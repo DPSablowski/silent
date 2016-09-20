@@ -3572,7 +3572,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionBug_Report_triggered()
 {
-    QMessageBox::information(this, "Bug Report", "Troubles?\n\ncontact: dsablowski@aip.de\n\nBe as precise as possible.");
+    QMessageBox::information(this, "Bug Report", "Troubles?\n\n See https://dpsablowski.wordpress.com/silent/ \n\ncontact: dsablowski@aip.de\n\nBe as precise as possible.");
     return;
 }
 
