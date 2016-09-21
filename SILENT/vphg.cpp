@@ -62,6 +62,11 @@ VPHG::VPHG(QWidget *parent) :
     ui->doubleSpinBox_12->setValue(dn_l);
 
     ui->customPlot->axisRect()->setupFullAxesBox(true);
+    ui->customPlot->legend->setVisible(true);
+    QFont legendFont = font();
+    legendFont.setPointSize(10);
+    ui->customPlot->legend->setFont(legendFont);
+    ui->customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignBottom|Qt::AlignRight);
 
     VPHG::calculateVPH();
 
@@ -110,17 +115,21 @@ void VPHG::calculateVPH()
             }
 
         ui->customPlot->addGraph();
+        ui->customPlot->graph(0)->setPen(QPen(Qt::red));
+        ui->customPlot->graph(0)->setName("s Pol");
         ui->customPlot->graph(0)->setData(dvp, etav_s);
         ui->customPlot->addGraph();
-        ui->customPlot->graph(1)->setPen(QPen(Qt::red));
+        ui->customPlot->graph(1)->setPen(QPen(Qt::green));
+        ui->customPlot->graph(1)->setName("p Pol");
         ui->customPlot->graph(1)->setData(dvp, etav_p);
         ui->customPlot->addGraph();
-        ui->customPlot->graph(2)->setPen(QPen(Qt::green));
+        ui->customPlot->graph(2)->setPen(QPen(Qt::blue));
+        ui->customPlot->graph(2)->setName("ave Pol");
         ui->customPlot->graph(2)->setData(dvp, etav);
         ui->customPlot->xAxis->setLabel("Thickness [um]");
         ui->customPlot->yAxis->setLabel("Efficiency");
         ui->customPlot->xAxis->setRange(ldv*1000, udv*1000);
-        ui->customPlot->yAxis->setRange(0, 1.1);
+        ui->customPlot->yAxis->setRange(0, 1.05);
         ui->customPlot->replot();
 
     }
@@ -145,17 +154,21 @@ void VPHG::calculateVPH()
         }
 
            ui->customPlot->addGraph();
+           ui->customPlot->graph(0)->setPen(QPen(Qt::red));
+           ui->customPlot->graph(0)->setName("s Pol");
            ui->customPlot->graph(0)->setData(lv, etav_s);
            ui->customPlot->addGraph();
-           ui->customPlot->graph(1)->setPen(QPen(Qt::red));
+           ui->customPlot->graph(1)->setPen(QPen(Qt::green));
+           ui->customPlot->graph(1)->setName("p Pol");
            ui->customPlot->graph(1)->setData(lv, etav_p);
            ui->customPlot->addGraph();
-           ui->customPlot->graph(2)->setPen(QPen(Qt::green));
+           ui->customPlot->graph(2)->setPen(QPen(Qt::blue));
+           ui->customPlot->graph(2)->setName("ave Pol");
            ui->customPlot->graph(2)->setData(lv, etav);
            ui->customPlot->xAxis->setLabel("Wavlength [nm]");
            ui->customPlot->yAxis->setLabel("Efficiency");
            ui->customPlot->xAxis->setRange(lwv, uwv);
-           ui->customPlot->yAxis->setRange(0, 1.1);
+           ui->customPlot->yAxis->setRange(0, 1.05);
            ui->customPlot->replot();
 
 
@@ -185,17 +198,21 @@ void VPHG::calculateVPH()
                       }
 
         ui->customPlot->addGraph();
+        ui->customPlot->graph(0)->setPen(QPen(Qt::red));
+        ui->customPlot->graph(0)->setName("s Pol");
         ui->customPlot->graph(0)->setData(lv, etav_s);
         ui->customPlot->addGraph();
-        ui->customPlot->graph(1)->setPen(QPen(Qt::red));
+        ui->customPlot->graph(1)->setPen(QPen(Qt::green));
+        ui->customPlot->graph(1)->setName("p Pol");
         ui->customPlot->graph(1)->setData(lv, etav_p);
         ui->customPlot->addGraph();
-        ui->customPlot->graph(2)->setPen(QPen(Qt::green));
+        ui->customPlot->graph(2)->setPen(QPen(Qt::blue));
+        ui->customPlot->graph(2)->setName("ave Pol");
         ui->customPlot->graph(2)->setData(lv, etav);
         ui->customPlot->xAxis->setLabel("Wavlength [nm]");
         ui->customPlot->yAxis->setLabel("Efficiency");
         ui->customPlot->xAxis->setRange(lwv, uwv);
-        ui->customPlot->yAxis->setRange(0, 1.1);
+        ui->customPlot->yAxis->setRange(0, 1.05);
         ui->customPlot->replot();
     }
 }
@@ -300,6 +317,7 @@ void VPHG::on_spinBox_valueChanged()
 {
     QFont legendFont = font();
     legendFont.setPointSize(ui->spinBox->value());
+    ui->customPlot->legend->setFont(legendFont);
     ui->customPlot->xAxis->setLabelFont(legendFont);
     ui->customPlot->yAxis->setLabelFont(legendFont);
     ui->customPlot->xAxis->setTickLabelFont(legendFont);
