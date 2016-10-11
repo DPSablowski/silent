@@ -4146,7 +4146,7 @@ void MainWindow::setvalues(){
 
     ui->comboBox->setCurrentIndex(variables[44]);
     ui->comboBox_2->setCurrentIndex(variables[45]);
-    ui->comboBox_3->setCurrentIndex(variable[46]);
+    ui->comboBox_3->setCurrentIndex(variables[46]);
 
 
       qApp->processEvents(QEventLoop::AllEvents);

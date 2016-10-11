@@ -105,7 +105,7 @@ double l1; // lower wavelength
   QVector<double> Frp(unc);
   QVector<double> Frs(unc);
   QVector<double> Fr(unc);
-  int vars=46;
+  int vars=47;
   QVector<double> variables(vars);
 
   double Frenl=1;
@@ -4146,6 +4146,7 @@ void MainWindow::setvalues(){
 
     ui->comboBox->setCurrentIndex(variables[44]);
     ui->comboBox_2->setCurrentIndex(variables[45]);
+    ui->comboBox_3->setCurrentIndex(variable[46]);
 
 
       qApp->processEvents(QEventLoop::AllEvents);
@@ -4254,6 +4255,7 @@ void MainWindow::on_actionSave_triggered()
     file<<cint<<endl;
     cint = ui->comboBox_2->currentIndex();
     file<<cint<<endl;
+    cint = ui->comboBox_3->currentIndex();
 
     file.close();
 }

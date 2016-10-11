@@ -749,7 +749,7 @@
               <item>
                <widget class="QLabel" name="label_71">
                 <property name="text">
-                 <string>Trans. Coll Focal Length:</string>
+                 <string>Trans. Coll Focal Length: [mm]</string>
                 </property>
                </widget>
               </item>
