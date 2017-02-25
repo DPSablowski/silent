@@ -2291,7 +2291,7 @@ public:
         label_34->setText(QApplication::translate("MainWindow", "to", 0));
         label_11->setText(QApplication::translate("MainWindow", "Focal Length Collimator [mm]:", 0));
         label_12->setText(QApplication::translate("MainWindow", "Focal Length Camera [mm]:", 0));
-        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length:", 0));
+        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length: [mm]", 0));
         label_2->setText(QApplication::translate("MainWindow", "X-Disperser:", 0));
         label_27->setText(QApplication::translate("MainWindow", "XD Line Density [l/mm]:", 0));
         label_28->setText(QApplication::translate("MainWindow", "Total Angle at XD [deg]:", 0));

@@ -13,6 +13,9 @@
 
 using namespace std;
 
+string cPPath;
+QString qCPPath;
+
 double x1cl, x2cl, y1cl, y2cl;
 
 PClassical::PClassical(QWidget *parent) :
@@ -26,6 +29,8 @@ PClassical::PClassical(QWidget *parent) :
     ui->customPlot->setInteraction(QCP::iRangeDrag, true);
     ui->customPlot->setInteraction(QCP::iRangeZoom, true);
     ui->customPlot->setInteraction(QCP::iSelectPlottables, true);
+
+    ui->lineEdit_2->setText("/home/daniels/Silent/silent/SILENT");
 
     ui->comboBox->addItem("Resolving Power");
     ui->comboBox->addItem("2-Pixel Resolving Power");
@@ -57,11 +62,17 @@ void PClassical::on_pushButton_3_clicked()
     string zeile, one, two;
     this->setCursor(QCursor(Qt::WaitCursor));
 
+    qCPPath = ui->lineEdit_2->text();
+    cPPath = qCPPath.toUtf8().constData();
+
         if(ui->comboBox->currentIndex()==0){
 
-            ifstream toplot1("resolvingcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/resolvingcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("resolvingcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -114,9 +125,12 @@ void PClassical::on_pushButton_3_clicked()
 
         if(ui->comboBox->currentIndex()==1){
 
-            ifstream toplot1("twopixRcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/twopixRcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("twopixRcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -169,9 +183,12 @@ void PClassical::on_pushButton_3_clicked()
 
         if(ui->comboBox->currentIndex()==2){
 
-            ifstream toplot1("dispersioncl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/dispersioncl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("dispersioncl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -223,9 +240,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==3){
 
-            ifstream toplot1("anamorphismcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/anamorphismcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("anamorphismcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -277,9 +297,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==4){
 
-            ifstream toplot1("nyquistcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/nyquistcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("nyquistcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -332,9 +355,12 @@ void PClassical::on_pushButton_3_clicked()
 
         if(ui->comboBox->currentIndex()==5){
 
-            ifstream toplot("slitcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/slitcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot(datName.c_str());
 
-            QFile checkfile3("slitcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -387,9 +413,12 @@ void PClassical::on_pushButton_3_clicked()
 
         if(ui->comboBox->currentIndex()==6){
 
-            ifstream toplot1("atmospherecl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/atmospherecl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("atmospherecl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -441,9 +470,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==7){
 
-            ifstream toplot1("telescopecl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/telescopecl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("telescopecl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -495,9 +527,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==8){
 
-            ifstream toplot1("ccdcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/ccdcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("ccdcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -549,9 +584,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==9){
 
-            ifstream toplot1("gratingcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/gratingcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("gratingcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -603,9 +641,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==10){
 
-            ifstream toplot1("efficiencycl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/efficiencycl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("efficiencycl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -657,9 +698,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==11){
 
-            ifstream toplot1("overallcl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/overallcl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("overallcl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -711,9 +755,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==12){
 
-            ifstream toplot1("surfacescl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/surfacescl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("surfacescl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -765,9 +812,12 @@ void PClassical::on_pushButton_3_clicked()
         }
         if(ui->comboBox->currentIndex()==13){
 
-            ifstream toplot1("neoncl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/neoncl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("neoncl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -820,9 +870,12 @@ void PClassical::on_pushButton_3_clicked()
 
         if(ui->comboBox->currentIndex()==14){
 
-            ifstream toplot1("balmercl.txt");
+            std::ostringstream datNameStream(cPPath);
+            datNameStream<<cPPath<<"/balmercl.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
-            QFile checkfile3("balmercl.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -890,9 +943,12 @@ void PClassical::on_pushButton_2_clicked()
 
     if(ui->comboBox->currentIndex()==0){
 
-        ifstream toplot1("resolvingcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/resolvingcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("resolvingcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -932,9 +988,12 @@ void PClassical::on_pushButton_2_clicked()
 
     if(ui->comboBox->currentIndex()==1){
 
-        ifstream toplot1("twopixRcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/twopixRcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("twopixRcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -974,9 +1033,12 @@ void PClassical::on_pushButton_2_clicked()
 
     if(ui->comboBox->currentIndex()==2){
 
-        ifstream toplot1("dispersioncl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/dispersioncl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("dispersioncl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1016,9 +1078,12 @@ void PClassical::on_pushButton_2_clicked()
 
     if(ui->comboBox->currentIndex()==3){
 
-        ifstream toplot1("anamorphismcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/anamorphismcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("anamorphismcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1057,9 +1122,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==4){
 
-        ifstream toplot1("nyquistcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/nyquistcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("nyquistcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1098,9 +1166,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==5){
 
-        ifstream toplot1("slitcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/slitcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("slitcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1139,9 +1210,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==6){
 
-        ifstream toplot1("atmospherecl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/atmospherecl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("atmospherecl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1180,9 +1254,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==7){
 
-        ifstream toplot1("telescopecl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/telescopecl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("telescopecl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1221,9 +1298,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==8){
 
-        ifstream toplot1("ccdcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/ccdcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("ccdcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1262,9 +1342,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==9){
 
-        ifstream toplot1("gratingcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/gratingcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("gratingcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1303,9 +1386,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==10){
 
-        ifstream toplot1("efficiencycl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/efficiencycl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("efficiencycl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1344,9 +1430,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==11){
 
-        ifstream toplot1("overallcl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/overallcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("overallcl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1385,9 +1474,12 @@ void PClassical::on_pushButton_2_clicked()
     }
     if(ui->comboBox->currentIndex()==12){
 
-        ifstream toplot1("surfacescl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/surfacescl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("surfacescl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1428,9 +1520,12 @@ void PClassical::on_pushButton_2_clicked()
 
         ui->customPlot->clearGraphs();
 
-        ifstream toplot1("neoncl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/neoncl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("neoncl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
@@ -1472,9 +1567,12 @@ void PClassical::on_pushButton_2_clicked()
 
         ui->customPlot->clearGraphs();
 
-        ifstream toplot1("balmercl.txt");
+        std::ostringstream datNameStream(cPPath);
+        datNameStream<<cPPath<<"/balmercl.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
-        QFile checkfile3("balmercl.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");

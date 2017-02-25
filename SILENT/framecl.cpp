@@ -6,6 +6,8 @@
 #include <iostream>
 
 using namespace std;
+string cFPath;
+QString qCFPath;
 
 FrameCl::FrameCl(QWidget *parent) :
     QDialog(parent),
@@ -23,6 +25,8 @@ FrameCl::FrameCl(QWidget *parent) :
     ui->comboBox->addItem("Neon Spectrum");
     ui->comboBox->addItem("Balmer Spectrum");
 
+    ui->lineEdit_3->setText("/home/");
+
     ui->customPlot->axisRect()->setupFullAxesBox(true);
 }
 
@@ -38,14 +42,22 @@ void FrameCl::on_pushButton_2_clicked()
     ui->customPlot->clearGraphs();
     ui->customPlot->clearPlottables();
 
+    qCFPath = ui->lineEdit_3->text();
+    cFPath = qCFPath.toUtf8().constData();
+
     string zeile, one, two, three;
     int llx=ui->spinBox->value(), lly=ui->spinBox_2->value();
 
     //Planck
     if(ui->comboBox->currentIndex()==0){
 
-    ifstream input("planckfcl.txt");
-    QFile checkfile2("planckfcl.txt");
+        std::ostringstream datNameStream(cFPath);
+        datNameStream<<cFPath<<"/planckfcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream input(datName.c_str());
+
+
+    QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "File with Continuum not available! Calculate first.");
@@ -117,8 +129,12 @@ void FrameCl::on_pushButton_2_clicked()
     //Neon
     if(ui->comboBox->currentIndex()==1){
 
-    ifstream input("neonfcl.txt");
-    QFile checkfile2("neonfcl.txt");
+        std::ostringstream datNameStream(cFPath);
+        datNameStream<<cFPath<<"/neonfcl.txt";
+        std::string datName = datNameStream.str();
+        ifstream input(datName.c_str());
+
+    QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "File with Neon emission not available! Calculate first.");
@@ -190,9 +206,12 @@ void FrameCl::on_pushButton_2_clicked()
     //Balmer
     if(ui->comboBox->currentIndex()==2){
 
-    ifstream input("balmerfcl.txt");
+        std::ostringstream datNameStream(cFPath);
+        datNameStream<<cFPath<<"/balmerfcl";
+        std::string datName = datNameStream.str();
+        ifstream input(datName.c_str());
 
-    QFile checkfile2("balmerfcl.txt");
+    QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "File with Balmer absorption not available! Calculate first.");
@@ -289,25 +308,30 @@ void FrameCl::on_pushButton_3_clicked()
     QString save=ui->lineEdit->text();
 
     if(ui->checkBox->isChecked()){
-        ui->customPlot->savePdf(save+".pdf");
+        ui->customPlot->savePdf(qCFPath+save+".pdf");
     }
 
     if(ui->checkBox_2->isChecked()){
-        ui->customPlot->savePng(save+".png");
+        ui->customPlot->savePng(qCFPath+save+".png");
     }
     if(ui->checkBox_3->isChecked()){
         QString output=ui->lineEdit->text();
             string data = output.toUtf8().constData();
             std::ostringstream datNameStream(data);
-            datNameStream<<data<<".txt";
+            datNameStream<<cFPath<<data<<".txt";
             std::string datName = datNameStream.str();
             ofstream dat(datName.c_str());
 
             string zeile, one, two, three;
 
             if(ui->comboBox->currentIndex()==0){
-            ifstream input("planckfcl.txt");
-            QFile checkfile2("planckfcl.txt");
+
+                std::ostringstream dat2NameStream(cFPath);
+                dat2NameStream<<cFPath<<"/planckfcl.txt";
+                std::string dat2Name = dat2NameStream.str();
+                ifstream input(dat2Name.c_str());
+
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Continuum file does not exist.");
@@ -341,10 +365,15 @@ void FrameCl::on_pushButton_3_clicked()
             }
             input.close();
             }
-            if(ui->comboBox->currentIndex()==1){
-            ifstream input("neonfcl.txt");
 
-            QFile checkfile2("neonfcl.txt");
+            if(ui->comboBox->currentIndex()==1){
+
+                std::ostringstream dat2NameStream(cFPath);
+                dat2NameStream<<cFPath<<"/neonfcl.txt";
+                std::string dat2Name = dat2NameStream.str();
+                ifstream input(dat2Name.c_str());
+
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Neon file does not exist.");
@@ -380,8 +409,12 @@ void FrameCl::on_pushButton_3_clicked()
             }
 
             if(ui->comboBox->currentIndex()==2){
-            ifstream input("balmerfcl.txt");
-            QFile checkfile2("planckfcl.txt");
+                std::ostringstream dat2NameStream(cFPath);
+                dat2NameStream<<cFPath<<"/balmerfcl.txt";
+                std::string dat2Name = dat2NameStream.str();
+                ifstream input(dat2Name.c_str());
+
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Balmer file does not exist.");
@@ -425,6 +458,9 @@ void FrameCl::on_pushButton_4_clicked()
     ui->customPlot->clearGraphs();
     ui->customPlot->clearPlottables();
 
+    qCFPath = ui->lineEdit_3->text();
+    cFPath = qCFPath.toUtf8().constData();
+
     string zeile, one, two, three;
     int llx=ui->spinBox->value(), lly=ui->spinBox_2->value();
 
@@ -432,10 +468,11 @@ void FrameCl::on_pushButton_4_clicked()
     QString output=ui->lineEdit_2->text();
         string data = output.toUtf8().constData();
         std::ostringstream datNameStream(data);
+        datNameStream<<cFPath<<data;
         std::string datName = datNameStream.str();
         ifstream dat(datName.c_str());
 
-        QFile checkfile2(output);
+        QFile checkfile2(datName.c_str());
 
         if(!checkfile2.exists()){
             QMessageBox::information(this, "Error", "File does not exist.");

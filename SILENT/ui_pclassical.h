@@ -53,6 +53,9 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QLineEdit *lineEdit;
     QPushButton *pushButton_4;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label_6;
+    QLineEdit *lineEdit_2;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
@@ -74,7 +77,7 @@ public:
     {
         if (PClassical->objectName().isEmpty())
             PClassical->setObjectName(QStringLiteral("PClassical"));
-        PClassical->resize(783, 487);
+        PClassical->resize(783, 370);
         QFont font;
         font.setFamily(QStringLiteral("Ubuntu Mono"));
         font.setBold(true);
@@ -89,7 +92,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1035, 456));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1033, 356));
         horizontalLayout_6 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
@@ -180,6 +183,23 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_5);
+
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        label_6 = new QLabel(scrollAreaWidgetContents);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        horizontalLayout_8->addWidget(label_6);
+
+        lineEdit_2 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        sizePolicy1.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_8->addWidget(lineEdit_2);
+
+
+        verticalLayout->addLayout(horizontalLayout_8);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -299,6 +319,7 @@ public:
         checkBox_14->setText(QApplication::translate("PClassical", "pdf", 0));
         checkBox_15->setText(QApplication::translate("PClassical", "png", 0));
         pushButton_4->setText(QApplication::translate("PClassical", "Save", 0));
+        label_6->setText(QApplication::translate("PClassical", "Work Path:", 0));
         pushButton->setText(QApplication::translate("PClassical", "Close", 0));
         label->setText(QApplication::translate("PClassical", "x1:", 0));
         label_2->setText(QApplication::translate("PClassical", "x2:", 0));

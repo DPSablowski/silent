@@ -85,6 +85,9 @@ public:
     QComboBox *comboBox;
     QPushButton *pushButton_3;
     QPushButton *pushButton_4;
+    QHBoxLayout *horizontalLayout_41;
+    QLabel *label_42;
+    QLineEdit *lineEdit_3;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_11;
     QPushButton *pushButton;
@@ -183,7 +186,7 @@ public:
     {
         if (classical->objectName().isEmpty())
             classical->setObjectName(QStringLiteral("classical"));
-        classical->resize(983, 624);
+        classical->resize(1154, 641);
         QFont font;
         font.setFamily(QStringLiteral("Ubuntu Mono"));
         font.setBold(true);
@@ -198,7 +201,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 981, 590));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1136, 623));
         horizontalLayout_38 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_38->setObjectName(QStringLiteral("horizontalLayout_38"));
         verticalLayout = new QVBoxLayout();
@@ -486,6 +489,26 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_25);
+
+        horizontalLayout_41 = new QHBoxLayout();
+        horizontalLayout_41->setObjectName(QStringLiteral("horizontalLayout_41"));
+        label_42 = new QLabel(scrollAreaWidgetContents);
+        label_42->setObjectName(QStringLiteral("label_42"));
+
+        horizontalLayout_41->addWidget(label_42);
+
+        lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Maximum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy2);
+
+        horizontalLayout_41->addWidget(lineEdit_3);
+
+
+        verticalLayout->addLayout(horizontalLayout_41);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -861,11 +884,11 @@ public:
 
         doubleSpinBox_11 = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_11->setObjectName(QStringLiteral("doubleSpinBox_11"));
-        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(doubleSpinBox_11->sizePolicy().hasHeightForWidth());
-        doubleSpinBox_11->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(doubleSpinBox_11->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_11->setSizePolicy(sizePolicy3);
         doubleSpinBox_11->setMaximum(90);
 
         horizontalLayout_30->addWidget(doubleSpinBox_11);
@@ -983,11 +1006,11 @@ public:
 
         progressBar = new QProgressBar(scrollAreaWidgetContents);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
-        progressBar->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy4);
         progressBar->setValue(24);
 
         verticalLayout_3->addWidget(progressBar);
@@ -1079,6 +1102,7 @@ public:
         label_13->setText(QApplication::translate("classical", "Width on Sky [arcsec]:", 0));
         pushButton_3->setText(QApplication::translate("classical", "Parameters", 0));
         pushButton_4->setText(QApplication::translate("classical", "Frame", 0));
+        label_42->setText(QApplication::translate("classical", "Work Path:", 0));
         pushButton->setText(QApplication::translate("classical", "Close", 0));
         label_12->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Telescope &amp; CCD Data</span></p></body></html>", 0));
         label_16->setText(QApplication::translate("classical", "Seeing [arcsec]:", 0));

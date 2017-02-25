@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>983</width>
-    <height>624</height>
+    <width>1154</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="font">
@@ -35,8 +35,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>981</width>
-        <height>590</height>
+        <width>1136</width>
+        <height>623</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_38">
@@ -441,6 +441,27 @@
              </property>
              <property name="text">
               <string>Frame</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_41">
+           <item>
+            <widget class="QLabel" name="label_42">
+             <property name="text">
+              <string>Work Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
             </widget>
            </item>

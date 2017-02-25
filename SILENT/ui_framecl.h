@@ -60,6 +60,9 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit;
     QPushButton *pushButton_3;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label_4;
+    QLineEdit *lineEdit_3;
     QSpacerItem *verticalSpacer;
     QPushButton *pushButton;
     QCustomPlot *customPlot;
@@ -68,7 +71,7 @@ public:
     {
         if (FrameCl->objectName().isEmpty())
             FrameCl->setObjectName(QStringLiteral("FrameCl"));
-        FrameCl->resize(839, 418);
+        FrameCl->resize(839, 445);
         QFont font;
         font.setFamily(QStringLiteral("Ubuntu Mono"));
         font.setBold(true);
@@ -83,7 +86,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 838, 387));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 838, 414));
         horizontalLayout_6 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
@@ -223,6 +226,23 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_4);
 
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        label_4 = new QLabel(scrollAreaWidgetContents);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        horizontalLayout_8->addWidget(label_4);
+
+        lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        sizePolicy.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy);
+
+        horizontalLayout_8->addWidget(lineEdit_3);
+
+
+        verticalLayout->addLayout(horizontalLayout_8);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
@@ -271,6 +291,7 @@ public:
         checkBox_2->setText(QApplication::translate("FrameCl", "png", 0));
         checkBox_3->setText(QApplication::translate("FrameCl", "txt", 0));
         pushButton_3->setText(QApplication::translate("FrameCl", "Save", 0));
+        label_4->setText(QApplication::translate("FrameCl", "Work Path", 0));
         pushButton->setText(QApplication::translate("FrameCl", "Close", 0));
     } // retranslateUi
 

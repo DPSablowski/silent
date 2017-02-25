@@ -331,14 +331,15 @@ void FrameEchelle::on_checkBox_2_clicked()
 void FrameEchelle::on_pushButton_3_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
-    QString save=ui->lineEdit->text();
 
     if(ui->checkBox->isChecked()){
-        ui->customPlot->savePdf(save+".pdf");
+        QString save=ui->lineEdit->text()+"pdf";
+        ui->customPlot->savePdf(save);
     }
 
     if(ui->checkBox_2->isChecked()){
-        ui->customPlot->savePng(save+".png");
+        QString save=ui->lineEdit->text()+"png";
+        ui->customPlot->savePng(save);
     }
     if(ui->checkBox_3->isChecked()){
         QString output=ui->lineEdit->text();

@@ -21,6 +21,8 @@ QVector<double> wcl(lxcl), Acl(lxcl), s2cl(lxcl), Rcl(lxcl), Trcl(lxcl), emi(lxc
 QVector<double> alcli(1), alclw(1), aluvcli(1), aluvclw(1), agcli(1), agclw(1), aucli(1), auclw(1), bbcli(1), bbclw(1), alclt(1), agclt(1), bbclt(1), aluvclt(1), auclt(1);
 int varcl=35;
 QVector<double> variablescl(varcl);
+QString qCPath;
+string cPath;
 
 classical::classical(QWidget *parent) :
     QDialog(parent),
@@ -131,6 +133,8 @@ classical::classical(QWidget *parent) :
     ui->comboBox->addItem("Planck Continuum");
     ui->comboBox->addItem("Balmer Absorption");
     ui->comboBox->addItem("Neon Emission");
+
+    ui->lineEdit_3->setText("/home/daniels/Silent/silent/SILENT");
 
 }
 
@@ -265,10 +269,16 @@ void classical::vecresize(){
     bbclt.resize(lxcl/Bxcl);
 }
 
+//*****************************
+// Parameters
+//*****************************
 void classical::on_pushButton_3_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
     classical::vecresize();
+
+    qCPath = ui->lineEdit_3->text();
+    cPath = qCPath.toUtf8().constData();
 
     string zeile, one, two, line, eins, zwei;
     int bini=0, bini2=0, bini3=0, bini4=0, bini5=0;
@@ -280,9 +290,13 @@ void classical::on_pushButton_3_clicked()
     bbcl=ui->spinBox_9->value();
 
     if(alcl>0){
-    ifstream input1("protected_Al.txt");
 
-    QFile checkfile1("protected_Al.txt");
+        std::ostringstream datNameStream(cPath);
+        datNameStream<<cPath<<"/protected_Al.txt";
+        std::string datName = datNameStream.str();
+        ifstream input1(datName.c_str());
+
+    QFile checkfile1(datName.c_str());
 
     if(!checkfile1.exists()){
         QMessageBox::information(this, "Error", "Reflection data of aluminium not available!");
@@ -310,9 +324,13 @@ void classical::on_pushButton_3_clicked()
     input1.close();
 }
     if(aluvcl>0){
-    ifstream input2("UVEnhanced_Al.txt");
 
-    QFile checkfile2("UVEnhanced_Al.txt");
+        std::ostringstream dat2NameStream(cPath);
+        dat2NameStream<<cPath<<"/UVEnhanced_Al.txt";
+        std::string dat2Name = dat2NameStream.str();
+        ifstream input2(dat2Name.c_str());
+
+    QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "Reflection data of UV enhanced aluminium not available!");
@@ -339,9 +357,13 @@ void classical::on_pushButton_3_clicked()
     input2.close();
 }
     if(agcl>0){
-    ifstream input3("protected_Ag.txt");
 
-    QFile checkfile3("protected_Ag.txt");
+        std::ostringstream dat3NameStream(cPath);
+        dat3NameStream<<cPath<<"/protected_Ag.txt";
+        std::string dat3Name = dat3NameStream.str();
+        ifstream input3(dat3Name.c_str());
+
+    QFile checkfile3(dat3Name.c_str());
 
     if(!checkfile3.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected silver not available!");
@@ -369,9 +391,13 @@ void classical::on_pushButton_3_clicked()
 }
 
     if(aucl>0){
-    ifstream input4("protected_Au.txt");
 
-    QFile checkfile4("protected_Au.txt");
+        std::ostringstream dat4NameStream(cPath);
+        dat4NameStream<<cPath<<"/protected_Au.txt";
+        std::string dat4Name = dat4NameStream.str();
+        ifstream input4(dat4Name.c_str());
+
+    QFile checkfile4(dat4Name.c_str());
 
     if(!checkfile4.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected gold not available!");
@@ -399,9 +425,13 @@ void classical::on_pushButton_3_clicked()
 }
 
     if(bbcl>0){
-    ifstream input5("vis_ar.txt");
 
-    QFile checkfile5("vis_ar.txt");
+        std::ostringstream dat5NameStream(cPath);
+        dat5NameStream<<cPath<<"/vis_ar.txt";
+        std::string dat5Name = dat5NameStream.str();
+        ifstream input5(dat5Name.c_str());
+
+    QFile checkfile5(dat5Name.c_str());
 
     if(!checkfile5.exists()){
         QMessageBox::information(this, "Error", "Transmission data of VIS AR coating not available!");
@@ -430,22 +460,85 @@ void classical::on_pushButton_3_clicked()
 
     classical::on_pushButton_2_clicked();
 
-    ofstream file1("efficiencycl.txt");
-    ofstream file2("ccdcl.txt");
-    ofstream file3("anamorphismcl.txt");
-    ofstream file4("nyquistcl.txt");
-    ofstream file5("slitcl.txt");
-    ofstream file6("resolvingcl.txt");
-    ofstream file7("dispersioncl.txt");
-    ofstream file8("atmospherecl.txt");
-    ofstream file9("overallcl.txt");
-    ofstream file10("signalcl.txt");
-    ofstream file11("telescopecl.txt");
-    ofstream file12("gratingcl.txt");
-    ofstream file13("neoncl.txt");
-    ofstream file14("surfacescl.txt");
-    ofstream file16("balmercl.txt");
-    ofstream file17("twopixRcl.txt");
+    std::ostringstream datNameStream(cPath);
+    datNameStream<<cPath<<"/efficiencycl.txt";
+    std::string datName = datNameStream.str();
+    ofstream file1(datName.c_str());
+
+    std::ostringstream dat2NameStream(cPath);
+    dat2NameStream<<cPath<<"/ccdcl.txt";
+    std::string dat2Name = dat2NameStream.str();
+    ofstream file2(dat2Name.c_str());
+
+    std::ostringstream dat3NameStream(cPath);
+    dat3NameStream<<cPath<<"/amamorphismcl.txt";
+    std::string dat3Name = dat3NameStream.str();
+    ofstream file3(dat3Name.c_str());
+
+    std::ostringstream dat4NameStream(cPath);
+    dat4NameStream<<cPath<<"/nyquistcl.txt";
+    std::string dat4Name = dat4NameStream.str();
+    ofstream file4(dat4Name.c_str());
+
+    std::ostringstream dat5NameStream(cPath);
+    dat5NameStream<<cPath<<"/slitcl.txt";
+    std::string dat5Name = dat5NameStream.str();
+    ofstream file5(dat5Name.c_str());
+
+    std::ostringstream dat6NameStream(cPath);
+    dat6NameStream<<cPath<<"/resolvingcl.txt";
+    std::string dat6Name = dat6NameStream.str();
+    ofstream file6(dat6Name.c_str());
+
+    std::ostringstream dat7NameStream(cPath);
+    dat7NameStream<<cPath<<"/dispersioncl.txt";
+    std::string dat7Name = dat7NameStream.str();
+    ofstream file7(dat7Name.c_str());
+
+    std::ostringstream dat8NameStream(cPath);
+    dat8NameStream<<cPath<<"/atmospherecl.txt";
+    std::string dat8Name = dat8NameStream.str();
+    ofstream file8(dat8Name.c_str());
+
+    std::ostringstream dat9NameStream(cPath);
+    dat9NameStream<<cPath<<"/overallcl.txt";
+    std::string dat9Name = dat9NameStream.str();
+    ofstream file9(dat9Name.c_str());
+
+    std::ostringstream dat10NameStream(cPath);
+    dat10NameStream<<cPath<<"/signalcl.txt";
+    std::string dat10Name = dat10NameStream.str();
+    ofstream file10(dat10Name.c_str());
+
+    std::ostringstream dat11NameStream(cPath);
+    dat11NameStream<<cPath<<"/telescopecl.txt";
+    std::string dat11Name = dat11NameStream.str();
+    ofstream file11(dat11Name.c_str());
+
+    std::ostringstream dat12NameStream(cPath);
+    dat12NameStream<<cPath<<"/gratingcl.txt";
+    std::string dat12Name = dat12NameStream.str();
+    ofstream file12(dat12Name.c_str());
+
+    std::ostringstream dat13NameStream(cPath);
+    dat13NameStream<<cPath<<"/neoncl.txt";
+    std::string dat13Name = dat13NameStream.str();
+    ofstream file13(dat13Name.c_str());
+
+    std::ostringstream dat14NameStream(cPath);
+    dat14NameStream<<cPath<<"/surfacescl.txt";
+    std::string dat14Name = dat14NameStream.str();
+    ofstream file14(dat14Name.c_str());
+
+    std::ostringstream dat15NameStream(cPath);
+    dat15NameStream<<cPath<<"/balmercl.txt";
+    std::string dat15Name = dat15NameStream.str();
+    ofstream file15(dat15Name.c_str());
+
+    std::ostringstream dat16NameStream(cPath);
+    dat16NameStream<<cPath<<"/twopixRcl.txt";
+    std::string dat16Name = dat16NameStream.str();
+    ofstream file16(dat16Name.c_str());
 
 
     // read data from TSI
@@ -470,9 +563,12 @@ void classical::on_pushButton_3_clicked()
 
     scl=ui->doubleSpinBox_22->value();
 
-    ifstream input("neon_line.txt");
+    std::ostringstream dat17NameStream(cPath);
+    dat17NameStream<<cPath<<"/neon_line.txt";
+    std::string dat17Name = dat17NameStream.str();
+    ifstream input(dat17Name.c_str());
 
-    QFile checkfile6("neon_line.txt");
+    QFile checkfile6(dat17Name.c_str());
 
     if(!checkfile6.exists()){
         QMessageBox::information(this, "Error", "Neon line list neon_line.txt not available!");
@@ -500,9 +596,12 @@ void classical::on_pushButton_3_clicked()
     }
     input.close();
 
-    ifstream input1("absor_line.txt");
+    std::ostringstream dat18NameStream(cPath);
+    dat18NameStream<<cPath<<"/absor_line.txt";
+    std::string dat18Name = dat18NameStream.str();
+    ifstream input1(dat18Name.c_str());
 
-    QFile checkfile7("absor_line.txt");
+    QFile checkfile7(dat18Name.c_str());
 
     if(!checkfile7.exists()){
         QMessageBox::information(this, "Error", "Balmer line list absor_line.txt not available!");
@@ -695,20 +794,15 @@ void classical::on_pushButton_3_clicked()
         file11<<wcl[i]*1000000<<" "<<Pcl[i]<<endl;
         file12<<wcl[i]*1000000<<" "<<I1cl[i]<<endl;
         file13<<wcl[i]*1000000<<" "<<Ineon<<endl;
-        file17<<wcl[i]*1000000<<" "<<wcl[i]/2/Dcl[i]<<endl;
+        file16<<wcl[i]*1000000<<" "<<wcl[i]/2/Dcl[i]<<endl;
         Ineon=0;
         file14<<wcl[i]*1000000<<" "<<reflectance<<endl;
         reflectance=1;
-        file16<<wcl[i]*1000000<<" "<<Iabsor<<endl;
+        file15<<wcl[i]*1000000<<" "<<Iabsor<<endl;
         Iabsor=0;
 
         ui->progressBar->setValue((i+1)*100/(lxcl/Bxcl));
         qApp->processEvents(QEventLoop::AllEvents);
-    }
-
-    if(send==0){
-    qPClassical = new PClassical(this);
-    qPClassical->show();
     }
 
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -775,9 +869,14 @@ void classical::on_doubleSpinBox_16_valueChanged()
 }
 
 
+//*****************************************
 // Frame
+//*****************************************
 void classical::on_pushButton_4_clicked()
 {
+    qCPath = ui->lineEdit_3->text();
+    cPath = qCPath.toUtf8().constData();
+
     double ficl=0, fycl;
     int number_of_lines;
     string zeile, one, two;
@@ -803,7 +902,11 @@ void classical::on_pushButton_4_clicked()
 
     //Planck
         if(ui->comboBox->currentIndex()==0){
-        ofstream framecl("planckfcl.txt");
+
+            std::ostringstream datNameStream(cPath);
+            datNameStream<<cPath<<"/planckfcl.txt";
+            std::string datName = datNameStream.str();
+            ofstream framecl(datName.c_str());
 
             for(int i=0; i<lxcl/Bxcl; i++){
             for(int m=0; m<lycl/Bycl; m++){
@@ -831,7 +934,10 @@ void classical::on_pushButton_4_clicked()
     // Balmer
      if(ui->comboBox->currentIndex()==1){
 
-         ifstream input("absor_line.txt");
+         std::ostringstream dat2NameStream(cPath);
+         dat2NameStream<<cPath<<"/absor_line.txt";
+         std::string dat2Name = dat2NameStream.str();
+         ifstream input(dat2Name.c_str());
 
          number_of_lines =0;
 
@@ -856,7 +962,10 @@ void classical::on_pushButton_4_clicked()
 
          fycl=0;
 
-         ofstream framecl("balmerfcl.txt");
+         std::ostringstream dat3NameStream(cPath);
+         dat3NameStream<<cPath<<"/balmerfcl.txt";
+         std::string dat3Name = dat3NameStream.str();
+         ofstream framecl(dat3Name.c_str());
 
          for(int i=0; i<lxcl/Bxcl; i++){
 
@@ -895,7 +1004,10 @@ void classical::on_pushButton_4_clicked()
      // Neon
       if(ui->comboBox->currentIndex()==2){
 
-          ifstream input("neon_line.txt");
+          std::ostringstream dat4NameStream(cPath);
+          dat4NameStream<<cPath<<"/neon_line.txt";
+          std::string dat4Name = dat4NameStream.str();
+          ifstream input(dat4Name.c_str());
 
           number_of_lines =0;
 
@@ -921,7 +1033,10 @@ void classical::on_pushButton_4_clicked()
           fycl=0;
           ficl=0;
 
-          ofstream framecl("neonfcl.txt");
+          std::ostringstream dat5NameStream(cPath);
+          dat5NameStream<<cPath<<"/neonfcl.txt";
+          std::string dat5Name = dat5NameStream.str();
+          ofstream framecl(dat5Name.c_str());
 
           for(int i=0; i<lxcl/Bxcl; i++){
               for(int e=0; e<number_of_lines; e++){
@@ -1125,9 +1240,15 @@ void classical::setvaluescl(){
 // Save
 void classical::on_pushButton_5_clicked()
 {
+    qCPath = ui->lineEdit_3->text();
+    cPath = qCPath.toUtf8().constData();
+
     QString qSavecl = ui->lineEdit->text()+".clconf";
     string savecl = qSavecl.toUtf8().constData();
-    ofstream file(savecl.c_str());
+    std::ostringstream datNameStream(savecl);
+    datNameStream<<cPath<<"/"<<savecl;
+    std::string datName = datNameStream.str();
+    ofstream file(datName.c_str());
 
     file<<gcl<<endl;
     file<<ncl<<endl;
@@ -1171,10 +1292,17 @@ void classical::on_pushButton_5_clicked()
 //Load
 void classical::on_pushButton_6_clicked()
 {
+    qCPath = ui->lineEdit_3->text();
+    cPath = qCPath.toUtf8().constData();
+
     QString qLoadcl = ui->lineEdit_2->text()+".clconf";
     string loadcl = qLoadcl.toUtf8().constData();
+    std::ostringstream datNameStream(loadcl);
+    datNameStream<<cPath<<"/"<<loadcl;
+    std::string datName = datNameStream.str();
+    ifstream file(datName.c_str());
 
-    QFile checkfile(qLoadcl);
+    QFile checkfile(datName.c_str());
 
     if(!checkfile.exists()){
         QMessageBox::information(this, "Error", "File is not available!");
@@ -1183,7 +1311,6 @@ void classical::on_pushButton_6_clicked()
     }
 
     string eins;
-    ifstream file(loadcl.c_str());
 
     for(int i=0; i<varcl; i++){
         file >> eins;
