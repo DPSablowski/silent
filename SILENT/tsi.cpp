@@ -84,7 +84,7 @@ void TSI::on_pushButton_2_clicked()
           xs=heigh/size*i;
           for(int m=0; m<size; m++){
                 ys=widt/size*m;
-              if(sqrt(pow((i+distx/2-size/2),2)+pow((m-disty/2-size/2),2))<=rs&i>size/2-rs-distx/2&i<size/2-distx/2 or sqrt(pow((i-distx/2-size/2),2)+pow((m+disty/2-size/2),2))<=rs&i>size/2+distx/2&i<size/2+rs+distx/2){
+              if(sqrt(pow((i+distx/2-size/2),2)+pow((m-disty/2-size/2),2))<=rs & (i>size/2-rs-distx/2&i<size/2-distx/2) or (sqrt(pow((i-distx/2-size/2),2)+pow((m+disty/2-size/2),2))<=rs) & i>size/2+distx/2&i<size/2+rs+distx/2){
                   file1<<1<<" ";
                   colorMap->data()->setCell(i, m, 1);
                   counter++;

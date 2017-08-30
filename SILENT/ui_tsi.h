@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tsi.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -268,17 +268,17 @@ public:
 
     void retranslateUi(QDialog *TSI)
     {
-        TSI->setWindowTitle(QApplication::translate("TSI", "Dialog", 0));
-        label->setText(QApplication::translate("TSI", "Image Slicer:", 0));
-        label_5->setText(QApplication::translate("TSI", "<html><head/><body><p>Fibre Diameter [um]:</p></body></html>", 0));
-        label_6->setText(QApplication::translate("TSI", "Magnification of Transfer Optics:", 0));
-        label_2->setText(QApplication::translate("TSI", "# Slices:", 0));
-        label_3->setText(QApplication::translate("TSI", "<html><head/><body><p>Distance in x [um]:</p></body></html>", 0));
-        label_4->setText(QApplication::translate("TSI", "<html><head/><body><p>Distance in y [um]:</p></body></html>", 0));
-        pushButton_2->setText(QApplication::translate("TSI", "Geometry", 0));
-        pushButton_3->setText(QApplication::translate("TSI", "Apply", 0));
-        pushButton_4->setText(QApplication::translate("TSI", "Remove", 0));
-        pushButton->setText(QApplication::translate("TSI", "Close", 0));
+        TSI->setWindowTitle(QApplication::translate("TSI", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("TSI", "Image Slicer:", Q_NULLPTR));
+        label_5->setText(QApplication::translate("TSI", "<html><head/><body><p>Fibre Diameter [um]:</p></body></html>", Q_NULLPTR));
+        label_6->setText(QApplication::translate("TSI", "Magnification of Transfer Optics:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("TSI", "# Slices:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("TSI", "<html><head/><body><p>Distance in x [um]:</p></body></html>", Q_NULLPTR));
+        label_4->setText(QApplication::translate("TSI", "<html><head/><body><p>Distance in y [um]:</p></body></html>", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("TSI", "Geometry", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("TSI", "Apply", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("TSI", "Remove", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("TSI", "Close", Q_NULLPTR));
     } // retranslateUi
 
 };

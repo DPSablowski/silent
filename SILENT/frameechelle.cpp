@@ -32,6 +32,10 @@ FrameEchelle::~FrameEchelle()
     delete ui;
 }
 
+void FrameEchelle::seData(QString str)
+{
+    ui->lineEdit_3->setText(str);
+}
 
 void FrameEchelle::on_pushButton_2_clicked()
 {

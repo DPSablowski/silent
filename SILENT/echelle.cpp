@@ -53,6 +53,9 @@ Echelle::Echelle(QWidget *parent) : QDialog(parent),
     ui->customPlot->yAxis->setLabelFont(legendFont);
     ui->customPlot->xAxis->setTickLabelFont(legendFont);
     ui->customPlot->yAxis->setTickLabelFont(legendFont);
+
+    connect(ui->customPlot, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip(QMouseEvent*)));
+
 }
 
 Echelle::~Echelle()
@@ -60,6 +63,22 @@ Echelle::~Echelle()
     delete ui;
 }
 
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void Echelle::showPointToolTip(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+void Echelle::seData(QString str)
+{
+    ui->lineEdit_2->setText(str);
+}
 
 //plot file
 void Echelle::on_pushButton_2_clicked()

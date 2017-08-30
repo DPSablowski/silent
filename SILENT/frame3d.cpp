@@ -33,6 +33,11 @@ Frame3D::~Frame3D()
     delete ui;
 }
 
+void Frame3D::seData(QString str)
+{
+    ui->lineEdit_3->setText(str);
+}
+
 void Frame3D::on_pushButton_2_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));

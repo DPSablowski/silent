@@ -15,6 +15,9 @@ public:
     explicit PClassical(QWidget *parent = 0);
     ~PClassical();
 
+public slots:
+    void seData(QString str);
+
 private slots:
 
     void on_pushButton_2_clicked();
@@ -28,6 +31,8 @@ private slots:
     void on_checkBox_15_clicked();
 
     void on_spinBox_valueChanged();
+
+    void showPointToolTip(QMouseEvent *event);
 
 private:
     Ui::PClassical *ui;

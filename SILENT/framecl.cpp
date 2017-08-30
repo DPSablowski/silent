@@ -25,8 +25,6 @@ FrameCl::FrameCl(QWidget *parent) :
     ui->comboBox->addItem("Neon Spectrum");
     ui->comboBox->addItem("Balmer Spectrum");
 
-    ui->lineEdit_3->setText("/home/");
-
     ui->customPlot->axisRect()->setupFullAxesBox(true);
 }
 
@@ -34,6 +32,11 @@ FrameCl::FrameCl(QWidget *parent) :
 FrameCl::~FrameCl()
 {
     delete ui;
+}
+
+void FrameCl::seData(QString str)
+{
+    ui->lineEdit_3->setText(str);
 }
 
 void FrameCl::on_pushButton_2_clicked()

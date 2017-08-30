@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'notes.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -91,8 +91,8 @@ public:
 
     void retranslateUi(QDialog *Notes)
     {
-        Notes->setWindowTitle(QApplication::translate("Notes", "Dialog", 0));
-        pushButton->setText(QApplication::translate("Notes", "Close", 0));
+        Notes->setWindowTitle(QApplication::translate("Notes", "Dialog", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("Notes", "Close", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -56,8 +56,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1408</width>
-        <height>674</height>
+        <width>1705</width>
+        <height>721</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -411,6 +411,34 @@
              </property>
              <property name="text">
               <string>Frame</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_46">
+           <item>
+            <widget class="QLabel" name="label_50">
+             <property name="text">
+              <string>Work Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
             </widget>
            </item>
@@ -898,6 +926,13 @@
             <widget class="QCheckBox" name="checkBox_4">
              <property name="text">
               <string>rectangular</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_5">
+             <property name="text">
+              <string>slitless</string>
              </property>
             </widget>
            </item>

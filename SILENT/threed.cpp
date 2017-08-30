@@ -2,6 +2,7 @@
 #include "ui_threed.h"
 #include <pthreed.h>
 #include <cmath>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -10,6 +11,7 @@
 
 using namespace std;
 
+string tdpath;
 double g3d, t3d, theta3d, eta3d, l3d, index3d, dn3d, d3d, dg3d, f13d, f23d, tune3d, seeing3d, T3d, BC3d, vm3d, z3d, ftel3d, dtel3d, sky3d, sdisc3d, slitEff3d, p3d, s3d, sl3d, offset3d, noise3d, gain3d, CCDp3d, CCDl3d, CCDT3d, CCDm3d;
 double a3d, b3d, exptime3d, at3d, b13d, bt3d, Il13d, Il23d;
 double k3d = 143877500;
@@ -18,6 +20,8 @@ int n3d, slits3d, lx3d, ly3d, Bx3d, By3d, ag3d, al3d, aluv3d, au3d, bb3d, aal3d=
 QVector<double> w3d(lx3d), R3d(lx3d), A3d(lx3d), s23d(lx3d), Nf3d(lx3d), Tr3d(lx3d), D3d(lx3d), CCD3d(lx3d), P3d(lx3d), I13d(lx3d), Ef3d(lx3d), al3dt(lx3d), aluv3dt(lx3d), au3dt(lx3d), ag3dt(lx3d), bb3dt(lx3d);
 QVector<double> al3di(1), al3dw(1), ag3di(1), ag3dw(1), aluv3di(1), aluv3dw(1), au3di(1), au3dw(1), bb3di(1), bb3dw(1), emi3d(1), reflectance3d(lx3d);
 int var3d=40;
+QString qtdpath;
+
 QVector<double> variables3d(var3d);
 threed::threed(QWidget *parent) :
     QDialog(parent),
@@ -158,6 +162,11 @@ threed::threed(QWidget *parent) :
 threed::~threed()
 {
     delete ui;
+}
+
+void threed::seData(QString str)
+{
+    ui->lineEdit_3->setText(str);
 }
 
 void threed::on_checkBox_clicked()
@@ -320,13 +329,22 @@ void threed::on_doubleSpinBox_19_valueChanged()
 void threed::on_checkBox_3_clicked()
 {
     ui->checkBox_4->setChecked(false);
+    ui->checkBox_5->setChecked(false);
     ui->doubleSpinBox_21->setEnabled(false);
 }
 
 void threed::on_checkBox_4_clicked()
 {
     ui->checkBox_3->setChecked(false);
+    ui->checkBox_5->setChecked(false);
     ui->doubleSpinBox_21->setEnabled(true);
+}
+
+void threed::on_checkBox_5_clicked()
+{
+    ui->checkBox_3->setChecked(false);
+    ui->checkBox_4->setChecked(false);
+    ui->doubleSpinBox_21->setEnabled(false);
 }
 
 void threed::on_spinBox_6_valueChanged()
@@ -379,6 +397,12 @@ void threed::on_pushButton_2_clicked()
         }
         slitEff3d=2*relativ1*2*relativ2/pow((sdisc3d*sqrt(M_PI/2)),2);
         ui->doubleSpinBox_22->setValue(slitEff3d*100);
+    }
+
+    // slitless
+    if(ui->checkBox_5->isChecked()){
+        slitEff3d=1.0;
+        ui->doubleSpinBox_22->setValue(100);
     }
 }
 
@@ -465,6 +489,9 @@ void threed::on_pushButton_3_clicked()
     string zeile, one, two, line, eins, zwei;
     int bini=0, bini2=0, bini3=0, bini4=0, bini5=0;
 
+    qtdpath = ui->lineEdit_3->text();
+    tdpath = qtdpath.toUtf8().constData();
+
     ag3d=ui->spinBox_7->value();
     al3d=ui->spinBox_8->value();
     aluv3d=ui->spinBox_9->value();
@@ -472,15 +499,18 @@ void threed::on_pushButton_3_clicked()
     bb3d=ui->spinBox_11->value();
 
     if(al3d>0){
-    ifstream input1("protected_Al.txt");
 
-    QFile checkfile1("protected_Al.txt");
+    QFile checkfile1(qtdpath+"/protected_Al.txt");
 
     if(!checkfile1.exists()){
         QMessageBox::information(this, "Error", "Reflection data of aluminium not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(tdpath);
+    datNameStream<<tdpath<<"/protected_Al.txt";
+    std::string datName = datNameStream.str();
+    ifstream input1(datName.c_str());
 
     while(std::getline(input1, line))
        ++ bini;
@@ -501,15 +531,18 @@ void threed::on_pushButton_3_clicked()
     input1.close();
 }
     if(aluv3d>0){
-    ifstream input2("UVEnhanced_Al.txt");
 
-    QFile checkfile2("UVEnhanced_Al.txt");
+    QFile checkfile2(qtdpath+"/UVEnhanced_Al.txt");
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "Reflection data of UV enhanced aluminium not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(tdpath);
+    datNameStream<<tdpath<<"/UVEnhanced_Al.txt";
+    std::string datName = datNameStream.str();
+    ifstream input2(datName.c_str());
 
     while(std::getline(input2, line))
        ++ bini2;
@@ -530,15 +563,18 @@ void threed::on_pushButton_3_clicked()
     input2.close();
 }
     if(ag3d>0){
-    ifstream input3("protected_Ag.txt");
 
-    QFile checkfile3("protected_Ag.txt");
+    QFile checkfile3(qtdpath+"/protected_Ag.txt");
 
     if(!checkfile3.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected silver not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(tdpath);
+    datNameStream<<tdpath<<"/protected_Ag.txt";
+    std::string datName = datNameStream.str();
+    ifstream input3(datName.c_str());
 
     while(std::getline(input3, line))
        ++ bini3;
@@ -560,15 +596,18 @@ void threed::on_pushButton_3_clicked()
 }
 
     if(au3d>0){
-    ifstream input4("protected_Au.txt");
 
-    QFile checkfile4("protected_Au.txt");
+    QFile checkfile4(qtdpath+"/protected_Au.txt");
 
     if(!checkfile4.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected gold not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(tdpath);
+    datNameStream<<tdpath<<"/protected_Au.txt";
+    std::string datName = datNameStream.str();
+    ifstream input4(datName.c_str());
 
     while(std::getline(input4, line))
        ++ bini4;
@@ -590,15 +629,18 @@ void threed::on_pushButton_3_clicked()
 }
 
     if(bb3d>0){
-    ifstream input5("vis_ar.txt");
 
-    QFile checkfile5("vis_ar.txt");
+    QFile checkfile5(qtdpath+"/vis_ar.txt");
 
     if(!checkfile5.exists()){
         QMessageBox::information(this, "Error", "Transmission data of VIS AR coating not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(tdpath);
+    datNameStream<<tdpath<<"/vis_ar.txt";
+    std::string datName = datNameStream.str();
+    ifstream input5(datName.c_str());
 
     while(std::getline(input5, line))
        ++ bini5;
@@ -623,28 +665,91 @@ void threed::on_pushButton_3_clicked()
 
     string spectrum3d;
 
-    ofstream file1("efficiency3d.txt");
-    ofstream file2("ccd3d.txt");
-    ofstream file3("anamorphism3d.txt");
-    ofstream file4("nyquist3d.txt");
-    ofstream file5("slit3d.txt");
-    ofstream file6("resolving3d.txt");
-    ofstream file7("dispersion3d.txt");
-    ofstream file8("atmosphere3d.txt");
-    ofstream file9("overall3d.txt");
-    ofstream file10("signal3d.txt");
-    ofstream file11("telescope3d.txt");
-    ofstream file12("grating3d.txt");
-    ofstream file14("surfaces3d.txt");
-    ofstream file15("layout3d.txt");
+    std::ostringstream o1Stream(tdpath);
+    o1Stream<<tdpath<<"/efficiency3d.txt";
+    std::string o1Name = o1Stream.str();
+    ofstream file1(o1Name.c_str());
+
+    std::ostringstream o2Stream(tdpath);
+    o2Stream<<tdpath<<"/ccd3d.txt";
+    std::string o2Name = o2Stream.str();
+    ofstream file2(o2Name.c_str());
+
+
+    std::ostringstream o3Stream(tdpath);
+    o3Stream<<tdpath<<"/anamorphism3d.txt";
+    std::string o3Name = o3Stream.str();
+    ofstream file3(o3Name.c_str());
+
+    std::ostringstream o4Stream(tdpath);
+    o4Stream<<tdpath<<"/nyquist3d.txt";
+    std::string o4Name = o4Stream.str();
+    ofstream file4(o4Name.c_str());
+
+    std::ostringstream o5Stream(tdpath);
+    o5Stream<<tdpath<<"/slit3d.txt";
+    std::string o5Name = o5Stream.str();
+    ofstream file5(o5Name.c_str());
+
+    std::ostringstream o6Stream(tdpath);
+    o6Stream<<tdpath<<"/resolving3d.txt";
+    std::string o6Name = o6Stream.str();
+    ofstream file6(o6Name.c_str());
+
+    std::ostringstream o7Stream(tdpath);
+    o7Stream<<tdpath<<"/dispersion3d.txt";
+    std::string o7Name = o7Stream.str();
+    ofstream file7(o7Name.c_str());
+
+    std::ostringstream o8Stream(tdpath);
+    o8Stream<<tdpath<<"/atmosphere3d.txt";
+    std::string o8Name = o8Stream.str();
+    ofstream file8(o8Name.c_str());
+
+    std::ostringstream o9Stream(tdpath);
+    o9Stream<<tdpath<<"/overall3d.txt";
+    std::string o9Name = o9Stream.str();
+    ofstream file9(o9Name.c_str());
+
+    std::ostringstream o10Stream(tdpath);
+    o10Stream<<tdpath<<"/signal3d.txt";
+    std::string o10Name = o10Stream.str();
+    ofstream file10(o10Name.c_str());
+
+    std::ostringstream o11Stream(tdpath);
+    o11Stream<<tdpath<<"/telescope3d.txt";
+    std::string o11Name = o11Stream.str();
+    ofstream file11(o11Name.c_str());
+
+    std::ostringstream o12Stream(tdpath);
+    o12Stream<<tdpath<<"/grating3d.txt";
+    std::string o12Name = o12Stream.str();
+    ofstream file12(o12Name.c_str());
+
+    std::ostringstream o13Stream(tdpath);
+    o13Stream<<tdpath<<"/surfaces3d.txt";
+    std::string o13Name = o13Stream.str();
+    ofstream file14(o13Name.c_str());
+
+    std::ostringstream o14Stream(tdpath);
+    o14Stream<<tdpath<<"/layout3d.txt";
+    std::string o14Name = o14Stream.str();
+    ofstream file15(o14Name.c_str());
+
     if(ui->comboBox->currentIndex()==0){
-        spectrum3d="planck3d.txt";
+        std::ostringstream o15Stream(tdpath);
+        o15Stream<<tdpath<<"/planck3d.txt";
+        spectrum3d = o15Stream.str();
     }
     if(ui->comboBox->currentIndex()==1){
-        spectrum3d="balmer3d.txt";
+        std::ostringstream o15Stream(tdpath);
+        o15Stream<<tdpath<<"/balmer3d.txt";
+        spectrum3d = o15Stream.str();
     }
     if(ui->comboBox->currentIndex()==2){
-        spectrum3d="neon3d.txt";
+        std::ostringstream o15Stream(tdpath);
+        o15Stream<<tdpath<<"/neon3d.txt";
+        spectrum3d = o15Stream.str();
     }
     ofstream file13(spectrum3d.c_str());
 
@@ -661,70 +766,93 @@ void threed::on_pushButton_3_clicked()
     b3d = a3d-t3d;
 
     at3d = sin(M_PI/180*(a3d-theta3d));
-    double  bm3d, Ineon;
+    double  bm3d;
     int number_of_lines=0;
     QVector<double> a(1), b(1), Ineons(lx3d/Bx3d);
 
     if(ui->comboBox->currentIndex()==2){
-    ifstream input("neon_line.txt");
 
-    number_of_lines =0;
+        QFile checkfile6(qtdpath+"/neon_line.txt");
 
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
+        if(!checkfile6.exists()){
+            QMessageBox::information(this, "Error", "Neon line list "+checkfile6.fileName()+" not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+           return;
+        }
+        std::ostringstream dat2NameStream(tdpath);
+        dat2NameStream<<tdpath<<"/neon_line.txt";
+        std::string dat2Name = dat2NameStream.str();
+        ifstream input(dat2Name.c_str());
 
-    input.clear();
-    input.seekg(0, ios::beg);
+        number_of_lines =0;
 
-    a.resize(number_of_lines);
-    b.resize(number_of_lines);
-    emi3d.resize(number_of_lines);
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
 
-    for (int i=0; i<number_of_lines; i++){
-    input >> one >>two;
-    istringstream ist(one);
-    ist >> a[i];
-    istringstream ist2(two);
-    ist2 >> b[i];
-    }
-    input.close();
+        input.clear();
+        input.seekg(0, ios::beg);
+
+        a.resize(number_of_lines);
+        b.resize(number_of_lines);
+        emi3d.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> a[i];
+            istringstream ist2(two);
+            ist2 >> b[i];
+        }
+        input.close();
     }
 
     if(ui->comboBox->currentIndex()==1){
-    ifstream input("absor_line.txt");
 
-    number_of_lines =0;
+        QFile checkfile7(qtdpath+"/absor_line.txt");
 
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
+        if(!checkfile7.exists()){
+            QMessageBox::information(this, "Error", "Balmer line list "+checkfile7.fileName()+" not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+           return;
+        }
+        std::ostringstream dat2NameStream(tdpath);
+        dat2NameStream<<tdpath<<"/absor_line.txt";
+        std::string dat2Name = dat2NameStream.str();
+        ifstream input(dat2Name.c_str());
 
-    input.clear();
-    input.seekg(0, ios::beg);
+        number_of_lines =0;
 
-    a.resize(number_of_lines);
-    b.resize(number_of_lines);
-    emi3d.resize(number_of_lines);
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
 
-    for (int i=0; i<number_of_lines; i++){
-    input >> one >>two;
-    istringstream ist(one);
-    ist >> a[i];
-    istringstream ist2(two);
-    ist2 >> b[i];
-    }
-    input.close();
+        input.clear();
+        input.seekg(0, ios::beg);
+
+        a.resize(number_of_lines);
+        b.resize(number_of_lines);
+        emi3d.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> a[i];
+            istringstream ist2(two);
+            ist2 >> b[i];
+        }
+        input.close();
     }
 
     double eta_s, eta_p, y13d=0, y23d=0;
     double alpha_2b=asin(n3d*tune3d/1000000/index3d/2*g3d)*180/M_PI;
     double sepa=ly3d/(slits3d+1);
-    double FWHM;
+    double FWHM=0;
 
     if(ui->checkBox_3->isChecked()){
-    FWHM=s3d/p3d*f23d/f13d;
+        FWHM=s3d/p3d*f23d/f13d;
     }
-    if(ui->checkBox_4->isChecked()){
-    FWHM=sl3d/p3d*f23d/f13d;
+
+    else if(ui->checkBox_4->isChecked()){
+        FWHM=sl3d/p3d*f23d/f13d;
     }
 
         for(int i=0; i<lx3d/Bx3d; i++){
@@ -949,6 +1077,9 @@ void threed::on_pushButton_3_clicked()
 void threed::on_pushButton_4_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
+    qtdpath = ui->lineEdit_3->text();
+    tdpath = qtdpath.toUtf8().constBegin();
+
     ui->customPlot->clearGraphs();
 
     threed::vecresize();
@@ -969,42 +1100,76 @@ void threed::on_pushButton_4_clicked()
     b3d = a3d-t3d;
 
     bm3d = atan((lx3d/2)*p3d/f23d)*180/M_PI;
-    double loww3d = (sin(M_PI/180*a3d)+sin(M_PI/180*(b3d-bm3d)))/(n3d*g3d)*1000000;
-    double upperw3d = (sin(M_PI/180*a3d)+sin(M_PI/180*(b3d+bm3d)))/(n3d*g3d)*1000000;
+    //double loww3d = (sin(M_PI/180*a3d)+sin(M_PI/180*(b3d-bm3d)))/(n3d*g3d)*1000000;
+    //double upperw3d = (sin(M_PI/180*a3d)+sin(M_PI/180*(b3d+bm3d)))/(n3d*g3d)*1000000;
 
-    ofstream file1("planck3d.txt");
-    ofstream file2("balmer3d.txt");
-    ofstream file3("neon3d.txt");
+    std::ostringstream o1Stream(tdpath);
+    o1Stream<<tdpath<<"/planck3d.txt";
+    std::string o1Name = o1Stream.str();
+    ofstream file1(o1Name.c_str());
+
+    std::ostringstream o2Stream(tdpath);
+    o2Stream<<tdpath<<"/balmer3d.txt";
+    std::string o2Name = o2Stream.str();
+    ofstream file2(o2Name.c_str());
+
+
+    std::ostringstream o3Stream(tdpath);
+    o3Stream<<tdpath<<"/neon3d.txt";
+    std::string o3Name = o3Stream.str();
+    ofstream file3(o3Name.c_str());
 
     QVector<double> a(1), b(1);
     int number_of_lines;
 
     if(ui->comboBox->currentIndex()==2){
-    ifstream input("neon_line.txt");
 
-    number_of_lines =0;
+        QFile checkfile(qtdpath+"/neon_line.txt");
 
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
+        if(!checkfile.exists()){
+            QMessageBox::information(this, "Error", "Neon line list "+checkfile.fileName()+" not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+           return;
+        }
+        std::ostringstream datNameStream(tdpath);
+        datNameStream<<tdpath<<"/neon_line.txt";
+        std::string datName = datNameStream.str();
+        ifstream input(datName.c_str());
 
-    input.clear();
-    input.seekg(0, ios::beg);
+        number_of_lines =0;
 
-    a.resize(number_of_lines);
-    b.resize(number_of_lines);
-    emi3d.resize(number_of_lines);
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
 
-    for (int i=0; i<number_of_lines; i++){
-    input >> one >>two;
-    istringstream ist(one);
-    ist >> a[i];
-    istringstream ist2(two);
-    ist2 >> b[i];
-    }
-    input.close();
+        input.clear();
+        input.seekg(0, ios::beg);
+
+        a.resize(number_of_lines);
+        b.resize(number_of_lines);
+        emi3d.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> a[i];
+            istringstream ist2(two);
+            ist2 >> b[i];
+        }
+        input.close();
     }
     if(ui->comboBox->currentIndex()==1){
-        ifstream input("absor_line.txt");
+
+        QFile checkfile1(qtdpath+"/absor_line.txt");
+
+        if(!checkfile1.exists()){
+            QMessageBox::information(this, "Error", "Balmer line list "+checkfile1.fileName()+" not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+           return;
+        }
+        std::ostringstream dat2NameStream(tdpath);
+        dat2NameStream<<tdpath<<"/absor_line.txt";
+        std::string dat2Name = dat2NameStream.str();
+        ifstream input(dat2Name.c_str());
 
         number_of_lines =0;
 
@@ -1019,11 +1184,11 @@ void threed::on_pushButton_4_clicked()
         emi3d.resize(number_of_lines);
 
         for (int i=0; i<number_of_lines; i++){
-        input >> one >>two;
-        istringstream ist(one);
-        ist >> a[i];
-        istringstream ist2(two);
-        ist2 >> b[i];
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> a[i];
+            istringstream ist2(two);
+            ist2 >> b[i];
         }
         input.close();
     }

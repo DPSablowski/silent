@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -133,7 +133,11 @@ public:
     QHBoxLayout *horizontalLayout_67;
     QLabel *label_35;
     QDoubleSpinBox *doubleSpinBox_36;
+    QFrame *line_8;
     QSpacerItem *verticalSpacer_3;
+    QHBoxLayout *horizontalLayout_69;
+    QLabel *label_41;
+    QLineEdit *lineEdit_2;
     QHBoxLayout *horizontalLayout_13;
     QPushButton *pushButton;
     QFrame *line_3;
@@ -197,6 +201,7 @@ public:
     QLabel *label_15;
     QCheckBox *checkBox_8;
     QCheckBox *checkBox_9;
+    QCheckBox *checkBox;
     QHBoxLayout *horizontalLayout_8;
     QDoubleSpinBox *doubleSpinBox_14;
     QLabel *label_40;
@@ -322,7 +327,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1612, 876);
+        MainWindow->resize(1612, 1037);
         QPalette palette;
         QBrush brush(QColor(102, 21, 21, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -472,7 +477,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1689, 774));
+        scrollAreaWidgetContents->setGeometry(QRect(-342, 0, 1911, 933));
         horizontalLayout_61 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_61->setSpacing(6);
         horizontalLayout_61->setContentsMargins(11, 11, 11, 11);
@@ -968,9 +973,37 @@ public:
 
         verticalLayout_5->addLayout(horizontalLayout_67);
 
+        line_8 = new QFrame(scrollAreaWidgetContents);
+        line_8->setObjectName(QStringLiteral("line_8"));
+        line_8->setFrameShape(QFrame::HLine);
+        line_8->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_5->addWidget(line_8);
+
         verticalSpacer_3 = new QSpacerItem(20, 38, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_5->addItem(verticalSpacer_3);
+
+        horizontalLayout_69 = new QHBoxLayout();
+        horizontalLayout_69->setSpacing(6);
+        horizontalLayout_69->setObjectName(QStringLiteral("horizontalLayout_69"));
+        label_41 = new QLabel(scrollAreaWidgetContents);
+        label_41->setObjectName(QStringLiteral("label_41"));
+
+        horizontalLayout_69->addWidget(label_41);
+
+        lineEdit_2 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy6);
+
+        horizontalLayout_69->addWidget(lineEdit_2);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_69);
 
         horizontalLayout_13 = new QHBoxLayout();
         horizontalLayout_13->setSpacing(6);
@@ -1161,11 +1194,11 @@ public:
         if (tableWidget->columnCount() < 2)
             tableWidget->setColumnCount(2);
         tableWidget->setObjectName(QStringLiteral("tableWidget"));
-        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(tableWidget->sizePolicy().hasHeightForWidth());
-        tableWidget->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy7(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(tableWidget->sizePolicy().hasHeightForWidth());
+        tableWidget->setSizePolicy(sizePolicy7);
         tableWidget->setMinimumSize(QSize(0, 100));
         tableWidget->setColumnCount(2);
         tableWidget->horizontalHeader()->setDefaultSectionSize(100);
@@ -1332,11 +1365,8 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         label_4 = new QLabel(scrollAreaWidgetContents);
         label_4->setObjectName(QStringLiteral("label_4"));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
-        label_4->setSizePolicy(sizePolicy7);
+        sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
+        label_4->setSizePolicy(sizePolicy);
 
         verticalLayout->addWidget(label_4);
 
@@ -1374,7 +1404,7 @@ public:
         doubleSpinBox_35->setObjectName(QStringLiteral("doubleSpinBox_35"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_35->sizePolicy().hasHeightForWidth());
         doubleSpinBox_35->setSizePolicy(sizePolicy3);
-        doubleSpinBox_35->setMaximum(1e+06);
+        doubleSpinBox_35->setMaximum(1e+6);
 
         horizontalLayout_22->addWidget(doubleSpinBox_35);
 
@@ -1395,7 +1425,7 @@ public:
         doubleSpinBox_34->setObjectName(QStringLiteral("doubleSpinBox_34"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_34->sizePolicy().hasHeightForWidth());
         doubleSpinBox_34->setSizePolicy(sizePolicy3);
-        doubleSpinBox_34->setMaximum(1e+06);
+        doubleSpinBox_34->setMaximum(1e+6);
 
         horizontalLayout_21->addWidget(doubleSpinBox_34);
 
@@ -1414,11 +1444,8 @@ public:
         horizontalLayout_34->setObjectName(QStringLiteral("horizontalLayout_34"));
         label_15 = new QLabel(scrollAreaWidgetContents);
         label_15->setObjectName(QStringLiteral("label_15"));
-        QSizePolicy sizePolicy8(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
-        label_15->setSizePolicy(sizePolicy8);
+        sizePolicy6.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy6);
 
         horizontalLayout_34->addWidget(label_15);
 
@@ -1435,6 +1462,13 @@ public:
         checkBox_9->setSizePolicy(sizePolicy2);
 
         horizontalLayout_34->addWidget(checkBox_9);
+
+        checkBox = new QCheckBox(scrollAreaWidgetContents);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        sizePolicy6.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
+        checkBox->setSizePolicy(sizePolicy6);
+
+        horizontalLayout_34->addWidget(checkBox);
 
 
         verticalLayout->addLayout(horizontalLayout_34);
@@ -1453,11 +1487,11 @@ public:
 
         label_40 = new QLabel(scrollAreaWidgetContents);
         label_40->setObjectName(QStringLiteral("label_40"));
-        QSizePolicy sizePolicy9(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy9.setHorizontalStretch(0);
-        sizePolicy9.setVerticalStretch(0);
-        sizePolicy9.setHeightForWidth(label_40->sizePolicy().hasHeightForWidth());
-        label_40->setSizePolicy(sizePolicy9);
+        QSizePolicy sizePolicy8(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(label_40->sizePolicy().hasHeightForWidth());
+        label_40->setSizePolicy(sizePolicy8);
 
         horizontalLayout_8->addWidget(label_40);
 
@@ -1747,8 +1781,8 @@ public:
 
         progressBar = new QProgressBar(scrollAreaWidgetContents);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        sizePolicy8.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
-        progressBar->setSizePolicy(sizePolicy8);
+        sizePolicy6.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy6);
         progressBar->setValue(24);
 
         verticalLayout->addWidget(progressBar);
@@ -2059,11 +2093,8 @@ public:
 
         customPlot = new QCustomPlot(scrollAreaWidgetContents);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        QSizePolicy sizePolicy10(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy10.setHorizontalStretch(0);
-        sizePolicy10.setVerticalStretch(0);
-        sizePolicy10.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
-        customPlot->setSizePolicy(sizePolicy10);
+        sizePolicy7.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
+        customPlot->setSizePolicy(sizePolicy7);
         customPlot->setMinimumSize(QSize(293, 150));
 
         verticalLayout_4->addWidget(customPlot);
@@ -2103,8 +2134,11 @@ public:
 
         customPlot_3 = new QCustomPlot(scrollAreaWidgetContents);
         customPlot_3->setObjectName(QStringLiteral("customPlot_3"));
-        sizePolicy10.setHeightForWidth(customPlot_3->sizePolicy().hasHeightForWidth());
-        customPlot_3->setSizePolicy(sizePolicy10);
+        QSizePolicy sizePolicy9(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(customPlot_3->sizePolicy().hasHeightForWidth());
+        customPlot_3->setSizePolicy(sizePolicy9);
         customPlot_3->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_3);
@@ -2126,8 +2160,8 @@ public:
 
         customPlot_4 = new QCustomPlot(scrollAreaWidgetContents);
         customPlot_4->setObjectName(QStringLiteral("customPlot_4"));
-        sizePolicy10.setHeightForWidth(customPlot_4->sizePolicy().hasHeightForWidth());
-        customPlot_4->setSizePolicy(sizePolicy10);
+        sizePolicy9.setHeightForWidth(customPlot_4->sizePolicy().hasHeightForWidth());
+        customPlot_4->setSizePolicy(sizePolicy9);
         customPlot_4->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_4);
@@ -2149,8 +2183,8 @@ public:
 
         customPlot_5 = new QCustomPlot(scrollAreaWidgetContents);
         customPlot_5->setObjectName(QStringLiteral("customPlot_5"));
-        sizePolicy10.setHeightForWidth(customPlot_5->sizePolicy().hasHeightForWidth());
-        customPlot_5->setSizePolicy(sizePolicy10);
+        sizePolicy9.setHeightForWidth(customPlot_5->sizePolicy().hasHeightForWidth());
+        customPlot_5->setSizePolicy(sizePolicy9);
         customPlot_5->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_5);
@@ -2172,8 +2206,8 @@ public:
 
         customPlot_2 = new QCustomPlot(scrollAreaWidgetContents);
         customPlot_2->setObjectName(QStringLiteral("customPlot_2"));
-        sizePolicy10.setHeightForWidth(customPlot_2->sizePolicy().hasHeightForWidth());
-        customPlot_2->setSizePolicy(sizePolicy10);
+        sizePolicy9.setHeightForWidth(customPlot_2->sizePolicy().hasHeightForWidth());
+        customPlot_2->setSizePolicy(sizePolicy9);
         customPlot_2->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_2);
@@ -2188,7 +2222,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1612, 24));
+        menuBar->setGeometry(QRect(0, 0, 1612, 25));
         menuClassical = new QMenu(menuBar);
         menuClassical->setObjectName(QStringLiteral("menuClassical"));
         menuTools = new QMenu(menuBar);
@@ -2259,122 +2293,124 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        actionParameters->setText(QApplication::translate("MainWindow", "Echelle", 0));
-        actionClassical->setText(QApplication::translate("MainWindow", "Classical", 0));
-        action3D_Spectrograph->setText(QApplication::translate("MainWindow", "3D", 0));
-        actionClassical_2->setText(QApplication::translate("MainWindow", "Classical", 0));
-        action3D->setText(QApplication::translate("MainWindow", "3D", 0));
-        action3D_Frame->setText(QApplication::translate("MainWindow", "3D Frame", 0));
-        actionEchelle_Frame->setText(QApplication::translate("MainWindow", "Echelle Frame", 0));
-        actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
-        actionBug_Report->setText(QApplication::translate("MainWindow", "Bug Report", 0));
-        actionManual->setText(QApplication::translate("MainWindow", "Manual", 0));
-        actionBasics->setText(QApplication::translate("MainWindow", "Basics Astro. Spectrographs", 0));
-        actionVPHG->setText(QApplication::translate("MainWindow", "VPHG", 0));
-        actionOptical_Fibres->setText(QApplication::translate("MainWindow", "Optical Fibres", 0));
-        actionClassical_Frame->setText(QApplication::translate("MainWindow", "Classical Frame", 0));
-        actionTSI->setText(QApplication::translate("MainWindow", "TSI", 0));
-        actionNotes->setText(QApplication::translate("MainWindow", "Notes", 0));
-        actionNew->setText(QApplication::translate("MainWindow", "New", 0));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
-        actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
-        actionSave_AS->setText(QApplication::translate("MainWindow", "Save AS", 0));
-        actionUndo->setText(QApplication::translate("MainWindow", "Undo", 0));
-        actionRedo->setText(QApplication::translate("MainWindow", "Redo", 0));
-        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-style:italic; text-decoration: underline;\">Optical &amp; Geometrical Parameters</span></p></body></html>", 0));
-        label_10->setText(QApplication::translate("MainWindow", "Echelle Line Density [l/mm]:", 0));
-        label_58->setText(QApplication::translate("MainWindow", "Peak Efficiency:", 0));
-        label_16->setText(QApplication::translate("MainWindow", "Blaze Angle [deg]:", 0));
-        label_13->setText(QApplication::translate("MainWindow", "Total Angle [deg]:", 0));
-        label_33->setText(QApplication::translate("MainWindow", "Wavelength [nm]:", 0));
-        label_34->setText(QApplication::translate("MainWindow", "to", 0));
-        label_11->setText(QApplication::translate("MainWindow", "Focal Length Collimator [mm]:", 0));
-        label_12->setText(QApplication::translate("MainWindow", "Focal Length Camera [mm]:", 0));
-        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length: [mm]", 0));
-        label_2->setText(QApplication::translate("MainWindow", "X-Disperser:", 0));
-        label_27->setText(QApplication::translate("MainWindow", "XD Line Density [l/mm]:", 0));
-        label_28->setText(QApplication::translate("MainWindow", "Total Angle at XD [deg]:", 0));
-        label_59->setText(QApplication::translate("MainWindow", "Blaze Angle [deg]:", 0));
-        label_60->setText(QApplication::translate("MainWindow", "Peak Efficiency:", 0));
-        label_67->setText(QApplication::translate("MainWindow", "Index of DCG Layer:", 0));
-        label_69->setText(QApplication::translate("MainWindow", "Thickness of DCG Layer [mm]:", 0));
-        label_68->setText(QApplication::translate("MainWindow", "Semiamplitude of Modulation:", 0));
-        label_70->setText(QApplication::translate("MainWindow", "Tune Wavelength [nm]:", 0));
-        label_14->setText(QApplication::translate("MainWindow", "Material XD:", 0));
-        label_35->setText(QApplication::translate("MainWindow", "Grism Angle:", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "Close", 0));
-        label_3->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Efficiency Data</span></p></body></html>", 0));
-        label_5->setText(QApplication::translate("MainWindow", "# Silver Surfaces:", 0));
-        label_6->setText(QApplication::translate("MainWindow", "# Aluminium Surfaces:", 0));
-        label_65->setText(QApplication::translate("MainWindow", "# Aluminium UV Surfaces:", 0));
-        label_66->setText(QApplication::translate("MainWindow", "# Gold Surfaces:", 0));
-        label_8->setText(QApplication::translate("MainWindow", "# VIS AR Coated Surfaces:", 0));
-        checkBox_11->setText(QApplication::translate("MainWindow", "Transmission File: ", 0));
-        label_7->setText(QApplication::translate("MainWindow", "Uncoated Glass Surfaces:", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "Efficiency [%]:", 0));
-        label_29->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", 0));
-        label_30->setText(QApplication::translate("MainWindow", "Effective Temperature [K]:", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        actionParameters->setText(QApplication::translate("MainWindow", "Echelle", Q_NULLPTR));
+        actionClassical->setText(QApplication::translate("MainWindow", "Classical", Q_NULLPTR));
+        action3D_Spectrograph->setText(QApplication::translate("MainWindow", "3D", Q_NULLPTR));
+        actionClassical_2->setText(QApplication::translate("MainWindow", "Classical", Q_NULLPTR));
+        action3D->setText(QApplication::translate("MainWindow", "3D", Q_NULLPTR));
+        action3D_Frame->setText(QApplication::translate("MainWindow", "3D Frame", Q_NULLPTR));
+        actionEchelle_Frame->setText(QApplication::translate("MainWindow", "Echelle Frame", Q_NULLPTR));
+        actionAbout->setText(QApplication::translate("MainWindow", "About", Q_NULLPTR));
+        actionBug_Report->setText(QApplication::translate("MainWindow", "Bug Report", Q_NULLPTR));
+        actionManual->setText(QApplication::translate("MainWindow", "Manual", Q_NULLPTR));
+        actionBasics->setText(QApplication::translate("MainWindow", "Basics Astro. Spectrographs", Q_NULLPTR));
+        actionVPHG->setText(QApplication::translate("MainWindow", "VPHG", Q_NULLPTR));
+        actionOptical_Fibres->setText(QApplication::translate("MainWindow", "Optical Fibres", Q_NULLPTR));
+        actionClassical_Frame->setText(QApplication::translate("MainWindow", "Classical Frame", Q_NULLPTR));
+        actionTSI->setText(QApplication::translate("MainWindow", "TSI", Q_NULLPTR));
+        actionNotes->setText(QApplication::translate("MainWindow", "Notes", Q_NULLPTR));
+        actionNew->setText(QApplication::translate("MainWindow", "New", Q_NULLPTR));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
+        actionSave->setText(QApplication::translate("MainWindow", "Save", Q_NULLPTR));
+        actionSave_AS->setText(QApplication::translate("MainWindow", "Save AS", Q_NULLPTR));
+        actionUndo->setText(QApplication::translate("MainWindow", "Undo", Q_NULLPTR));
+        actionRedo->setText(QApplication::translate("MainWindow", "Redo", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-style:italic; text-decoration: underline;\">Optical &amp; Geometrical Parameters</span></p></body></html>", Q_NULLPTR));
+        label_10->setText(QApplication::translate("MainWindow", "Echelle Line Density [l/mm]:", Q_NULLPTR));
+        label_58->setText(QApplication::translate("MainWindow", "Peak Efficiency:", Q_NULLPTR));
+        label_16->setText(QApplication::translate("MainWindow", "Blaze Angle [deg]:", Q_NULLPTR));
+        label_13->setText(QApplication::translate("MainWindow", "Total Angle [deg]:", Q_NULLPTR));
+        label_33->setText(QApplication::translate("MainWindow", "Wavelength [nm]:", Q_NULLPTR));
+        label_34->setText(QApplication::translate("MainWindow", "to", Q_NULLPTR));
+        label_11->setText(QApplication::translate("MainWindow", "Focal Length Collimator [mm]:", Q_NULLPTR));
+        label_12->setText(QApplication::translate("MainWindow", "Focal Length Camera [mm]:", Q_NULLPTR));
+        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length: [mm]", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "X-Disperser:", Q_NULLPTR));
+        label_27->setText(QApplication::translate("MainWindow", "XD Line Density [l/mm]:", Q_NULLPTR));
+        label_28->setText(QApplication::translate("MainWindow", "Total Angle at XD [deg]:", Q_NULLPTR));
+        label_59->setText(QApplication::translate("MainWindow", "Blaze Angle [deg]:", Q_NULLPTR));
+        label_60->setText(QApplication::translate("MainWindow", "Peak Efficiency:", Q_NULLPTR));
+        label_67->setText(QApplication::translate("MainWindow", "Index of DCG Layer:", Q_NULLPTR));
+        label_69->setText(QApplication::translate("MainWindow", "Thickness of DCG Layer [mm]:", Q_NULLPTR));
+        label_68->setText(QApplication::translate("MainWindow", "Semiamplitude of Modulation:", Q_NULLPTR));
+        label_70->setText(QApplication::translate("MainWindow", "Tune Wavelength [nm]:", Q_NULLPTR));
+        label_14->setText(QApplication::translate("MainWindow", "Material XD:", Q_NULLPTR));
+        label_35->setText(QApplication::translate("MainWindow", "Grism Angle:", Q_NULLPTR));
+        label_41->setText(QApplication::translate("MainWindow", "Work Path:", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Close", Q_NULLPTR));
+        label_3->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Efficiency Data</span></p></body></html>", Q_NULLPTR));
+        label_5->setText(QApplication::translate("MainWindow", "# Silver Surfaces:", Q_NULLPTR));
+        label_6->setText(QApplication::translate("MainWindow", "# Aluminium Surfaces:", Q_NULLPTR));
+        label_65->setText(QApplication::translate("MainWindow", "# Aluminium UV Surfaces:", Q_NULLPTR));
+        label_66->setText(QApplication::translate("MainWindow", "# Gold Surfaces:", Q_NULLPTR));
+        label_8->setText(QApplication::translate("MainWindow", "# VIS AR Coated Surfaces:", Q_NULLPTR));
+        checkBox_11->setText(QApplication::translate("MainWindow", "Transmission File: ", Q_NULLPTR));
+        label_7->setText(QApplication::translate("MainWindow", "Uncoated Glass Surfaces:", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Efficiency [%]:", Q_NULLPTR));
+        label_29->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", Q_NULLPTR));
+        label_30->setText(QApplication::translate("MainWindow", "Effective Temperature [K]:", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         doubleSpinBox_9->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_WHATSTHIS
         doubleSpinBox_9->setWhatsThis(QString());
 #endif // QT_NO_WHATSTHIS
-        label_38->setText(QApplication::translate("MainWindow", "BC [mag]:", 0));
-        label_31->setText(QApplication::translate("MainWindow", "Visual Magnitude [mag]:", 0));
-        label_32->setText(QApplication::translate("MainWindow", "Zenit Distance [deg]:", 0));
-        label_61->setText(QApplication::translate("MainWindow", "Exposure Time [s]:", 0));
-        label_4->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Telescope, Slit &amp; CCD Data</span></p></body></html>", 0));
-        label_17->setText(QApplication::translate("MainWindow", "Seeing [arcsec]:", 0));
-        label_21->setText(QApplication::translate("MainWindow", "Focal Length [mm]:", 0));
-        label_22->setText(QApplication::translate("MainWindow", "Diameter [mm]:", 0));
-        label_15->setText(QApplication::translate("MainWindow", "Slit:", 0));
-        checkBox_8->setText(QApplication::translate("MainWindow", "circular", 0));
-        checkBox_9->setText(QApplication::translate("MainWindow", "rectangular", 0));
-        label_40->setText(QApplication::translate("MainWindow", "mm x", 0));
-        label_39->setText(QApplication::translate("MainWindow", "mm", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "Efficiency [%]:", 0));
-        label_56->setText(QApplication::translate("MainWindow", "Width on Sky [arcsec]:", 0));
-        label_18->setText(QApplication::translate("MainWindow", "Pixel Size [mm]:", 0));
-        label_19->setText(QApplication::translate("MainWindow", "Pixel in x:", 0));
-        label_20->setText(QApplication::translate("MainWindow", "Pixel in y:", 0));
-        label_23->setText(QApplication::translate("MainWindow", "Binning x:", 0));
-        label_24->setText(QApplication::translate("MainWindow", "Binning y:", 0));
-        label_25->setText(QApplication::translate("MainWindow", "<html><head/><body><p>CCD Bias [ADU]:</p></body></html>", 0));
-        label_26->setText(QApplication::translate("MainWindow", "<html><head/><body><p>CCD Noise [ADU]:</p></body></html>", 0));
-        label_36->setText(QApplication::translate("MainWindow", "CCD Peak Wavelength [nm]:", 0));
-        label_37->setText(QApplication::translate("MainWindow", "CCD Peak Efficiency:", 0));
-        label_57->setText(QApplication::translate("MainWindow", "CCD  Gain [e/ADU]:", 0));
-        label_44->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">System Output Overview</span></p></body></html>", 0));
-        label_45->setText(QApplication::translate("MainWindow", "Central Wavelength [nm]:", 0));
-        label_46->setText(QApplication::translate("MainWindow", "Angle of Incidence @ CD:", 0));
-        label_47->setText(QApplication::translate("MainWindow", "Angle of Diffraction @ CD:", 0));
-        label_48->setText(QApplication::translate("MainWindow", "Lower Central Wavelength [nm]:", 0));
-        label_49->setText(QApplication::translate("MainWindow", "Upper Central Wavelength [nm]:", 0));
-        label_50->setText(QApplication::translate("MainWindow", "Lower Wavelength [nm]:", 0));
-        label_51->setText(QApplication::translate("MainWindow", "Upper Wavelength [nm]:", 0));
-        label_52->setText(QApplication::translate("MainWindow", "Lower Diffraction Order:", 0));
-        label_53->setText(QApplication::translate("MainWindow", "Upper Diffraction Order:", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "Overview", 0));
-        pushButton_5->setText(QApplication::translate("MainWindow", "Parameters", 0));
-        pushButton_6->setText(QApplication::translate("MainWindow", "\303\211chellogram", 0));
-        label_54->setText(QApplication::translate("MainWindow", "Upper Diffraction Order on CCD:", 0));
-        label_55->setText(QApplication::translate("MainWindow", "Upper Wavelength on CCD:", 0));
-        label_62->setText(QApplication::translate("MainWindow", "y of Upper Diffraction Order:", 0));
-        pushButton_7->setText(QApplication::translate("MainWindow", "Frame", 0));
-        label_42->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">Outputs</span></p></body></html>", 0));
-        label_43->setText(QApplication::translate("MainWindow", "Averaged Efficiency", 0));
-        label_63->setText(QApplication::translate("MainWindow", "Signal", 0));
-        label_64->setText(QApplication::translate("MainWindow", "SNR", 0));
-        label_9->setText(QApplication::translate("MainWindow", "Order Separation", 0));
-        menuClassical->setTitle(QApplication::translate("MainWindow", "Spec", 0));
-        menuTools->setTitle(QApplication::translate("MainWindow", "Parameters", 0));
-        menuFrame->setTitle(QApplication::translate("MainWindow", "Frame", 0));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
-        menuTools_2->setTitle(QApplication::translate("MainWindow", "Tools", 0));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
+        label_38->setText(QApplication::translate("MainWindow", "BC [mag]:", Q_NULLPTR));
+        label_31->setText(QApplication::translate("MainWindow", "Visual Magnitude [mag]:", Q_NULLPTR));
+        label_32->setText(QApplication::translate("MainWindow", "Zenit Distance [deg]:", Q_NULLPTR));
+        label_61->setText(QApplication::translate("MainWindow", "Exposure Time [s]:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Telescope, Slit &amp; CCD Data</span></p></body></html>", Q_NULLPTR));
+        label_17->setText(QApplication::translate("MainWindow", "Seeing [arcsec]:", Q_NULLPTR));
+        label_21->setText(QApplication::translate("MainWindow", "Focal Length [mm]:", Q_NULLPTR));
+        label_22->setText(QApplication::translate("MainWindow", "Diameter [mm]:", Q_NULLPTR));
+        label_15->setText(QApplication::translate("MainWindow", "Slit:", Q_NULLPTR));
+        checkBox_8->setText(QApplication::translate("MainWindow", "circular", Q_NULLPTR));
+        checkBox_9->setText(QApplication::translate("MainWindow", "rectangular", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("MainWindow", "slitless", Q_NULLPTR));
+        label_40->setText(QApplication::translate("MainWindow", "mm x", Q_NULLPTR));
+        label_39->setText(QApplication::translate("MainWindow", "mm", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Efficiency [%]:", Q_NULLPTR));
+        label_56->setText(QApplication::translate("MainWindow", "Width on Sky [arcsec]:", Q_NULLPTR));
+        label_18->setText(QApplication::translate("MainWindow", "Pixel Size [mm]:", Q_NULLPTR));
+        label_19->setText(QApplication::translate("MainWindow", "Pixel in x:", Q_NULLPTR));
+        label_20->setText(QApplication::translate("MainWindow", "Pixel in y:", Q_NULLPTR));
+        label_23->setText(QApplication::translate("MainWindow", "Binning x:", Q_NULLPTR));
+        label_24->setText(QApplication::translate("MainWindow", "Binning y:", Q_NULLPTR));
+        label_25->setText(QApplication::translate("MainWindow", "<html><head/><body><p>CCD Bias [ADU]:</p></body></html>", Q_NULLPTR));
+        label_26->setText(QApplication::translate("MainWindow", "<html><head/><body><p>CCD Noise [ADU]:</p></body></html>", Q_NULLPTR));
+        label_36->setText(QApplication::translate("MainWindow", "CCD Peak Wavelength [nm]:", Q_NULLPTR));
+        label_37->setText(QApplication::translate("MainWindow", "CCD Peak Efficiency:", Q_NULLPTR));
+        label_57->setText(QApplication::translate("MainWindow", "CCD  Gain [e/ADU]:", Q_NULLPTR));
+        label_44->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">System Output Overview</span></p></body></html>", Q_NULLPTR));
+        label_45->setText(QApplication::translate("MainWindow", "Central Wavelength [nm]:", Q_NULLPTR));
+        label_46->setText(QApplication::translate("MainWindow", "Angle of Incidence @ CD:", Q_NULLPTR));
+        label_47->setText(QApplication::translate("MainWindow", "Angle of Diffraction @ CD:", Q_NULLPTR));
+        label_48->setText(QApplication::translate("MainWindow", "Lower Central Wavelength [nm]:", Q_NULLPTR));
+        label_49->setText(QApplication::translate("MainWindow", "Upper Central Wavelength [nm]:", Q_NULLPTR));
+        label_50->setText(QApplication::translate("MainWindow", "Lower Wavelength [nm]:", Q_NULLPTR));
+        label_51->setText(QApplication::translate("MainWindow", "Upper Wavelength [nm]:", Q_NULLPTR));
+        label_52->setText(QApplication::translate("MainWindow", "Lower Diffraction Order:", Q_NULLPTR));
+        label_53->setText(QApplication::translate("MainWindow", "Upper Diffraction Order:", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("MainWindow", "Overview", Q_NULLPTR));
+        pushButton_5->setText(QApplication::translate("MainWindow", "Parameters", Q_NULLPTR));
+        pushButton_6->setText(QApplication::translate("MainWindow", "\303\211chellogram", Q_NULLPTR));
+        label_54->setText(QApplication::translate("MainWindow", "Upper Diffraction Order on CCD:", Q_NULLPTR));
+        label_55->setText(QApplication::translate("MainWindow", "Upper Wavelength on CCD:", Q_NULLPTR));
+        label_62->setText(QApplication::translate("MainWindow", "y of Upper Diffraction Order:", Q_NULLPTR));
+        pushButton_7->setText(QApplication::translate("MainWindow", "Frame", Q_NULLPTR));
+        label_42->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">Outputs</span></p></body></html>", Q_NULLPTR));
+        label_43->setText(QApplication::translate("MainWindow", "Averaged Efficiency", Q_NULLPTR));
+        label_63->setText(QApplication::translate("MainWindow", "Signal", Q_NULLPTR));
+        label_64->setText(QApplication::translate("MainWindow", "SNR", Q_NULLPTR));
+        label_9->setText(QApplication::translate("MainWindow", "Order Separation", Q_NULLPTR));
+        menuClassical->setTitle(QApplication::translate("MainWindow", "Spec", Q_NULLPTR));
+        menuTools->setTitle(QApplication::translate("MainWindow", "Parameters", Q_NULLPTR));
+        menuFrame->setTitle(QApplication::translate("MainWindow", "Frame", Q_NULLPTR));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
+        menuTools_2->setTitle(QApplication::translate("MainWindow", "Tools", Q_NULLPTR));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
+        menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", Q_NULLPTR));
     } // retranslateUi
 
 };

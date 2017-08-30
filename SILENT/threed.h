@@ -15,6 +15,9 @@ public:
     explicit threed(QWidget *parent = 0);
     ~threed();
 
+public slots:
+    void seData(QString str);
+
 private slots:
     void on_checkBox_clicked();
 
@@ -73,6 +76,8 @@ private slots:
     void on_checkBox_3_clicked();
 
     void on_checkBox_4_clicked();
+
+    void on_checkBox_5_clicked();
 
     void on_spinBox_6_valueChanged();
 

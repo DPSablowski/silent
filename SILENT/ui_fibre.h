@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fibre.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -270,7 +270,7 @@ public:
         doubleSpinBox_6->setObjectName(QStringLiteral("doubleSpinBox_6"));
         sizePolicy.setHeightForWidth(doubleSpinBox_6->sizePolicy().hasHeightForWidth());
         doubleSpinBox_6->setSizePolicy(sizePolicy);
-        doubleSpinBox_6->setMaximum(1e+06);
+        doubleSpinBox_6->setMaximum(1e+6);
 
         horizontalLayout_6->addWidget(doubleSpinBox_6);
 
@@ -512,33 +512,33 @@ public:
 
     void retranslateUi(QDialog *Fibre)
     {
-        Fibre->setWindowTitle(QApplication::translate("Fibre", "Dialog", 0));
-        label->setText(QApplication::translate("Fibre", "<html><head/><body><p>Core Diameter [mm]:</p></body></html>", 0));
-        label_5->setText(QApplication::translate("Fibre", "<html><head/><body><p>Cladding Diameter [mm]:</p></body></html>", 0));
-        label_3->setText(QApplication::translate("Fibre", "NA:", 0));
-        label_10->setText(QApplication::translate("Fibre", "Doped:", 0));
-        label_4->setText(QApplication::translate("Fibre", "Wavelength for NA:", 0));
-        label_8->setText(QApplication::translate("Fibre", "Environment Index:", 0));
-        label_2->setText(QApplication::translate("Fibre", "<html><head/><body><p>Length [mm]:</p></body></html>", 0));
-        label_6->setText(QApplication::translate("Fibre", "Input F#:", 0));
-        label_7->setText(QApplication::translate("Fibre", "Absorption Data:", 0));
-        label_11->setText(QApplication::translate("Fibre", "<html><head/><body><p>2-Pixel Resolution  [nm]:</p></body></html>", 0));
-        label_12->setText(QApplication::translate("Fibre", "<html><head/><body><p>Spectrum Width [pix]:</p></body></html>", 0));
-        label_9->setText(QApplication::translate("Fibre", "<html><head/><body><p>Min. Bend Radius [mm]:</p></body></html>", 0));
-        checkBox->setText(QApplication::translate("Fibre", "Reflections", 0));
-        checkBox_2->setText(QApplication::translate("Fibre", "OPL", 0));
-        checkBox_3->setText(QApplication::translate("Fibre", "Trans", 0));
-        checkBox_5->setText(QApplication::translate("Fibre", "F#", 0));
-        checkBox_4->setText(QApplication::translate("Fibre", "Index", 0));
-        checkBox_6->setText(QApplication::translate("Fibre", "max. Modes", 0));
-        checkBox_10->setText(QApplication::translate("Fibre", "Modes", 0));
-        checkBox_7->setText(QApplication::translate("Fibre", "M-Noise", 0));
-        label_13->setText(QApplication::translate("Fibre", "Font Size:", 0));
-        pushButton_3->setText(QApplication::translate("Fibre", "Save As:", 0));
-        checkBox_8->setText(QApplication::translate("Fibre", "pdf", 0));
-        checkBox_9->setText(QApplication::translate("Fibre", "png", 0));
-        pushButton->setText(QApplication::translate("Fibre", "Close", 0));
-        pushButton_2->setText(QApplication::translate("Fibre", "Go", 0));
+        Fibre->setWindowTitle(QApplication::translate("Fibre", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("Fibre", "<html><head/><body><p>Core Diameter [mm]:</p></body></html>", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Fibre", "<html><head/><body><p>Cladding Diameter [mm]:</p></body></html>", Q_NULLPTR));
+        label_3->setText(QApplication::translate("Fibre", "NA:", Q_NULLPTR));
+        label_10->setText(QApplication::translate("Fibre", "Doped:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Fibre", "Wavelength for NA:", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Fibre", "Environment Index:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Fibre", "<html><head/><body><p>Length [mm]:</p></body></html>", Q_NULLPTR));
+        label_6->setText(QApplication::translate("Fibre", "Input F#:", Q_NULLPTR));
+        label_7->setText(QApplication::translate("Fibre", "Absorption Data:", Q_NULLPTR));
+        label_11->setText(QApplication::translate("Fibre", "<html><head/><body><p>2-Pixel Resolution  [nm]:</p></body></html>", Q_NULLPTR));
+        label_12->setText(QApplication::translate("Fibre", "<html><head/><body><p>Spectrum Width [pix]:</p></body></html>", Q_NULLPTR));
+        label_9->setText(QApplication::translate("Fibre", "<html><head/><body><p>Min. Bend Radius [mm]:</p></body></html>", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("Fibre", "Reflections", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("Fibre", "OPL", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("Fibre", "Trans", Q_NULLPTR));
+        checkBox_5->setText(QApplication::translate("Fibre", "F#", Q_NULLPTR));
+        checkBox_4->setText(QApplication::translate("Fibre", "Index", Q_NULLPTR));
+        checkBox_6->setText(QApplication::translate("Fibre", "max. Modes", Q_NULLPTR));
+        checkBox_10->setText(QApplication::translate("Fibre", "Modes", Q_NULLPTR));
+        checkBox_7->setText(QApplication::translate("Fibre", "M-Noise", Q_NULLPTR));
+        label_13->setText(QApplication::translate("Fibre", "Font Size:", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("Fibre", "Save As:", Q_NULLPTR));
+        checkBox_8->setText(QApplication::translate("Fibre", "pdf", Q_NULLPTR));
+        checkBox_9->setText(QApplication::translate("Fibre", "png", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("Fibre", "Close", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("Fibre", "Go", Q_NULLPTR));
     } // retranslateUi
 
 };

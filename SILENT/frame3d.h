@@ -15,6 +15,9 @@ public:
     explicit Frame3D(QWidget *parent = 0);
     ~Frame3D();
 
+public slots:
+    void seData(QString str);
+
 private slots:
     void on_pushButton_2_clicked();
 

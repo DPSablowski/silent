@@ -16,11 +16,16 @@ public:
     explicit classical(QWidget *parent = 0);
     ~classical();
 
+public slots:
+    void seData(QString str);
+
 private slots:
 
     void on_checkBox_clicked();
 
     void on_checkBox_2_clicked();
+
+    void on_checkBox_3_clicked();
 
     void on_pushButton_2_clicked();
 

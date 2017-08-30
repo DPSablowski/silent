@@ -30,8 +30,6 @@ PClassical::PClassical(QWidget *parent) :
     ui->customPlot->setInteraction(QCP::iRangeZoom, true);
     ui->customPlot->setInteraction(QCP::iSelectPlottables, true);
 
-    ui->lineEdit_2->setText("/home/daniels/Silent/silent/SILENT");
-
     ui->comboBox->addItem("Resolving Power");
     ui->comboBox->addItem("2-Pixel Resolving Power");
     ui->comboBox->addItem("Dispersion");
@@ -49,11 +47,31 @@ PClassical::PClassical(QWidget *parent) :
     ui->comboBox->addItem("Balmer Spectrum");
 
     ui->customPlot->axisRect()->setupFullAxesBox(true);
+
+    connect(ui->customPlot, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip(QMouseEvent*)));
+
 }
 
 PClassical::~PClassical()
 {
     delete ui;
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void PClassical::showPointToolTip(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+void PClassical::seData(QString str)
+{
+    ui->lineEdit_2->setText(str);
 }
 
 // find values
@@ -70,7 +88,6 @@ void PClassical::on_pushButton_3_clicked()
             std::ostringstream datNameStream(cPPath);
             datNameStream<<cPPath<<"/resolvingcl.txt";
             std::string datName = datNameStream.str();
-            ifstream toplot1(datName.c_str());
 
             QFile checkfile3(datName.c_str());
 
@@ -79,6 +96,8 @@ void PClassical::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 

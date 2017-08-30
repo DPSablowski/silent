@@ -15,6 +15,9 @@ public:
     explicit FrameEchelle(QWidget *parent = 0);
     ~FrameEchelle();
 
+public slots:
+    void seData(QString str);
+
 private slots:
     void on_pushButton_2_clicked();
 

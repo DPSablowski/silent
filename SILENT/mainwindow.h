@@ -45,6 +45,8 @@ private slots:
 
     void on_checkBox_9_clicked();
 
+    void on_checkBox_clicked();
+
     void on_pushButton_3_clicked();
 
     void overview();
@@ -188,6 +190,16 @@ private slots:
     void on_actionSave_AS_triggered();
 
     void on_actionSave_triggered();
+
+    void showPointToolTip(QMouseEvent *event);
+
+    void showPointToolTip_2(QMouseEvent *event);
+
+    void showPointToolTip_3(QMouseEvent *event);
+
+    void showPointToolTip_4(QMouseEvent *event);
+
+    void showPointToolTip_5(QMouseEvent *event);
 
 private:
     Ui::MainWindow *ui;

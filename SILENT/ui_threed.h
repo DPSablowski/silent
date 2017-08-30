@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'threed.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -86,6 +86,10 @@ public:
     QComboBox *comboBox;
     QPushButton *pushButton_3;
     QPushButton *pushButton_4;
+    QFrame *line_6;
+    QHBoxLayout *horizontalLayout_46;
+    QLabel *label_50;
+    QLineEdit *lineEdit_3;
     QSpacerItem *verticalSpacer_2;
     QPushButton *pushButton;
     QFrame *line;
@@ -147,6 +151,7 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QCheckBox *checkBox_3;
     QCheckBox *checkBox_4;
+    QCheckBox *checkBox_5;
     QHBoxLayout *horizontalLayout_27;
     QLabel *label_28;
     QSpinBox *spinBox_6;
@@ -231,7 +236,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1408, 674));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1705, 721));
         horizontalLayout_43 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_43->setObjectName(QStringLiteral("horizontalLayout_43"));
         verticalLayout = new QVBoxLayout();
@@ -501,6 +506,33 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_42);
 
+        line_6 = new QFrame(scrollAreaWidgetContents);
+        line_6->setObjectName(QStringLiteral("line_6"));
+        line_6->setFrameShape(QFrame::HLine);
+        line_6->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_6);
+
+        horizontalLayout_46 = new QHBoxLayout();
+        horizontalLayout_46->setObjectName(QStringLiteral("horizontalLayout_46"));
+        label_50 = new QLabel(scrollAreaWidgetContents);
+        label_50->setObjectName(QStringLiteral("label_50"));
+
+        horizontalLayout_46->addWidget(label_50);
+
+        lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy2);
+
+        horizontalLayout_46->addWidget(lineEdit_3);
+
+
+        verticalLayout->addLayout(horizontalLayout_46);
+
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer_2);
@@ -767,9 +799,6 @@ public:
 
         progressBar = new QProgressBar(scrollAreaWidgetContents);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
         progressBar->setSizePolicy(sizePolicy2);
         progressBar->setValue(24);
@@ -856,6 +885,11 @@ public:
         checkBox_4->setObjectName(QStringLiteral("checkBox_4"));
 
         horizontalLayout_26->addWidget(checkBox_4);
+
+        checkBox_5 = new QCheckBox(scrollAreaWidgetContents);
+        checkBox_5->setObjectName(QStringLiteral("checkBox_5"));
+
+        horizontalLayout_26->addWidget(checkBox_5);
 
 
         verticalLayout_3->addLayout(horizontalLayout_26);
@@ -1204,66 +1238,68 @@ public:
 
     void retranslateUi(QDialog *threed)
     {
-        threed->setWindowTitle(QApplication::translate("threed", "Dialog", 0));
-        label->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical &amp; Geometrical Data</span></p></body></html>", 0));
-        checkBox->setText(QApplication::translate("threed", "Grating", 0));
-        checkBox_2->setText(QApplication::translate("threed", "VPH Grating", 0));
-        label_2->setText(QApplication::translate("threed", "<html><head/><body><p>Grating Line Density [l/mm]:</p></body></html>", 0));
-        label_3->setText(QApplication::translate("threed", "Diffraction Order:", 0));
-        label_7->setText(QApplication::translate("threed", "<html><head/><body><p>Total Angle [deg]:</p></body></html>", 0));
-        label_4->setText(QApplication::translate("threed", "<html><head/><body><p>Blaze Angle [deg]:</p></body></html>", 0));
-        label_5->setText(QApplication::translate("threed", "Blaze Efficiency:", 0));
-        label_6->setText(QApplication::translate("threed", "<html><head/><body><p>Central Wavelength [nm]:</p></body></html>", 0));
-        label_8->setText(QApplication::translate("threed", "Index DCG Layer:", 0));
-        label_9->setText(QApplication::translate("threed", "Semiamplitude of Modulation:", 0));
-        label_10->setText(QApplication::translate("threed", "<html><head/><body><p>Thickness of DCG Layer [mm]:</p></body></html>", 0));
-        label_11->setText(QApplication::translate("threed", "<html><head/><body><p>Focal Length Collimator [mm]:</p></body></html>", 0));
-        label_12->setText(QApplication::translate("threed", "<html><head/><body><p>Focal Length Camera [mm]:</p></body></html>", 0));
-        label_45->setText(QApplication::translate("threed", "<html><head/><body><p>Tune Wavelength [nm]:</p></body></html>", 0));
-        pushButton_3->setText(QApplication::translate("threed", "Parameters", 0));
-        pushButton_4->setText(QApplication::translate("threed", "Frame", 0));
-        pushButton->setText(QApplication::translate("threed", "Close", 0));
-        label_13->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Telescope &amp; CCD Data</span></p></body></html>", 0));
-        label_14->setText(QApplication::translate("threed", "<html><head/><body><p>Seeing [arcsec]:</p></body></html>", 0));
-        label_15->setText(QApplication::translate("threed", "<html><head/><body><p>Telescope Focal Length [mm]:</p></body></html>", 0));
-        label_16->setText(QApplication::translate("threed", "<html><head/><body><p>Telescope Diameter [mm]:</p></body></html>", 0));
-        label_17->setText(QApplication::translate("threed", "<html><head/><body><p>Pixel Size [mm]:</p></body></html>", 0));
-        label_18->setText(QApplication::translate("threed", "Pixel in x:", 0));
-        label_19->setText(QApplication::translate("threed", "Pixel in y:", 0));
-        label_20->setText(QApplication::translate("threed", "Binning x:", 0));
-        label_21->setText(QApplication::translate("threed", "Binning y:", 0));
-        label_22->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Bias [ADU]:</p></body></html>", 0));
-        label_23->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Noise [ADU]:</p></body></html>", 0));
-        label_24->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Gain [e/ADU]:</p></body></html>", 0));
-        label_25->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Peak Wavelength [nm]:</p></body></html>", 0));
-        label_26->setText(QApplication::translate("threed", "CCD Peak Efficiency:", 0));
-        label_48->setText(QApplication::translate("threed", ".dconf", 0));
-        pushButton_5->setText(QApplication::translate("threed", "Save", 0));
-        label_49->setText(QApplication::translate("threed", ".dconf", 0));
-        pushButton_6->setText(QApplication::translate("threed", "Load", 0));
-        label_27->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Slit</span></p></body></html>", 0));
-        checkBox_3->setText(QApplication::translate("threed", "circular", 0));
-        checkBox_4->setText(QApplication::translate("threed", "rectangular", 0));
-        label_28->setText(QApplication::translate("threed", "# Slitlets:", 0));
-        label_29->setText(QApplication::translate("threed", "<html><head/><body><p>Width:</p></body></html>", 0));
-        label_30->setText(QApplication::translate("threed", "<html><head/><body><p>Length [mm]:</p></body></html>", 0));
-        label_32->setText(QApplication::translate("threed", "<html><head/><body><p>Width on Sky [arcsec]:</p></body></html>", 0));
-        pushButton_2->setText(QApplication::translate("threed", "Calculate", 0));
-        label_31->setText(QApplication::translate("threed", "<html><head/><body><p>Efficiency [%]:</p></body></html>", 0));
-        label_33->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical Surfaces</span></p></body></html>", 0));
-        label_34->setText(QApplication::translate("threed", "# Silver Surfaces:", 0));
-        label_35->setText(QApplication::translate("threed", "# Aluminium Surfaces:", 0));
-        label_36->setText(QApplication::translate("threed", "# Aluminium UV Surfaces:", 0));
-        label_37->setText(QApplication::translate("threed", "# Gold Surfaces:", 0));
-        label_38->setText(QApplication::translate("threed", "# VIS AR Surfaces:", 0));
-        label_39->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", 0));
-        label_40->setText(QApplication::translate("threed", "<html><head/><body><p>Effective Temperature [K]:</p></body></html>", 0));
-        label_41->setText(QApplication::translate("threed", "<html><head/><body><p>BC [mag]:</p></body></html>", 0));
-        label_42->setText(QApplication::translate("threed", "<html><head/><body><p>Magnitude [mag]:</p></body></html>", 0));
-        label_43->setText(QApplication::translate("threed", "<html><head/><body><p>Zenith Distance [deg]:</p></body></html>", 0));
-        label_44->setText(QApplication::translate("threed", "<html><head/><body><p>Exposure Time [s]:</p></body></html>", 0));
-        label_46->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Frame</span></p></body></html>", 0));
-        label_47->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Single Spectrum</span></p></body></html>", 0));
+        threed->setWindowTitle(QApplication::translate("threed", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical &amp; Geometrical Data</span></p></body></html>", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("threed", "Grating", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("threed", "VPH Grating", Q_NULLPTR));
+        label_2->setText(QApplication::translate("threed", "<html><head/><body><p>Grating Line Density [l/mm]:</p></body></html>", Q_NULLPTR));
+        label_3->setText(QApplication::translate("threed", "Diffraction Order:", Q_NULLPTR));
+        label_7->setText(QApplication::translate("threed", "<html><head/><body><p>Total Angle [deg]:</p></body></html>", Q_NULLPTR));
+        label_4->setText(QApplication::translate("threed", "<html><head/><body><p>Blaze Angle [deg]:</p></body></html>", Q_NULLPTR));
+        label_5->setText(QApplication::translate("threed", "Blaze Efficiency:", Q_NULLPTR));
+        label_6->setText(QApplication::translate("threed", "<html><head/><body><p>Central Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_8->setText(QApplication::translate("threed", "Index DCG Layer:", Q_NULLPTR));
+        label_9->setText(QApplication::translate("threed", "Semiamplitude of Modulation:", Q_NULLPTR));
+        label_10->setText(QApplication::translate("threed", "<html><head/><body><p>Thickness of DCG Layer [mm]:</p></body></html>", Q_NULLPTR));
+        label_11->setText(QApplication::translate("threed", "<html><head/><body><p>Focal Length Collimator [mm]:</p></body></html>", Q_NULLPTR));
+        label_12->setText(QApplication::translate("threed", "<html><head/><body><p>Focal Length Camera [mm]:</p></body></html>", Q_NULLPTR));
+        label_45->setText(QApplication::translate("threed", "<html><head/><body><p>Tune Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("threed", "Parameters", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("threed", "Frame", Q_NULLPTR));
+        label_50->setText(QApplication::translate("threed", "Work Path:", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("threed", "Close", Q_NULLPTR));
+        label_13->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Telescope &amp; CCD Data</span></p></body></html>", Q_NULLPTR));
+        label_14->setText(QApplication::translate("threed", "<html><head/><body><p>Seeing [arcsec]:</p></body></html>", Q_NULLPTR));
+        label_15->setText(QApplication::translate("threed", "<html><head/><body><p>Telescope Focal Length [mm]:</p></body></html>", Q_NULLPTR));
+        label_16->setText(QApplication::translate("threed", "<html><head/><body><p>Telescope Diameter [mm]:</p></body></html>", Q_NULLPTR));
+        label_17->setText(QApplication::translate("threed", "<html><head/><body><p>Pixel Size [mm]:</p></body></html>", Q_NULLPTR));
+        label_18->setText(QApplication::translate("threed", "Pixel in x:", Q_NULLPTR));
+        label_19->setText(QApplication::translate("threed", "Pixel in y:", Q_NULLPTR));
+        label_20->setText(QApplication::translate("threed", "Binning x:", Q_NULLPTR));
+        label_21->setText(QApplication::translate("threed", "Binning y:", Q_NULLPTR));
+        label_22->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Bias [ADU]:</p></body></html>", Q_NULLPTR));
+        label_23->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Noise [ADU]:</p></body></html>", Q_NULLPTR));
+        label_24->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Gain [e/ADU]:</p></body></html>", Q_NULLPTR));
+        label_25->setText(QApplication::translate("threed", "<html><head/><body><p>CCD Peak Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_26->setText(QApplication::translate("threed", "CCD Peak Efficiency:", Q_NULLPTR));
+        label_48->setText(QApplication::translate("threed", ".dconf", Q_NULLPTR));
+        pushButton_5->setText(QApplication::translate("threed", "Save", Q_NULLPTR));
+        label_49->setText(QApplication::translate("threed", ".dconf", Q_NULLPTR));
+        pushButton_6->setText(QApplication::translate("threed", "Load", Q_NULLPTR));
+        label_27->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Slit</span></p></body></html>", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("threed", "circular", Q_NULLPTR));
+        checkBox_4->setText(QApplication::translate("threed", "rectangular", Q_NULLPTR));
+        checkBox_5->setText(QApplication::translate("threed", "slitless", Q_NULLPTR));
+        label_28->setText(QApplication::translate("threed", "# Slitlets:", Q_NULLPTR));
+        label_29->setText(QApplication::translate("threed", "<html><head/><body><p>Width:</p></body></html>", Q_NULLPTR));
+        label_30->setText(QApplication::translate("threed", "<html><head/><body><p>Length [mm]:</p></body></html>", Q_NULLPTR));
+        label_32->setText(QApplication::translate("threed", "<html><head/><body><p>Width on Sky [arcsec]:</p></body></html>", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("threed", "Calculate", Q_NULLPTR));
+        label_31->setText(QApplication::translate("threed", "<html><head/><body><p>Efficiency [%]:</p></body></html>", Q_NULLPTR));
+        label_33->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical Surfaces</span></p></body></html>", Q_NULLPTR));
+        label_34->setText(QApplication::translate("threed", "# Silver Surfaces:", Q_NULLPTR));
+        label_35->setText(QApplication::translate("threed", "# Aluminium Surfaces:", Q_NULLPTR));
+        label_36->setText(QApplication::translate("threed", "# Aluminium UV Surfaces:", Q_NULLPTR));
+        label_37->setText(QApplication::translate("threed", "# Gold Surfaces:", Q_NULLPTR));
+        label_38->setText(QApplication::translate("threed", "# VIS AR Surfaces:", Q_NULLPTR));
+        label_39->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", Q_NULLPTR));
+        label_40->setText(QApplication::translate("threed", "<html><head/><body><p>Effective Temperature [K]:</p></body></html>", Q_NULLPTR));
+        label_41->setText(QApplication::translate("threed", "<html><head/><body><p>BC [mag]:</p></body></html>", Q_NULLPTR));
+        label_42->setText(QApplication::translate("threed", "<html><head/><body><p>Magnitude [mag]:</p></body></html>", Q_NULLPTR));
+        label_43->setText(QApplication::translate("threed", "<html><head/><body><p>Zenith Distance [deg]:</p></body></html>", Q_NULLPTR));
+        label_44->setText(QApplication::translate("threed", "<html><head/><body><p>Exposure Time [s]:</p></body></html>", Q_NULLPTR));
+        label_46->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Frame</span></p></body></html>", Q_NULLPTR));
+        label_47->setText(QApplication::translate("threed", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Single Spectrum</span></p></body></html>", Q_NULLPTR));
     } // retranslateUi
 
 };

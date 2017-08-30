@@ -284,7 +284,7 @@ void Fibre::nmodes(){
 
     QVector<double> M(fsteps), Nw(fsteps), ncov(fsteps), ncov2(fsteps), Nav(fsteps);
     double Mmax, Mmin;
-    int defi;
+    int defi=0;
 
     for (int i=0; i<fsteps; i++){
         Nw[i]=lowerw+(upperl-lowerw)/fsteps*i;
@@ -320,6 +320,14 @@ void Fibre::nmodes(){
     ui->customPlot->xAxis->setRange(Nw[0], Nw[fsteps-1]);
     ui->customPlot->yAxis->setRange(Mmin, Mmax);
     ui->customPlot->replot();
+
+    if(defi==0){
+        ui->lineEdit_2->setText("Cladd");
+    }
+
+    if(defi==1){
+        ui->lineEdit_2->setText("Core");
+    }
 }
 
 //# modes
@@ -328,7 +336,6 @@ void Fibre::modes(){
 
    QVector<double> M(fsteps), Nw(fsteps);
    double Mmax, Mmin, Num;
-   int defi;
    Num = 1/(2*ui->doubleSpinBox_7->value());
 
    for (int i=0; i<fsteps; i++){
@@ -356,6 +363,7 @@ void Fibre::modes(){
    ui->customPlot->xAxis->setRange(Nw[0], Nw[fsteps-1]);
    ui->customPlot->yAxis->setRange(Mmin, Mmax);
    ui->customPlot->replot();
+
 }
 
 //modal noise
@@ -365,7 +373,6 @@ void Fibre::mnoise(){
 
     QVector<double> N(fsteps), Nw(fsteps), ncov(fsteps), ncov2(fsteps), Nav(fsteps), gauss(100), modaln(fsteps);
     double Nmax, Nmin, gaussmin, gaussmax, dx, Num;
-    int defi;
     Num = 1/(2*ui->doubleSpinBox_7->value());
 
     for (int i=0; i<fsteps; i++){
@@ -411,6 +418,7 @@ void Fibre::mnoise(){
     ui->customPlot->xAxis->setRange(Nw[0], Nw[fsteps-1]);
     ui->customPlot->yAxis->setRange(Nmin, Nmax);
     ui->customPlot->replot();
+
 
 }
 

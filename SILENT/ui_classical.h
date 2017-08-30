@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'classical.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -70,6 +70,7 @@ public:
     QLabel *label_8;
     QCheckBox *checkBox;
     QCheckBox *checkBox_2;
+    QCheckBox *checkBox_3;
     QHBoxLayout *horizontalLayout_8;
     QDoubleSpinBox *doubleSpinBox_22;
     QLabel *label_10;
@@ -91,7 +92,6 @@ public:
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_11;
     QPushButton *pushButton;
-    QSpacerItem *horizontalSpacer_11;
     QFrame *line;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_12;
@@ -186,7 +186,7 @@ public:
     {
         if (classical->objectName().isEmpty())
             classical->setObjectName(QStringLiteral("classical"));
-        classical->resize(1154, 641);
+        classical->resize(1218, 705);
         QFont font;
         font.setFamily(QStringLiteral("Ubuntu Mono"));
         font.setBold(true);
@@ -201,7 +201,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1136, 623));
+        scrollAreaWidgetContents->setGeometry(QRect(-119, 0, 1313, 662));
         horizontalLayout_38 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_38->setObjectName(QStringLiteral("horizontalLayout_38"));
         verticalLayout = new QVBoxLayout();
@@ -364,7 +364,7 @@ public:
         horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
         label_8 = new QLabel(scrollAreaWidgetContents);
         label_8->setObjectName(QStringLiteral("label_8"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
@@ -374,17 +374,27 @@ public:
 
         checkBox = new QCheckBox(scrollAreaWidgetContents);
         checkBox->setObjectName(QStringLiteral("checkBox"));
-        sizePolicy.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
-        checkBox->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
+        checkBox->setSizePolicy(sizePolicy2);
 
         horizontalLayout_7->addWidget(checkBox);
 
         checkBox_2 = new QCheckBox(scrollAreaWidgetContents);
         checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
-        sizePolicy.setHeightForWidth(checkBox_2->sizePolicy().hasHeightForWidth());
-        checkBox_2->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(checkBox_2->sizePolicy().hasHeightForWidth());
+        checkBox_2->setSizePolicy(sizePolicy2);
 
         horizontalLayout_7->addWidget(checkBox_2);
+
+        checkBox_3 = new QCheckBox(scrollAreaWidgetContents);
+        checkBox_3->setObjectName(QStringLiteral("checkBox_3"));
+        sizePolicy2.setHeightForWidth(checkBox_3->sizePolicy().hasHeightForWidth());
+        checkBox_3->setSizePolicy(sizePolicy2);
+
+        horizontalLayout_7->addWidget(checkBox_3);
 
 
         verticalLayout->addLayout(horizontalLayout_7);
@@ -402,8 +412,11 @@ public:
 
         label_10 = new QLabel(scrollAreaWidgetContents);
         label_10->setObjectName(QStringLiteral("label_10"));
-        sizePolicy1.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
-        label_10->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy3);
 
         horizontalLayout_8->addWidget(label_10);
 
@@ -418,8 +431,8 @@ public:
 
         label_9 = new QLabel(scrollAreaWidgetContents);
         label_9->setObjectName(QStringLiteral("label_9"));
-        sizePolicy1.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
-        label_9->setSizePolicy(sizePolicy1);
+        sizePolicy3.setHeightForWidth(label_9->sizePolicy().hasHeightForWidth());
+        label_9->setSizePolicy(sizePolicy3);
 
         horizontalLayout_8->addWidget(label_9);
 
@@ -430,8 +443,8 @@ public:
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
         pushButton_2 = new QPushButton(scrollAreaWidgetContents);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        sizePolicy.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
-        pushButton_2->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
+        pushButton_2->setSizePolicy(sizePolicy2);
 
         horizontalLayout_9->addWidget(pushButton_2);
 
@@ -450,6 +463,8 @@ public:
         horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
         label_13 = new QLabel(scrollAreaWidgetContents);
         label_13->setObjectName(QStringLiteral("label_13"));
+        sizePolicy1.setHeightForWidth(label_13->sizePolicy().hasHeightForWidth());
+        label_13->setSizePolicy(sizePolicy1);
 
         horizontalLayout_10->addWidget(label_13);
 
@@ -494,16 +509,18 @@ public:
         horizontalLayout_41->setObjectName(QStringLiteral("horizontalLayout_41"));
         label_42 = new QLabel(scrollAreaWidgetContents);
         label_42->setObjectName(QStringLiteral("label_42"));
+        sizePolicy3.setHeightForWidth(label_42->sizePolicy().hasHeightForWidth());
+        label_42->setSizePolicy(sizePolicy3);
 
         horizontalLayout_41->addWidget(label_42);
 
         lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
         lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
-        lineEdit_3->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy4);
 
         horizontalLayout_41->addWidget(lineEdit_3);
 
@@ -518,12 +535,10 @@ public:
         horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
         pushButton = new QPushButton(scrollAreaWidgetContents);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy);
 
         horizontalLayout_11->addWidget(pushButton);
-
-        horizontalSpacer_11 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_11->addItem(horizontalSpacer_11);
 
 
         verticalLayout->addLayout(horizontalLayout_11);
@@ -600,6 +615,11 @@ public:
 
         line_2 = new QFrame(scrollAreaWidgetContents);
         line_2->setObjectName(QStringLiteral("line_2"));
+        QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
+        line_2->setSizePolicy(sizePolicy5);
         line_2->setFrameShadow(QFrame::Plain);
         line_2->setFrameShape(QFrame::HLine);
 
@@ -823,8 +843,8 @@ public:
         horizontalLayout_27->setObjectName(QStringLiteral("horizontalLayout_27"));
         label_29 = new QLabel(scrollAreaWidgetContents);
         label_29->setObjectName(QStringLiteral("label_29"));
-        sizePolicy1.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
-        label_29->setSizePolicy(sizePolicy1);
+        sizePolicy3.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
+        label_29->setSizePolicy(sizePolicy3);
 
         horizontalLayout_27->addWidget(label_29);
 
@@ -834,6 +854,7 @@ public:
         doubleSpinBox_8->setSizePolicy(sizePolicy);
         doubleSpinBox_8->setMinimum(99);
         doubleSpinBox_8->setMaximum(99999);
+        doubleSpinBox_8->setValue(5000);
 
         horizontalLayout_27->addWidget(doubleSpinBox_8);
 
@@ -850,6 +871,8 @@ public:
         doubleSpinBox_9 = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_9->setObjectName(QStringLiteral("doubleSpinBox_9"));
         doubleSpinBox_9->setEnabled(false);
+        sizePolicy.setHeightForWidth(doubleSpinBox_9->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_9->setSizePolicy(sizePolicy);
         doubleSpinBox_9->setMinimum(-99);
 
         horizontalLayout_28->addWidget(doubleSpinBox_9);
@@ -884,11 +907,8 @@ public:
 
         doubleSpinBox_11 = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_11->setObjectName(QStringLiteral("doubleSpinBox_11"));
-        QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(doubleSpinBox_11->sizePolicy().hasHeightForWidth());
-        doubleSpinBox_11->setSizePolicy(sizePolicy3);
+        sizePolicy4.setHeightForWidth(doubleSpinBox_11->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_11->setSizePolicy(sizePolicy4);
         doubleSpinBox_11->setMaximum(90);
 
         horizontalLayout_30->addWidget(doubleSpinBox_11);
@@ -1006,11 +1026,8 @@ public:
 
         progressBar = new QProgressBar(scrollAreaWidgetContents);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
-        progressBar->setSizePolicy(sizePolicy4);
+        sizePolicy5.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy5);
         progressBar->setValue(24);
 
         verticalLayout_3->addWidget(progressBar);
@@ -1083,57 +1100,58 @@ public:
 
     void retranslateUi(QDialog *classical)
     {
-        classical->setWindowTitle(QApplication::translate("classical", "Dialog", 0));
-        label_7->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical &amp; Geometrical Data</span></p></body></html>", 0));
-        label->setText(QApplication::translate("classical", "Grating Line Density [l/mm]:", 0));
-        label_2->setText(QApplication::translate("classical", "Diffraction Order:", 0));
-        label_3->setText(QApplication::translate("classical", "Blaze Angle [deg]:", 0));
-        label_33->setText(QApplication::translate("classical", "Blaze Efficiency:", 0));
-        label_27->setText(QApplication::translate("classical", "Central Wavelength [nm]:", 0));
-        label_4->setText(QApplication::translate("classical", "Total Angle [deg]:", 0));
-        label_5->setText(QApplication::translate("classical", "Focal Length Collimator [mm]:", 0));
-        label_6->setText(QApplication::translate("classical", "Focal Length Camera [mm]:", 0));
-        label_8->setText(QApplication::translate("classical", "Slit:", 0));
-        checkBox->setText(QApplication::translate("classical", "circular", 0));
-        checkBox_2->setText(QApplication::translate("classical", "rectangular", 0));
-        label_10->setText(QApplication::translate("classical", "mm x", 0));
-        label_9->setText(QApplication::translate("classical", "mm", 0));
-        pushButton_2->setText(QApplication::translate("classical", "Efficiency [%]", 0));
-        label_13->setText(QApplication::translate("classical", "Width on Sky [arcsec]:", 0));
-        pushButton_3->setText(QApplication::translate("classical", "Parameters", 0));
-        pushButton_4->setText(QApplication::translate("classical", "Frame", 0));
-        label_42->setText(QApplication::translate("classical", "Work Path:", 0));
-        pushButton->setText(QApplication::translate("classical", "Close", 0));
-        label_12->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Telescope &amp; CCD Data</span></p></body></html>", 0));
-        label_16->setText(QApplication::translate("classical", "Seeing [arcsec]:", 0));
-        label_14->setText(QApplication::translate("classical", "Focal Length Telescope [mm]:", 0));
-        label_15->setText(QApplication::translate("classical", "Diameter Telescope [mm]:", 0));
-        label_17->setText(QApplication::translate("classical", "Pixel Size [mm]:", 0));
-        label_18->setText(QApplication::translate("classical", "Pixel in x:", 0));
-        label_19->setText(QApplication::translate("classical", "Pixel in y:", 0));
-        label_20->setText(QApplication::translate("classical", "Binning x:", 0));
-        label_21->setText(QApplication::translate("classical", "Binning y:", 0));
-        label_22->setText(QApplication::translate("classical", "CCD Bias:", 0));
-        label_23->setText(QApplication::translate("classical", "CCD Noise:", 0));
-        label_26->setText(QApplication::translate("classical", "CCD Gain:", 0));
-        label_24->setText(QApplication::translate("classical", "CCD Peak Wavelength [nm]:", 0));
-        label_25->setText(QApplication::translate("classical", "CCD Peak Efficiency:", 0));
-        label_28->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", 0));
-        label_29->setText(QApplication::translate("classical", "Effective Temperature [K]:", 0));
-        label_30->setText(QApplication::translate("classical", "Bolometric Correction [mag]:", 0));
-        label_31->setText(QApplication::translate("classical", "Magnitude [mag]:", 0));
-        label_32->setText(QApplication::translate("classical", "Zenith Distance [deg]:", 0));
-        label_34->setText(QApplication::translate("classical", "Exposure Time [s]:", 0));
-        label_40->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical Surfaces</span></p></body></html>", 0));
-        label_36->setText(QApplication::translate("classical", "# Silver Surfaces:", 0));
-        label_35->setText(QApplication::translate("classical", "# Aluminum Surfaces:", 0));
-        label_37->setText(QApplication::translate("classical", "# Aluminium UV Surfaces:", 0));
-        label_38->setText(QApplication::translate("classical", "# Gold Surfaces:", 0));
-        label_39->setText(QApplication::translate("classical", "# VIS AR Surfaces:", 0));
-        label_11->setText(QApplication::translate("classical", ".clconf", 0));
-        pushButton_5->setText(QApplication::translate("classical", "Save", 0));
-        label_41->setText(QApplication::translate("classical", ".clconf", 0));
-        pushButton_6->setText(QApplication::translate("classical", "Load", 0));
+        classical->setWindowTitle(QApplication::translate("classical", "Dialog", Q_NULLPTR));
+        label_7->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical &amp; Geometrical Data</span></p></body></html>", Q_NULLPTR));
+        label->setText(QApplication::translate("classical", "Grating Line Density [l/mm]:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("classical", "Diffraction Order:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("classical", "Blaze Angle [deg]:", Q_NULLPTR));
+        label_33->setText(QApplication::translate("classical", "Blaze Efficiency:", Q_NULLPTR));
+        label_27->setText(QApplication::translate("classical", "Central Wavelength [nm]:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("classical", "Total Angle [deg]:", Q_NULLPTR));
+        label_5->setText(QApplication::translate("classical", "Focal Length Collimator [mm]:", Q_NULLPTR));
+        label_6->setText(QApplication::translate("classical", "Focal Length Camera [mm]:", Q_NULLPTR));
+        label_8->setText(QApplication::translate("classical", "Slit:", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("classical", "circular", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("classical", "rectangular", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("classical", "slitless", Q_NULLPTR));
+        label_10->setText(QApplication::translate("classical", "mm x", Q_NULLPTR));
+        label_9->setText(QApplication::translate("classical", "mm", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("classical", "Efficiency [%]", Q_NULLPTR));
+        label_13->setText(QApplication::translate("classical", "Width on Sky [arcsec]:", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("classical", "Parameters", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("classical", "Frame", Q_NULLPTR));
+        label_42->setText(QApplication::translate("classical", "Work Path:", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("classical", "Close", Q_NULLPTR));
+        label_12->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Telescope &amp; CCD Data</span></p></body></html>", Q_NULLPTR));
+        label_16->setText(QApplication::translate("classical", "Seeing [arcsec]:", Q_NULLPTR));
+        label_14->setText(QApplication::translate("classical", "Focal Length Telescope [mm]:", Q_NULLPTR));
+        label_15->setText(QApplication::translate("classical", "Diameter Telescope [mm]:", Q_NULLPTR));
+        label_17->setText(QApplication::translate("classical", "Pixel Size [mm]:", Q_NULLPTR));
+        label_18->setText(QApplication::translate("classical", "Pixel in x:", Q_NULLPTR));
+        label_19->setText(QApplication::translate("classical", "Pixel in y:", Q_NULLPTR));
+        label_20->setText(QApplication::translate("classical", "Binning x:", Q_NULLPTR));
+        label_21->setText(QApplication::translate("classical", "Binning y:", Q_NULLPTR));
+        label_22->setText(QApplication::translate("classical", "CCD Bias:", Q_NULLPTR));
+        label_23->setText(QApplication::translate("classical", "CCD Noise:", Q_NULLPTR));
+        label_26->setText(QApplication::translate("classical", "CCD Gain:", Q_NULLPTR));
+        label_24->setText(QApplication::translate("classical", "CCD Peak Wavelength [nm]:", Q_NULLPTR));
+        label_25->setText(QApplication::translate("classical", "CCD Peak Efficiency:", Q_NULLPTR));
+        label_28->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", Q_NULLPTR));
+        label_29->setText(QApplication::translate("classical", "Effective Temperature [K]:", Q_NULLPTR));
+        label_30->setText(QApplication::translate("classical", "Bolometric Correction [mag]:", Q_NULLPTR));
+        label_31->setText(QApplication::translate("classical", "Magnitude [mag]:", Q_NULLPTR));
+        label_32->setText(QApplication::translate("classical", "Zenith Distance [deg]:", Q_NULLPTR));
+        label_34->setText(QApplication::translate("classical", "Exposure Time [s]:", Q_NULLPTR));
+        label_40->setText(QApplication::translate("classical", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Optical Surfaces</span></p></body></html>", Q_NULLPTR));
+        label_36->setText(QApplication::translate("classical", "# Silver Surfaces:", Q_NULLPTR));
+        label_35->setText(QApplication::translate("classical", "# Aluminum Surfaces:", Q_NULLPTR));
+        label_37->setText(QApplication::translate("classical", "# Aluminium UV Surfaces:", Q_NULLPTR));
+        label_38->setText(QApplication::translate("classical", "# Gold Surfaces:", Q_NULLPTR));
+        label_39->setText(QApplication::translate("classical", "# VIS AR Surfaces:", Q_NULLPTR));
+        label_11->setText(QApplication::translate("classical", ".clconf", Q_NULLPTR));
+        pushButton_5->setText(QApplication::translate("classical", "Save", Q_NULLPTR));
+        label_41->setText(QApplication::translate("classical", ".clconf", Q_NULLPTR));
+        pushButton_6->setText(QApplication::translate("classical", "Load", Q_NULLPTR));
     } // retranslateUi
 
 };

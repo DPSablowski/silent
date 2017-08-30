@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'warning1.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -85,11 +85,11 @@ public:
 
     void retranslateUi(QDialog *Warning1)
     {
-        Warning1->setWindowTitle(QApplication::translate("Warning1", "Dialog", 0));
-        label->setText(QApplication::translate("Warning1", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#ed1f1f;\">Warning !</span></p></body></html>", 0));
-        label_2->setText(QApplication::translate("Warning1", "<html><head/><body><p align=\"center\">This will delete all existing frames already calculated.</p><p align=\"center\">Save or export them first!<br/></p><p align=\"center\">Do you wish to continue?</p></body></html>", 0));
-        pushButton->setText(QApplication::translate("Warning1", "OK", 0));
-        pushButton_2->setText(QApplication::translate("Warning1", "STOP", 0));
+        Warning1->setWindowTitle(QApplication::translate("Warning1", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("Warning1", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; color:#ed1f1f;\">Warning !</span></p></body></html>", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Warning1", "<html><head/><body><p align=\"center\">This will delete all existing frames already calculated.</p><p align=\"center\">Save or export them first!<br/></p><p align=\"center\">Do you wish to continue?</p></body></html>", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("Warning1", "OK", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("Warning1", "STOP", Q_NULLPTR));
     } // retranslateUi
 
 };

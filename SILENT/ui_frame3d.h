@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'frame3d.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -57,11 +57,13 @@ public:
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_3;
     QSpinBox *spinBox_3;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *label_4;
+    QLineEdit *lineEdit_3;
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit;
     QPushButton *pushButton_3;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
     QCustomPlot *customPlot;
 
     void setupUi(QDialog *Frame3D)
@@ -83,7 +85,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1053, 480));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1047, 474));
         horizontalLayout_6 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
@@ -203,6 +205,26 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_7);
 
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setObjectName(QStringLiteral("horizontalLayout_8"));
+        label_4 = new QLabel(scrollAreaWidgetContents);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        horizontalLayout_8->addWidget(label_4);
+
+        lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_8->addWidget(lineEdit_3);
+
+
+        verticalLayout->addLayout(horizontalLayout_8);
+
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         lineEdit = new QLineEdit(scrollAreaWidgetContents);
@@ -226,23 +248,16 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
-        pushButton = new QPushButton(scrollAreaWidgetContents);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy);
-
-        verticalLayout->addWidget(pushButton);
-
 
         horizontalLayout_6->addLayout(verticalLayout);
 
         customPlot = new QCustomPlot(scrollAreaWidgetContents);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
-        customPlot->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
+        customPlot->setSizePolicy(sizePolicy2);
         customPlot->setMinimumSize(QSize(500, 300));
 
         horizontalLayout_6->addWidget(customPlot);
@@ -253,24 +268,23 @@ public:
 
 
         retranslateUi(Frame3D);
-        QObject::connect(pushButton, SIGNAL(clicked()), Frame3D, SLOT(close()));
 
         QMetaObject::connectSlotsByName(Frame3D);
     } // setupUi
 
     void retranslateUi(QDialog *Frame3D)
     {
-        Frame3D->setWindowTitle(QApplication::translate("Frame3D", "Dialog", 0));
-        pushButton_2->setText(QApplication::translate("Frame3D", "Show", 0));
-        pushButton_4->setText(QApplication::translate("Frame3D", "Show", 0));
-        label->setText(QApplication::translate("Frame3D", "Pixel x:", 0));
-        label_2->setText(QApplication::translate("Frame3D", "Pixel y:", 0));
-        checkBox->setText(QApplication::translate("Frame3D", "pdf", 0));
-        checkBox_2->setText(QApplication::translate("Frame3D", "png", 0));
-        checkBox_3->setText(QApplication::translate("Frame3D", "txt", 0));
-        label_3->setText(QApplication::translate("Frame3D", "Font Size:", 0));
-        pushButton_3->setText(QApplication::translate("Frame3D", "Save", 0));
-        pushButton->setText(QApplication::translate("Frame3D", "Close", 0));
+        Frame3D->setWindowTitle(QApplication::translate("Frame3D", "Dialog", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("Frame3D", "Show", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("Frame3D", "Show", Q_NULLPTR));
+        label->setText(QApplication::translate("Frame3D", "Pixel x:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Frame3D", "Pixel y:", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("Frame3D", "pdf", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("Frame3D", "png", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("Frame3D", "txt", Q_NULLPTR));
+        label_3->setText(QApplication::translate("Frame3D", "Font Size:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Frame3D", "Work Path:", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("Frame3D", "Save", Q_NULLPTR));
     } // retranslateUi
 
 };

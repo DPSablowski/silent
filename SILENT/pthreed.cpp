@@ -6,6 +6,8 @@
 using namespace std;
 
 double x13d, x23d, y13d, y23d;
+string ptdpath;
+QString qptdpath;
 
 pthreed::pthreed(QWidget *parent) :
     QDialog(parent),
@@ -38,6 +40,9 @@ pthreed::pthreed(QWidget *parent) :
     ui->comboBox->addItem("Balmer Spectrum");
 
     ui->customPlot->axisRect()->setupFullAxesBox(true);
+
+    connect(ui->customPlot, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip(QMouseEvent*)));
+
 }
 
 pthreed::~pthreed()
@@ -45,23 +50,45 @@ pthreed::~pthreed()
     delete ui;
 }
 
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void pthreed::showPointToolTip(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+void pthreed::seData(QString str)
+{
+    ui->lineEdit_2->setText(str);
+}
+
 // find values
 void pthreed::on_pushButton_2_clicked()
 {
+    qptdpath = ui->lineEdit_2->text();
+    ptdpath = qptdpath.toUtf8().constData();
+
     string zeile, one, two;
     this->setCursor(QCursor(Qt::WaitCursor));
 
         if(ui->comboBox->currentIndex()==0){
 
-            ifstream toplot1("resolving3d.txt");
-
-            QFile checkfile3("resolving3d.txt");
+            QFile checkfile3(qptdpath+"resolving3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/resolving3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -108,15 +135,17 @@ void pthreed::on_pushButton_2_clicked()
 
         if(ui->comboBox->currentIndex()==1){
 
-            ifstream toplot1("twopixR3d.txt");
-
-            QFile checkfile3("twopixR3d.txt");
+            QFile checkfile3(qptdpath+"twopixR3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/twopixR3d3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -163,15 +192,17 @@ void pthreed::on_pushButton_2_clicked()
 
         if(ui->comboBox->currentIndex()==2){
 
-            ifstream toplot1("dispersion3d.txt");
-
-            QFile checkfile3("dispersion3d.txt");
+            QFile checkfile3(qptdpath+"dispersion3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/dispersion3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -217,15 +248,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==3){
 
-            ifstream toplot1("anamorphism3d.txt");
-
-            QFile checkfile3("anamorphism3d.txt");
+            QFile checkfile3(qptdpath+"anamorphism3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/anamorphism3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -238,11 +271,11 @@ void pthreed::on_pushButton_2_clicked()
             QVector<double> a(number_of_lines), b(number_of_lines);
 
             for (int i=0; i<number_of_lines; i++){
-            toplot1 >> one >>two;
-            istringstream ist(one);
-            ist >> a[i];
-            istringstream ist2(two);
-            ist2 >> b[i];
+                toplot1 >> one >>two;
+                istringstream ist(one);
+                ist >> a[i];
+                istringstream ist2(two);
+                ist2 >> b[i];
             }
             toplot1.close();
 
@@ -271,15 +304,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==4){
 
-            ifstream toplot1("nyquist3d.txt");
-
-            QFile checkfile3("nyquist3d.txt");
+            QFile checkfile3(qptdpath+"nyquist3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/nyquist3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -325,15 +360,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==5){
 
-            ifstream toplot1("slit3d.txt");
-
-            QFile checkfile3("slit3d.txt");
+            QFile checkfile3(qptdpath+"slit3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/slit3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -379,15 +416,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==6){
 
-            ifstream toplot1("atmosphere3d.txt");
-
-            QFile checkfile3("atmosphere3d.txt");
+            QFile checkfile3(qptdpath+"atmosphere3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/atmosphere3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -433,15 +472,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==7){
 
-            ifstream toplot1("telescope3d.txt");
-
-            QFile checkfile3("telescope3d.txt");
+            QFile checkfile3(qptdpath+"telescope3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/telescope3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -487,15 +528,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==8){
 
-            ifstream toplot1("ccd3d.txt");
-
-            QFile checkfile3("ccd3d.txt");
+            QFile checkfile3(qptdpath+"ccd3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/ccd3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -541,15 +584,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==9){
 
-            ifstream toplot1("grating3d.txt");
-
-            QFile checkfile3("grating3d.txt");
+            QFile checkfile3(qptdpath+"grating3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/grating3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -595,15 +640,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==10){
 
-            ifstream toplot1("efficiency3d.txt");
-
-            QFile checkfile3("efficiency3d.txt");
+            QFile checkfile3(qptdpath+"efficiency3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/efficiency3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -649,15 +696,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==11){
 
-            ifstream toplot1("overall3d.txt");
-
-            QFile checkfile3("overall3d.txt");
+            QFile checkfile3(qptdpath+"overall3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/overall3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -670,11 +719,11 @@ void pthreed::on_pushButton_2_clicked()
             QVector<double> a(number_of_lines), b(number_of_lines);
 
             for (int i=0; i<number_of_lines; i++){
-            toplot1 >> one >>two;
-            istringstream ist(one);
-            ist >> a[i];
-            istringstream ist2(two);
-            ist2 >> b[i];
+                toplot1 >> one >>two;
+                istringstream ist(one);
+                ist >> a[i];
+                istringstream ist2(two);
+                ist2 >> b[i];
             }
             toplot1.close();
 
@@ -703,15 +752,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==12){
 
-            ifstream toplot1("surfaces3d.txt");
-
-            QFile checkfile3("surfaces3d.txt");
+            QFile checkfile3(qptdpath+"surfaces3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/surfaces3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -757,15 +808,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==13){
 
-            ifstream toplot1("layout3d.txt");
-
-            QFile checkfile3("layout3d.txt");
+            QFile checkfile3(qptdpath+"layout3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/layout3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -811,15 +864,17 @@ void pthreed::on_pushButton_2_clicked()
         }
         if(ui->comboBox->currentIndex()==14){
 
-            ifstream toplot1("neon3d.txt");
-
-            QFile checkfile3("neon3d.txt");
+            QFile checkfile3(qptdpath+"neon3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/neon3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -867,15 +922,17 @@ void pthreed::on_pushButton_2_clicked()
 
         if(ui->comboBox->currentIndex()==15){
 
-            ifstream toplot1("planck3d.txt");
-
-            QFile checkfile3("planck3d.txt");
+            QFile checkfile3(qptdpath+"planck3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/planck3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -922,15 +979,17 @@ void pthreed::on_pushButton_2_clicked()
 
         if(ui->comboBox->currentIndex()==16){
 
-            ifstream toplot1("balmer3d.txt");
-
-            QFile checkfile3("balmer3d.txt");
+            QFile checkfile3(qptdpath+"balmer3d.txt");
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            std::ostringstream datNameStream(ptdpath);
+            datNameStream<<ptdpath<<"/balmer3d.txt";
+            std::string datName = datNameStream.str();
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -993,15 +1052,17 @@ void pthreed::on_pushButton_3_clicked()
 
     if(ui->comboBox->currentIndex()==0){
 
-        ifstream toplot1("resolving3d.txt");
-
-        QFile checkfile3("resolving3d.txt");
+        QFile checkfile3(qptdpath+"resolving3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/resolving3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1035,15 +1096,17 @@ void pthreed::on_pushButton_3_clicked()
 
     if(ui->comboBox->currentIndex()==1){
 
-        ifstream toplot1("twopixR3d.txt");
-
-        QFile checkfile3("twopixR3d.txt");
+        QFile checkfile3(qptdpath+"twopixR3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/twopixR3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1077,15 +1140,17 @@ void pthreed::on_pushButton_3_clicked()
 
     if(ui->comboBox->currentIndex()==2){
 
-        ifstream toplot1("dispersion3d.txt");
-
-        QFile checkfile3("dispersion3d.txt");
+        QFile checkfile3(qptdpath+"dispersion3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/dispersion3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1119,15 +1184,17 @@ void pthreed::on_pushButton_3_clicked()
 
     if(ui->comboBox->currentIndex()==3){
 
-        ifstream toplot1("anamorphism3d.txt");
-
-        QFile checkfile3("anamorphism3d.txt");
+        QFile checkfile3(qptdpath+"anamorphism3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/anamorphism3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1160,15 +1227,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==4){
 
-        ifstream toplot1("nyquist3d.txt");
-
-        QFile checkfile3("nyquist3d.txt");
+        QFile checkfile3(qptdpath+"nyquist3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/nyquist3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1201,15 +1270,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==5){
 
-        ifstream toplot1("slit3d.txt");
-
-        QFile checkfile3("slit3d.txt");
+        QFile checkfile3(qptdpath+"slit3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/slit3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1242,15 +1313,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==6){
 
-        ifstream toplot1("atmosphere3d.txt");
-
-        QFile checkfile3("atmosphere3d.txt");
+        QFile checkfile3(qptdpath+"atmosphere3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/atmosphere3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1283,15 +1356,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==7){
 
-        ifstream toplot1("telescope3d.txt");
-
-        QFile checkfile3("telescope3d.txt");
+        QFile checkfile3(qptdpath+"telescope3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/telescope3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1324,15 +1399,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==8){
 
-        ifstream toplot1("ccd3d.txt");
-
-        QFile checkfile3("ccd3d.txt");
+        QFile checkfile3(qptdpath+"ccd3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/ccd3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1365,15 +1442,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==9){
 
-        ifstream toplot1("grating3d.txt");
-
-        QFile checkfile3("grating3d.txt");
+        QFile checkfile3(qptdpath+"grating3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/grating3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1406,15 +1485,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==10){
 
-        ifstream toplot1("efficiency3d.txt");
-
-        QFile checkfile3("efficiency3d.txt");
+        QFile checkfile3(qptdpath+"efficiency3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/efficiency3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1447,15 +1528,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==11){
 
-        ifstream toplot1("overall3d.txt");
-
-        QFile checkfile3("overall3d.txt");
+        QFile checkfile3(qptdpath+"overall3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/overall3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1488,15 +1571,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==12){
 
-        ifstream toplot1("surfaces3d.txt");
-
-        QFile checkfile3("surfaces3d.txt");
+        QFile checkfile3(qptdpath+"surfaces3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/surfaces3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1529,15 +1614,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==13){
 
-        ifstream toplot1("layout3d.txt");
-
-        QFile checkfile3("layout3d.txt");
+        QFile checkfile3(qptdpath+"layout3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/layout3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1570,15 +1657,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==14){
 
-        ifstream toplot1("neon3d.txt");
-
-        QFile checkfile3("neon3d.txt");
+        QFile checkfile3(qptdpath+"neon3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/neon3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1612,15 +1701,17 @@ void pthreed::on_pushButton_3_clicked()
 
         ui->customPlot->clearPlottables();
 
-        ifstream toplot1("planck3d.txt");
-
-        QFile checkfile3("planck3d.txt");
+        QFile checkfile3(qptdpath+"planck3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/planck3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1652,15 +1743,17 @@ void pthreed::on_pushButton_3_clicked()
     }
     if(ui->comboBox->currentIndex()==16){
 
-        ifstream toplot1("balmer3d.txt");
-
-        QFile checkfile3("balmer3d.txt");
+        QFile checkfile3(qptdpath+"balmer3d.txt");
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        std::ostringstream datNameStream(ptdpath);
+        datNameStream<<ptdpath<<"/balmer3d.txt";
+        std::string datName = datNameStream.str();
+        ifstream toplot1(datName.c_str());
 
         ui->customPlot->clearPlottables();
 

@@ -134,8 +134,6 @@ classical::classical(QWidget *parent) :
     ui->comboBox->addItem("Balmer Absorption");
     ui->comboBox->addItem("Neon Emission");
 
-    ui->lineEdit_3->setText("/home/daniels/Silent/silent/SILENT");
-
 }
 
 classical::~classical()
@@ -143,20 +141,31 @@ classical::~classical()
     delete ui;
 }
 
-
+void classical::seData(QString str)
+{
+    ui->lineEdit_3->setText(str);
+}
 
 void classical::on_checkBox_clicked()
 {
     ui->doubleSpinBox_23->setEnabled(false);
     ui->checkBox_2->setChecked(false);
+    ui->checkBox_3->setChecked(false);
 }
 
 void classical::on_checkBox_2_clicked()
 {
     ui->doubleSpinBox_23->setEnabled(true);
     ui->checkBox->setChecked(false);
+    ui->checkBox_3->setChecked(false);
 }
 
+void classical::on_checkBox_3_clicked()
+{
+    ui->doubleSpinBox_23->setEnabled(false);
+    ui->checkBox_2->setChecked(false);
+    ui->checkBox->setChecked(false);
+}
 
 
 // efficiency at slit
@@ -194,6 +203,13 @@ void classical::on_pushButton_2_clicked()
             relativ2+=sdisccl*sqrt(M_PI/2)/2;
         }
         slitEffcl=2*relativ1*2*relativ2/pow((sdisccl*sqrt(M_PI/2)),2);
+        QString SlitEffcl=QString::number(slitEffcl*100);
+        ui->lineEdit_9->setText(SlitEffcl);
+    }
+
+    // slitless
+    if(ui->checkBox_3->isChecked()){
+        slitEffcl=1.0;
         QString SlitEffcl=QString::number(slitEffcl*100);
         ui->lineEdit_9->setText(SlitEffcl);
     }
@@ -276,6 +292,14 @@ void classical::on_pushButton_3_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
     classical::vecresize();
+
+    if(ui->checkBox_3->isChecked()){
+        scl=tan(ui->doubleSpinBox_13->value()/180*M_PI/3600)*ui->doubleSpinBox_14->value();
+    }
+
+    else{
+        scl = ui->doubleSpinBox_22->value();
+    }
 
     qCPath = ui->lineEdit_3->text();
     cPath = qCPath.toUtf8().constData();

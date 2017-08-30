@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'pthreed.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -53,8 +53,10 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit;
     QPushButton *pushButton_4;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *label_6;
+    QLineEdit *lineEdit_2;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
     QVBoxLayout *verticalLayout_2;
     QCustomPlot *customPlot;
     QHBoxLayout *horizontalLayout_2;
@@ -86,7 +88,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1035, 464));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1047, 452));
         horizontalLayout_5 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         verticalLayout = new QVBoxLayout();
@@ -169,16 +171,29 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_4);
 
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        label_6 = new QLabel(scrollAreaWidgetContents);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        horizontalLayout_7->addWidget(label_6);
+
+        lineEdit_2 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_7->addWidget(lineEdit_2);
+
+
+        verticalLayout->addLayout(horizontalLayout_7);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
-
-        pushButton = new QPushButton(scrollAreaWidgetContents);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy);
-
-        verticalLayout->addWidget(pushButton);
 
 
         horizontalLayout_5->addLayout(verticalLayout);
@@ -187,11 +202,11 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         customPlot = new QCustomPlot(scrollAreaWidgetContents);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
-        customPlot->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
+        customPlot->setSizePolicy(sizePolicy2);
         customPlot->setMinimumSize(QSize(800, 300));
 
         verticalLayout_2->addWidget(customPlot);
@@ -256,25 +271,24 @@ public:
 
 
         retranslateUi(pthreed);
-        QObject::connect(pushButton, SIGNAL(clicked()), pthreed, SLOT(close()));
 
         QMetaObject::connectSlotsByName(pthreed);
     } // setupUi
 
     void retranslateUi(QDialog *pthreed)
     {
-        pthreed->setWindowTitle(QApplication::translate("pthreed", "Dialog", 0));
-        pushButton_2->setText(QApplication::translate("pthreed", "find values", 0));
-        pushButton_3->setText(QApplication::translate("pthreed", "Plot", 0));
-        label_5->setText(QApplication::translate("pthreed", "Font Size:", 0));
-        checkBox_15->setText(QApplication::translate("pthreed", "pdf", 0));
-        checkBox_16->setText(QApplication::translate("pthreed", "png", 0));
-        pushButton_4->setText(QApplication::translate("pthreed", "Save", 0));
-        pushButton->setText(QApplication::translate("pthreed", "Close", 0));
-        label->setText(QApplication::translate("pthreed", "x1:", 0));
-        label_2->setText(QApplication::translate("pthreed", "x2:", 0));
-        label_3->setText(QApplication::translate("pthreed", "y1:", 0));
-        label_4->setText(QApplication::translate("pthreed", "y2:", 0));
+        pthreed->setWindowTitle(QApplication::translate("pthreed", "Dialog", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("pthreed", "find values", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("pthreed", "Plot", Q_NULLPTR));
+        label_5->setText(QApplication::translate("pthreed", "Font Size:", Q_NULLPTR));
+        checkBox_15->setText(QApplication::translate("pthreed", "pdf", Q_NULLPTR));
+        checkBox_16->setText(QApplication::translate("pthreed", "png", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("pthreed", "Save", Q_NULLPTR));
+        label_6->setText(QApplication::translate("pthreed", "Work Path:", Q_NULLPTR));
+        label->setText(QApplication::translate("pthreed", "x1:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("pthreed", "x2:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("pthreed", "y1:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("pthreed", "y2:", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vphg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -472,28 +472,28 @@ public:
 
     void retranslateUi(QDialog *VPHG)
     {
-        VPHG->setWindowTitle(QApplication::translate("VPHG", "Dialog", 0));
-        label->setText(QApplication::translate("VPHG", "<html><head/><body><p>Grating Line Density [l/mm]:</p></body></html>", 0));
-        label_2->setText(QApplication::translate("VPHG", "<html><head/><body><p>Center Wavelength [nm]:</p></body></html>", 0));
-        label_7->setText(QApplication::translate("VPHG", "<html><head/><body><p>Upper Wavelength [nm]:</p></body></html>", 0));
-        label_8->setText(QApplication::translate("VPHG", "<html><head/><body><p>Lower Wavelength [nm]:</p></body></html>", 0));
-        label_10->setText(QApplication::translate("VPHG", "<html><head/><body><p>Tune Wavelength [nm]:</p></body></html>", 0));
-        label_3->setText(QApplication::translate("VPHG", "Index of Refraction of DCG Layer:", 0));
-        label_4->setText(QApplication::translate("VPHG", "Semiamplitude of Index Modulation:", 0));
-        label_9->setText(QApplication::translate("VPHG", "<html><head/><body><p>Thickness of DCG Layer [mm]:</p></body></html>", 0));
-        label_5->setText(QApplication::translate("VPHG", "<html><head/><body><p>Upper Thickness of DCG Layer [mm]:</p></body></html>", 0));
-        label_6->setText(QApplication::translate("VPHG", "<html><head/><body><p>Lower Thickness of DCG Layer [mm]:</p></body></html>", 0));
-        checkBox->setText(QApplication::translate("VPHG", "vs. Thickness", 0));
-        checkBox_2->setText(QApplication::translate("VPHG", "vs. Wavelength", 0));
-        checkBox_3->setText(QApplication::translate("VPHG", "Tune", 0));
-        label_12->setText(QApplication::translate("VPHG", "Maximum Index Modulation:", 0));
-        label_11->setText(QApplication::translate("VPHG", "Bragg Angle:", 0));
-        label_13->setText(QApplication::translate("VPHG", "Tune Bragg Angle:", 0));
-        label_14->setText(QApplication::translate("VPHG", "Font Size:", 0));
-        pushButton_2->setText(QApplication::translate("VPHG", "Save As:", 0));
-        checkBox_4->setText(QApplication::translate("VPHG", "pdf", 0));
-        checkBox_5->setText(QApplication::translate("VPHG", "png", 0));
-        pushButton->setText(QApplication::translate("VPHG", "Close", 0));
+        VPHG->setWindowTitle(QApplication::translate("VPHG", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("VPHG", "<html><head/><body><p>Grating Line Density [l/mm]:</p></body></html>", Q_NULLPTR));
+        label_2->setText(QApplication::translate("VPHG", "<html><head/><body><p>Center Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_7->setText(QApplication::translate("VPHG", "<html><head/><body><p>Upper Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_8->setText(QApplication::translate("VPHG", "<html><head/><body><p>Lower Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_10->setText(QApplication::translate("VPHG", "<html><head/><body><p>Tune Wavelength [nm]:</p></body></html>", Q_NULLPTR));
+        label_3->setText(QApplication::translate("VPHG", "Index of Refraction of DCG Layer:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("VPHG", "Semiamplitude of Index Modulation:", Q_NULLPTR));
+        label_9->setText(QApplication::translate("VPHG", "<html><head/><body><p>Thickness of DCG Layer [mm]:</p></body></html>", Q_NULLPTR));
+        label_5->setText(QApplication::translate("VPHG", "<html><head/><body><p>Upper Thickness of DCG Layer [mm]:</p></body></html>", Q_NULLPTR));
+        label_6->setText(QApplication::translate("VPHG", "<html><head/><body><p>Lower Thickness of DCG Layer [mm]:</p></body></html>", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("VPHG", "vs. Thickness", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("VPHG", "vs. Wavelength", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("VPHG", "Tune", Q_NULLPTR));
+        label_12->setText(QApplication::translate("VPHG", "Maximum Index Modulation:", Q_NULLPTR));
+        label_11->setText(QApplication::translate("VPHG", "Bragg Angle:", Q_NULLPTR));
+        label_13->setText(QApplication::translate("VPHG", "Tune Bragg Angle:", Q_NULLPTR));
+        label_14->setText(QApplication::translate("VPHG", "Font Size:", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("VPHG", "Save As:", Q_NULLPTR));
+        checkBox_4->setText(QApplication::translate("VPHG", "pdf", Q_NULLPTR));
+        checkBox_5->setText(QApplication::translate("VPHG", "png", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("VPHG", "Close", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'framecl.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -64,7 +64,6 @@ public:
     QLabel *label_4;
     QLineEdit *lineEdit_3;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
     QCustomPlot *customPlot;
 
     void setupUi(QDialog *FrameCl)
@@ -86,7 +85,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 838, 414));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 900, 402));
         horizontalLayout_6 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
         verticalLayout = new QVBoxLayout();
@@ -247,13 +246,6 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
-        pushButton = new QPushButton(scrollAreaWidgetContents);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy);
-
-        verticalLayout->addWidget(pushButton);
-
 
         horizontalLayout_6->addLayout(verticalLayout);
 
@@ -274,25 +266,23 @@ public:
 
 
         retranslateUi(FrameCl);
-        QObject::connect(pushButton, SIGNAL(clicked()), FrameCl, SLOT(close()));
 
         QMetaObject::connectSlotsByName(FrameCl);
     } // setupUi
 
     void retranslateUi(QDialog *FrameCl)
     {
-        FrameCl->setWindowTitle(QApplication::translate("FrameCl", "Dialog", 0));
-        pushButton_2->setText(QApplication::translate("FrameCl", "Show", 0));
-        pushButton_4->setText(QApplication::translate("FrameCl", "Show", 0));
-        label->setText(QApplication::translate("FrameCl", "Pixel x:", 0));
-        label_2->setText(QApplication::translate("FrameCl", "Pixel y:", 0));
-        label_3->setText(QApplication::translate("FrameCl", "TextLabel", 0));
-        checkBox->setText(QApplication::translate("FrameCl", "pdf", 0));
-        checkBox_2->setText(QApplication::translate("FrameCl", "png", 0));
-        checkBox_3->setText(QApplication::translate("FrameCl", "txt", 0));
-        pushButton_3->setText(QApplication::translate("FrameCl", "Save", 0));
-        label_4->setText(QApplication::translate("FrameCl", "Work Path", 0));
-        pushButton->setText(QApplication::translate("FrameCl", "Close", 0));
+        FrameCl->setWindowTitle(QApplication::translate("FrameCl", "Dialog", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("FrameCl", "Show", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("FrameCl", "Show", Q_NULLPTR));
+        label->setText(QApplication::translate("FrameCl", "Pixel x:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("FrameCl", "Pixel y:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("FrameCl", "TextLabel", Q_NULLPTR));
+        checkBox->setText(QApplication::translate("FrameCl", "pdf", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("FrameCl", "png", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("FrameCl", "txt", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("FrameCl", "Save", Q_NULLPTR));
+        label_4->setText(QApplication::translate("FrameCl", "Work Path", Q_NULLPTR));
     } // retranslateUi
 
 };

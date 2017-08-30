@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'echelle.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -53,8 +53,10 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLineEdit *lineEdit;
     QPushButton *pushButton_4;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *label_8;
+    QLineEdit *lineEdit_2;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
     QVBoxLayout *verticalLayout_2;
     QCustomPlot *customPlot;
     QHBoxLayout *horizontalLayout_4;
@@ -91,7 +93,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1175, 502));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1305, 477));
         horizontalLayout_5 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         verticalLayout = new QVBoxLayout();
@@ -177,16 +179,26 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_3);
 
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
+        label_8 = new QLabel(scrollAreaWidgetContents);
+        label_8->setObjectName(QStringLiteral("label_8"));
+
+        horizontalLayout_7->addWidget(label_8);
+
+        lineEdit_2 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        sizePolicy1.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy1);
+
+        horizontalLayout_7->addWidget(lineEdit_2);
+
+
+        verticalLayout->addLayout(horizontalLayout_7);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
-
-        pushButton = new QPushButton(scrollAreaWidgetContents);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy);
-
-        verticalLayout->addWidget(pushButton);
 
 
         horizontalLayout_5->addLayout(verticalLayout);
@@ -294,27 +306,26 @@ public:
 
 
         retranslateUi(Echelle);
-        QObject::connect(pushButton, SIGNAL(clicked()), Echelle, SLOT(close()));
 
         QMetaObject::connectSlotsByName(Echelle);
     } // setupUi
 
     void retranslateUi(QDialog *Echelle)
     {
-        Echelle->setWindowTitle(QApplication::translate("Echelle", "Dialog", 0));
-        pushButton_3->setText(QApplication::translate("Echelle", "find values", 0));
-        pushButton_2->setText(QApplication::translate("Echelle", "Plot", 0));
-        checkBox_16->setText(QApplication::translate("Echelle", "pdf", 0));
-        checkBox_17->setText(QApplication::translate("Echelle", "png", 0));
-        label_7->setText(QApplication::translate("Echelle", "Font Size:", 0));
-        pushButton_4->setText(QApplication::translate("Echelle", "Save", 0));
-        pushButton->setText(QApplication::translate("Echelle", "Close", 0));
-        label->setText(QApplication::translate("Echelle", "x1:", 0));
-        label_2->setText(QApplication::translate("Echelle", "x2:", 0));
-        label_3->setText(QApplication::translate("Echelle", "y1:", 0));
-        label_4->setText(QApplication::translate("Echelle", "y2:", 0));
-        label_5->setText(QApplication::translate("Echelle", "Pixel x:", 0));
-        label_6->setText(QApplication::translate("Echelle", "Pixel y:", 0));
+        Echelle->setWindowTitle(QApplication::translate("Echelle", "Dialog", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("Echelle", "find values", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("Echelle", "Plot", Q_NULLPTR));
+        checkBox_16->setText(QApplication::translate("Echelle", "pdf", Q_NULLPTR));
+        checkBox_17->setText(QApplication::translate("Echelle", "png", Q_NULLPTR));
+        label_7->setText(QApplication::translate("Echelle", "Font Size:", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("Echelle", "Save", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Echelle", "Work Path:", Q_NULLPTR));
+        label->setText(QApplication::translate("Echelle", "x1:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("Echelle", "x2:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("Echelle", "y1:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Echelle", "y2:", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Echelle", "Pixel x:", Q_NULLPTR));
+        label_6->setText(QApplication::translate("Echelle", "Pixel y:", Q_NULLPTR));
     } // retranslateUi
 
 };

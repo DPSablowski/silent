@@ -17,6 +17,7 @@
 #include <QColor>
 #include <QtGui>
 #include <QFileDialog>
+#include <QDir>
 
 
 using namespace std;
@@ -140,6 +141,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->doubleSpinBox_21->setEnabled(false);
     ui->doubleSpinBox_28->setEnabled(true);
     ui->doubleSpinBox_27->setEnabled(true);
+
+    ui->lineEdit_2->setText(QDir::currentPath());
 
     B1=1.39757037;
     B2=0.159201403;
@@ -334,12 +337,79 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->customPlot_3->axisRect()->setupFullAxesBox(true);
     ui->customPlot_4->axisRect()->setupFullAxesBox(true);
     ui->customPlot_5->axisRect()->setupFullAxesBox(true);
+
+    connect(ui->customPlot, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip(QMouseEvent*)));
+    connect(ui->customPlot_2, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip_2(QMouseEvent*)));
+    connect(ui->customPlot_3, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip_3(QMouseEvent*)));
+    connect(ui->customPlot_4, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip_4(QMouseEvent*)));
+    connect(ui->customPlot_5, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip_5(QMouseEvent*)));
+
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip_2(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot_2->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot_2->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip_3(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot_3->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot_3->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip_4(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot_4->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot_4->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip_5(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot_5->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot_5->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
 }
 
 inline double std_rand()
@@ -456,6 +526,7 @@ void MainWindow::on_spinBox_4_valueChanged()
 void MainWindow::on_actionClassical_triggered()
 {
     qClassical = new classical(this);
+    qClassical->seData(ui->lineEdit_2->text());
     qClassical->show();
 }
 
@@ -508,6 +579,7 @@ void MainWindow::on_doubleSpinBox_3_valueChanged()
 void MainWindow::on_checkBox_8_clicked()
 {
     ui->checkBox_9->setChecked(false);
+    ui->checkBox->setChecked(false);
     ui->doubleSpinBox_15->setEnabled(false);
 }
 
@@ -515,7 +587,16 @@ void MainWindow::on_checkBox_8_clicked()
 void MainWindow::on_checkBox_9_clicked()
 {
     ui->checkBox_8->setChecked(false);
+    ui->checkBox->setChecked(false);
     ui->doubleSpinBox_15->setEnabled(true);
+}
+
+// slitless
+void MainWindow::on_checkBox_clicked()
+{
+    ui->checkBox_8->setChecked(false);
+    ui->checkBox_9->setChecked(false);
+    ui->doubleSpinBox_15->setEnabled(false);
 }
 
 
@@ -554,6 +635,12 @@ void MainWindow::on_pushButton_3_clicked()
         }
         slitEff=2*relativ1*2*relativ2/pow((sdisc*sqrt(M_PI/2)),2);
         ui->doubleSpinBox_30->setValue(slitEff*100);
+    }
+
+    // slitless
+    if(ui->checkBox->isChecked()){
+        slitEff=1.0;
+        ui->doubleSpinBox_30->setValue(100);
     }
 
 }
@@ -843,6 +930,13 @@ void MainWindow::parameters()
     MainWindow::on_pushButton_3_clicked();
     MainWindow::on_pushButton_2_clicked();
     ui->progressBar->setValue(0);
+
+    if(ui->checkBox->isChecked()){
+        s = tan(ui->doubleSpinBox_29->value()/3600*M_PI/180)*ui->doubleSpinBox_35->value();
+    }
+    else{
+        s = ui->doubleSpinBox_14->value();
+    }
 
     int counter=0, bini=0, bini2=0, bini3=0, bini4=0, bini5=0, bini6=0, progress=0;
     double Il1, Il2, Il1c, Il2c, reflectance=1, index;
@@ -2357,6 +2451,14 @@ void MainWindow::Echellogram()
 
     this->setCursor(QCursor(Qt::WaitCursor));
 
+    if(ui->checkBox->isChecked()){
+        s = tan(ui->doubleSpinBox_29->value()/3600*M_PI/180)*ui->doubleSpinBox_35->value();
+    }
+    else{
+        s = ui->doubleSpinBox_14->value();
+    }
+
+
     lw.resize(lx/Bx);
     b1c.resize(lx/Bx);
     o.resize(lx/Bx);
@@ -2607,6 +2709,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_actionParameters_triggered()
 {
     qEchelle = new Echelle(this);
+    qEchelle->seData(ui->lineEdit_2->text());
     qEchelle->show();
 }
 
@@ -2732,6 +2835,7 @@ void MainWindow::on_doubleSpinBox_21_valueChanged()
 void MainWindow::on_actionClassical_2_triggered()
 {
     qPClassical = new PClassical(this);
+    qPClassical->seData(ui->lineEdit_2->text());
     qPClassical->show();
 }
 
@@ -2783,12 +2887,14 @@ void MainWindow::on_doubleSpinBox_26_valueChanged()
 void MainWindow::on_action3D_Spectrograph_triggered()
 {
     qThreed = new threed(this);
+    qThreed->seData(ui->lineEdit_2->text());
     qThreed->show();
 }
 
 void MainWindow::on_action3D_triggered()
 {
     qPthreed = new pthreed(this);
+    qPthreed->seData(ui->lineEdit_2->text());
     qPthreed->show();
 }
 
@@ -2796,12 +2902,14 @@ void MainWindow::on_action3D_triggered()
 void MainWindow::on_action3D_Frame_triggered()
 {
     qFrame3D = new Frame3D(this);
+    qFrame3D->seData(ui->lineEdit_2->text());
     qFrame3D->show();
 }
 
 void MainWindow::on_actionEchelle_Frame_triggered()
 {
     qFrameEchelle = new FrameEchelle(this);
+    qFrameEchelle->seData(ui->lineEdit_2->text());
     qFrameEchelle->show();
 }
 
@@ -3558,6 +3666,7 @@ void MainWindow::on_pushButton_7_clicked()
     }
 
     qFrameEchelle = new FrameEchelle(this);
+    qFrameEchelle->seData(ui->lineEdit_2->text());
     qFrameEchelle->show();
 
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -4014,6 +4123,7 @@ void MainWindow::on_doubleSpinBox_34_valueChanged()
 void MainWindow::on_actionClassical_Frame_triggered()
 {
     qFrameCl = new FrameCl(this);
+    qFrameCl->seData(ui->lineEdit_2->text());
     qFrameCl->show();
 }
 

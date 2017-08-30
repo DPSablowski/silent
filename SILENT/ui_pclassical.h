@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'pclassical.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -312,19 +312,19 @@ public:
 
     void retranslateUi(QDialog *PClassical)
     {
-        PClassical->setWindowTitle(QApplication::translate("PClassical", "Dialog", 0));
-        pushButton_3->setText(QApplication::translate("PClassical", "find values", 0));
-        pushButton_2->setText(QApplication::translate("PClassical", "Plot", 0));
-        label_5->setText(QApplication::translate("PClassical", "Font Size:", 0));
-        checkBox_14->setText(QApplication::translate("PClassical", "pdf", 0));
-        checkBox_15->setText(QApplication::translate("PClassical", "png", 0));
-        pushButton_4->setText(QApplication::translate("PClassical", "Save", 0));
-        label_6->setText(QApplication::translate("PClassical", "Work Path:", 0));
-        pushButton->setText(QApplication::translate("PClassical", "Close", 0));
-        label->setText(QApplication::translate("PClassical", "x1:", 0));
-        label_2->setText(QApplication::translate("PClassical", "x2:", 0));
-        label_3->setText(QApplication::translate("PClassical", "y1:", 0));
-        label_4->setText(QApplication::translate("PClassical", "y2:", 0));
+        PClassical->setWindowTitle(QApplication::translate("PClassical", "Dialog", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("PClassical", "find values", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("PClassical", "Plot", Q_NULLPTR));
+        label_5->setText(QApplication::translate("PClassical", "Font Size:", Q_NULLPTR));
+        checkBox_14->setText(QApplication::translate("PClassical", "pdf", Q_NULLPTR));
+        checkBox_15->setText(QApplication::translate("PClassical", "png", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("PClassical", "Save", Q_NULLPTR));
+        label_6->setText(QApplication::translate("PClassical", "Work Path:", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("PClassical", "Close", Q_NULLPTR));
+        label->setText(QApplication::translate("PClassical", "x1:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("PClassical", "x2:", Q_NULLPTR));
+        label_3->setText(QApplication::translate("PClassical", "y1:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("PClassical", "y2:", Q_NULLPTR));
     } // retranslateUi
 
 };
