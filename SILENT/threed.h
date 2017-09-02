@@ -117,6 +117,11 @@ private slots:
 
     void on_pushButton_6_clicked();
 
+    void showPointToolTip(QMouseEvent *event);
+
+    void showPointToolTip_2(QMouseEvent *event);
+
+
 private:
     Ui::threed *ui;
     pthreed *qPthreed;

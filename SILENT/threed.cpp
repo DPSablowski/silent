@@ -153,6 +153,13 @@ threed::threed(QWidget *parent) :
     ui->spinBox_6->setValue(35);
     slits3d=ui->spinBox_6->value();
 
+    ui->customPlot->axisRect()->setupFullAxesBox(true);
+    ui->customPlot_2->axisRect()->setupFullAxesBox(true);
+
+    connect(ui->customPlot, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip(QMouseEvent*)));
+    connect(ui->customPlot_2, SIGNAL(mouseMove(QMouseEvent*)), this ,SLOT(showPointToolTip_2(QMouseEvent*)));
+
+
     ui->comboBox->addItem("Planck");
     ui->comboBox->addItem("Balmer");
     ui->comboBox->addItem("Neon");
@@ -162,6 +169,30 @@ threed::threed(QWidget *parent) :
 threed::~threed()
 {
     delete ui;
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
+}
+
+//********************************************************
+//show mouse coordinates
+//********************************************************
+void MainWindow::showPointToolTip_2(QMouseEvent *event)
+{
+
+    double xc = ui->customPlot_2->xAxis->pixelToCoord(event->pos().x());
+    double yc = ui->customPlot_2->yAxis->pixelToCoord(event->pos().y());
+
+    setToolTip(QString("%1 , %2").arg(xc).arg(yc));
 }
 
 void threed::seData(QString str)
