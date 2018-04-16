@@ -16,6 +16,9 @@
 #include <notes.h>
 #include <QtCore>
 #include <QtGui>
+#include <fpe.h>
+#include <czernyturner.h>
+#include <petzval.h>
 
 namespace Ui {
 class MainWindow;
@@ -201,6 +204,20 @@ private slots:
 
     void showPointToolTip_5(QMouseEvent *event);
 
+    void on_actionFPE_triggered();
+
+    void on_actionCzerny_Turner_triggered();
+
+    void on_actionPetzval_triggered();
+
+    void on_pushButton_9_clicked();
+
+    void on_comboBox_4_currentIndexChanged();
+
+    void on_pushButton_10_clicked();
+
+    void on_checkBox_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     classical *qClassical;
@@ -215,7 +232,10 @@ private:
     FrameCl *qFrameCl;
     TSI *qTSI;
     Notes *qNotes;
+    FPE *qFPE;
     QString mFilename;
+    CzernyTurner *qCT;
+    Petzval *qPetzval;
 
 };
 

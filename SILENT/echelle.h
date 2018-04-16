@@ -16,7 +16,7 @@ public:
     ~Echelle();
 
 public slots:
-    void seData(QString str);
+    void seData(QString str, int pix, int piy);
 
 private slots:
     void on_pushButton_2_clicked();

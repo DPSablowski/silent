@@ -57,7 +57,6 @@ classical::classical(QWidget *parent) :
     f2cl=ui->doubleSpinBox_21->value();;
 
     ui->doubleSpinBox_22->setValue(0.05);
-    scl=ui->doubleSpinBox_22->value();
 
     ui->doubleSpinBox_23->setValue(0);
     slcl=ui->doubleSpinBox_23->value();
@@ -76,6 +75,14 @@ classical::classical(QWidget *parent) :
     seeingcl=ui->doubleSpinBox_13->value();
 
     sdisccl=tan(M_PI/180*seeingcl/3600)*ftelcl;
+
+    if(ui->checkBox_3->isChecked()){
+
+        scl=sdisccl;
+    }
+    else{
+         scl=ui->doubleSpinBox_22->value();
+    }
 
     ui->doubleSpinBox->setValue(0.009);
     pcl=ui->doubleSpinBox->value();
@@ -171,6 +178,7 @@ void classical::on_checkBox_3_clicked()
 // efficiency at slit
 void classical::on_pushButton_2_clicked()
 {
+    sdisccl = sdisccl/2.3548;
     // circular slit
     if(ui->checkBox->isChecked()){
 
@@ -178,9 +186,9 @@ void classical::on_pushButton_2_clicked()
         int steps=scl/2/slitstep+1;
         double relativ=0;
         for(int i =0; i<steps-1; i++){
-            relativ+=(exp(-2*i*slitstep*i*slitstep/sdisccl/sdisccl)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisccl/sdisccl))/2*slitstep;
+            relativ+=(exp(-i*slitstep*i*slitstep/2/sdisccl/sdisccl)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisccl/sdisccl))/2*slitstep;
         }
-        slitEffcl=pow((2*relativ/(sdisccl*sqrt(M_PI/2))),2);
+        slitEffcl=pow((2*relativ/(sdisccl*sqrt(M_PI*2))),2);
         QString SlitEffcl=QString::number(slitEffcl*100);
         ui->lineEdit_9->setText(SlitEffcl);
     }
@@ -193,16 +201,16 @@ void classical::on_pushButton_2_clicked()
         int steps2=slcl/2/slitstep+1;
         double relativ1=0, relativ2=0;
         for(int i =0; i<steps1-1; i++){
-            relativ1+=(exp(-2*i*slitstep*i*slitstep/sdisccl/sdisccl)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisccl/sdisccl))/2*slitstep;
+            relativ1+=(exp(-i*slitstep*i*slitstep/2/sdisccl/sdisccl)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisccl/sdisccl))/2*slitstep;
         }
         if(slcl!=0){
         for(int i =0; i<steps2-1; i++){
-            relativ2+=(exp(-2*i*slitstep*i*slitstep/sdisccl/sdisccl)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisccl/sdisccl))/2*slitstep;
+            relativ2+=(exp(-i*slitstep*i*slitstep/2/sdisccl/sdisccl)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisccl/sdisccl))/2*slitstep;
         }}
         else{
-            relativ2+=sdisccl*sqrt(M_PI/2)/2;
+            relativ2+=sdisccl*sqrt(M_PI*2)/2;
         }
-        slitEffcl=2*relativ1*2*relativ2/pow((sdisccl*sqrt(M_PI/2)),2);
+        slitEffcl=2*relativ1*2*relativ2/pow((sdisccl*sqrt(M_PI*2)),2);
         QString SlitEffcl=QString::number(slitEffcl*100);
         ui->lineEdit_9->setText(SlitEffcl);
     }
@@ -213,6 +221,7 @@ void classical::on_pushButton_2_clicked()
         QString SlitEffcl=QString::number(slitEffcl*100);
         ui->lineEdit_9->setText(SlitEffcl);
     }
+    sdisccl = sdisccl*2.3548;
 
 }
 
@@ -323,7 +332,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile1(datName.c_str());
 
     if(!checkfile1.exists()){
-        QMessageBox::information(this, "Error", "Reflection data of aluminium not available!");
+        QMessageBox::information(this, "Error", "Reflection data "+checkfile1.fileName()+" of aluminium not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -357,7 +366,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Reflection data of UV enhanced aluminium not available!");
+        QMessageBox::information(this, "Error", "Reflection data "+checkfile2.fileName()+" of UV enhanced aluminium not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -390,7 +399,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile3(dat3Name.c_str());
 
     if(!checkfile3.exists()){
-        QMessageBox::information(this, "Error", "Reflection data of protected silver not available!");
+        QMessageBox::information(this, "Error", "Reflection data "+checkfile3.fileName()+" of protected silver not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -424,7 +433,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile4(dat4Name.c_str());
 
     if(!checkfile4.exists()){
-        QMessageBox::information(this, "Error", "Reflection data of protected gold not available!");
+        QMessageBox::information(this, "Error", "Reflection data "+checkfile4.fileName()+" of protected gold not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -458,7 +467,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile5(dat5Name.c_str());
 
     if(!checkfile5.exists()){
-        QMessageBox::information(this, "Error", "Transmission data of VIS AR coating not available!");
+        QMessageBox::information(this, "Error", "Transmission data "+checkfile5.fileName()+" of VIS AR coating not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -595,7 +604,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile6(dat17Name.c_str());
 
     if(!checkfile6.exists()){
-        QMessageBox::information(this, "Error", "Neon line list neon_line.txt not available!");
+        QMessageBox::information(this, "Error", "Neon line list "+checkfile6.fileName()+" not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -628,7 +637,7 @@ void classical::on_pushButton_3_clicked()
     QFile checkfile7(dat18Name.c_str());
 
     if(!checkfile7.exists()){
-        QMessageBox::information(this, "Error", "Balmer line list absor_line.txt not available!");
+        QMessageBox::information(this, "Error", "Balmer line list "+checkfile7.fileName()+" not available!");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
@@ -764,8 +773,9 @@ void classical::on_pushButton_3_clicked()
         reflectance=reflectance*bbclt[i];
         }
 
-        Rcl[i] = wcl[i]*ncl*f1cl*gcl/(cos(M_PI/180*acl)*scl);
         Acl[i] = cos(M_PI/180*acl)/cos(M_PI/180*(bcl-bmcl));
+        Rcl[i] = wcl[i]*ncl*f1cl*gcl/(cos(M_PI/180*acl)*scl*Acl[i]);
+
         s2cl[i] = Acl[i] * f2cl/f1cl*scl;
         Nfcl[i] = s2cl[i]/pcl/2;
         Trcl[i] = 1-0.0091224/cos(M_PI/180*zcl)/(pow(wcl[i]*1000,4));
@@ -1140,6 +1150,14 @@ void classical::on_doubleSpinBox_22_valueChanged()
     skyslitcl=atan(scl/ftelcl)*3600*180/M_PI;
     QString Output=QString::number(skyslitcl);
     ui->lineEdit_10->setText(Output);
+
+    if(ui->checkBox_3->isChecked()){
+
+        scl=sdisccl;
+    }
+    else{
+         scl=ui->doubleSpinBox_22->value();
+    }
 }
 
 void classical::on_doubleSpinBox_23_valueChanged()
@@ -1248,16 +1266,16 @@ void classical::setvaluescl(){
     ui->spinBox_5->setValue(agcl);
 
     alcl=variablescl[31];
-    ui->spinBox_5->setValue(alcl);
+    ui->spinBox_6->setValue(alcl);
 
     aluvcl=variablescl[32];
-    ui->spinBox_5->setValue(aluvcl);
+    ui->spinBox_7->setValue(aluvcl);
 
     aucl=variablescl[33];
-    ui->spinBox_5->setValue(aucl);
+    ui->spinBox_8->setValue(aucl);
 
     bbcl=variablescl[34];
-    ui->spinBox_5->setValue(bbcl);
+    ui->spinBox_9->setValue(bbcl);
 }
 
 

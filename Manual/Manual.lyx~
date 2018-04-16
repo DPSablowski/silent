@@ -1,0 +1,574 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Silent - Spectrograph sImulation & EmulatioN Tool
+\end_layout
+
+\begin_layout Subtitle
+Manual
+\end_layout
+
+\begin_layout Author
+D.
+ P.
+ Sablowski
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This program is opensource and written with extensive use of the Qt library
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+www.qt.io
+\end_layout
+
+\end_inset
+
+ for GUI applications with C++.
+ Hence, it comes without warrenty.
+ However, the developer is thankfull for any usefull comments and bug reports
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Write an e-mail to dsablowski@aip.de
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Three types of spectragraphs are implemented yet: the classical one, the
+ échelle and 3D spectrograph.
+ These spectrographs are the most common ones in astronomical, medical,
+ chemical and biological applications.
+ The main goal is to hand-out a program to calculate in a fast manner, the
+ most important spectral parameters of these spectrographs to determine
+ the optical properties.
+ This will support the optical designer in finding start values for the
+ design/optimization with ray-tracing under the consideration of the scientific
+ requirements the instrument has to be adapted for.
+ Furthermore, the spectral format on the CCD is simulated and allows the
+ identification of the position of the spectral regions (lines) of interest.
+ This is especially important for échelle and 3D spectrographs were also
+ the spatial distribution of the spectra/diffraction orders on the CCD has
+ to be calculated.
+ Last but not least, it allows the calculation of a full CCD image with
+ specified (astronomical) sources, noise and efficiencies.
+ These outputs can be used to test data-reduction pipelines before the instrumen
+t is physically build and will finally help to make a desicion between different
+ designs.
+\end_layout
+
+\begin_layout Section
+Classical Spectrograph
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Classical-Spectrograph"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the program is started, the main window appears which shows the interface
+ for échelle spectrographs.
+ In the tool bar on top, select 
+\begin_inset Quotes eld
+\end_inset
+
+Spec - Classical
+\begin_inset Quotes erd
+\end_inset
+
+ to open the configuration editor for the classical spectrograph.
+ This interface should be more or less self-explanatory.
+ The blaze-efficiency corresponds to the maximum of the efficiency curve
+ of the grating.
+ The maximum appears at the blaze-wavelength which corresponds to the specified
+ blaze-angle.
+ Note that efficiency curves provided by most suppliers are limited to master
+ gratings and in general used replicated gratings suffer from much less
+ efficiencies.
+ 
+\end_layout
+
+\begin_layout Standard
+For calculating the efficiency at the input slit, a gaussian intensity distribut
+ion is used.
+ If 
+\begin_inset Quotes eld
+\end_inset
+
+circular
+\begin_inset Quotes erd
+\end_inset
+
+ slit is selected, the slit width corresponds to the diameter of this circular
+ input aperture.
+ When selecting 
+\begin_inset Quotes eld
+\end_inset
+
+rectangular
+\begin_inset Quotes erd
+\end_inset
+
+, the user can specify the slit length.
+ If this is set to zero, the efficiency will be calculated for an 
+\begin_inset Quotes eld
+\end_inset
+
+infinitely
+\begin_inset Quotes erd
+\end_inset
+
+ long slit.
+\end_layout
+
+\begin_layout Standard
+The efficiencies for the optical surfaces are interpolated with the use
+ of available reflection data from Thorlabs
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+www.thorlabs.com
+\end_layout
+
+\end_inset
+
+.
+ These files can be replaced in the local folder by custom data, if necessary.
+ Files are:
+\end_layout
+
+\begin_layout Itemize
+protected_Ag.txt: For the silver coating with protection layer.
+\end_layout
+
+\begin_layout Itemize
+protected_Al.txt: For the aluminium coating with protection layer.
+\end_layout
+
+\begin_layout Itemize
+protected_Au.txt: For the gold coating with protection layer.
+\end_layout
+
+\begin_layout Itemize
+uprotected_Au.txt: For unprotected gold coating.
+\end_layout
+
+\begin_layout Itemize
+UVEnhanced_Al.txt: For optimised reflection in the blue region of aluminium.
+\end_layout
+
+\begin_layout Itemize
+vis_ar.txt: For antireflection coating of lenses in the visible.
+\end_layout
+
+\begin_layout Standard
+As soon as the push button 
+\begin_inset Quotes eld
+\end_inset
+
+Parameters
+\begin_inset Quotes erd
+\end_inset
+
+ is hit, the program calculates relevant data and writes it to text-files.
+ When finished, a window for plotting these data can be opened from the
+ tool bar 
+\begin_inset Quotes eld
+\end_inset
+
+Parameters - Classical
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Choose the parameter you want to plot vs wavelength, hit the find value
+ button and then the plot botton.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Instrument Efficiency
+\begin_inset Quotes erd
+\end_inset
+
+ is the result under consideration of all optical surfaces, input slit,
+ CCD etc.
+ but without earth's atmosphere.
+ This is taken into account for the 
+\begin_inset Quotes eld
+\end_inset
+
+Overall Efficiency
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The window to plot these parameters can be opened multiple times, select
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Parameters - Classical
+\begin_inset Quotes erd
+\end_inset
+
+ in the menu bar again.
+\end_layout
+
+\begin_layout Standard
+To calculate spectra either one-dimensional or as whole images, the following
+ line lists are used (in current folder):
+\end_layout
+
+\begin_layout Itemize
+absor_line.txt: For (Balmer) absorption lines.
+\end_layout
+
+\begin_layout Itemize
+neon_line.txt: For neon emission line spectrum.
+\end_layout
+
+\begin_layout Itemize
+thar_uves.txt: For Thorium-Argon emission line spectrum.
+\end_layout
+
+\begin_layout Section
+Échelle Spectraphs
+\end_layout
+
+\begin_layout Standard
+The interface for échelle spectrographs is the main window which appears
+ after program has started.
+ It should be self-explanatory.
+ For details about slit, surface efficiency and blaze-effciency, see Sect.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Classical-Spectrograph"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the X-disperser there are four methods implemented, the naive diffraction
+ grating, dispersion prism (60°), volume-phase holographic grating and the
+ volume-phase holographic grism.
+ The diffraction grating is specified as common for ruled grating.
+ The prism is specified entirely by the use of the material.
+ Sellmeier equation is used to calculate the dispersion.
+ The VPH-Grating needs to be characterized by some parameters and the efficiency
+ of it is calculated after Kogelnik's theory.
+ Under 
+\begin_inset Quotes eld
+\end_inset
+
+Tools - VPHG
+\begin_inset Quotes erd
+\end_inset
+
+, there is a VPH grating tool to study the efficiency of VPHG.
+ The VPH-Grism is considered in symmetric path, e.i, the center wavelength
+ will pass through without deviation and both bratings have equal material
+ and angles.
+ The angle G in Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Grism"
+
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+Grism angle
+\begin_inset Quotes erd
+\end_inset
+
+ dislayed at bottom left in the window.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Grism.png
+	lyxscale 50
+	width 12cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Light path in an symmetric Grism.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Grism"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The plots at the right, showing averaged values for the efficiency, signal
+ and signal-to-noise ratio.
+ These values are averaged over the diffraction orders.
+ The separation between orders in pixels and the overlap of orders in wavelength
+ are also displayed.
+\end_layout
+
+\begin_layout Standard
+The parameters are computed and stored to text files, when pressing the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Parameters
+\begin_inset Quotes erd
+\end_inset
+
+ button.
+ These values can be plotted with 
+\begin_inset Quotes eld
+\end_inset
+
+Parameters - Echelle
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The échellogram is computable and visualized in the same manner.
+ 
+\end_layout
+
+\begin_layout Section
+3D-Spectrograph
+\end_layout
+
+\begin_layout Standard
+This type of spectrograph is currently implemented to support standard diffracti
+on grating and VPH grating.
+ Select 
+\begin_inset Quotes eld
+\end_inset
+
+Spec - 3D
+\begin_inset Quotes erd
+\end_inset
+
+ in the menu bar to open the configuration editor.
+\end_layout
+
+\begin_layout Standard
+In principle this is a classical spectrograph layout assumed, but the user
+ can specify the number of slitlets.
+ These are equidistantly distributed over the CCD in y direction.
+ For further information see Sect.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Classical-Spectrograph"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Tools
+\end_layout
+
+\begin_layout Standard
+Some additional tools are provided which can be selected in the menu bar.
+\end_layout
+
+\begin_layout Subsection
+VPHG
+\end_layout
+
+\begin_layout Standard
+This tool calculates properties of volume phase holographic gratings after
+ Kogelnik's theory.
+ Within this approximation, the maximum semiampitude is limited for a given
+ set of parameters.
+ This value is displayed at bottom left in the window and the specified
+ value has to be smaller.
+ The performance is calculated for the specified center wavelength and wavelengt
+h range.
+ There is also the possibility to simulate the behavior of the grating,
+ when tuned, e.i., the grating for a specified angle of incidence (AOI) and
+ angle of diffraction (AOD) is rotated for use in different wavelength ranges.
+ The specified center wavelength is fixed and the user can set a tune wavelength.
+\end_layout
+
+\begin_layout Subsection
+Optical Fibres
+\end_layout
+
+\begin_layout Standard
+This tool provides some basic behaviors of optical fibres.
+ There are several different doping options available.
+ The parameters will be plotted vs.
+ wavelength.
+ It has to be noted here that transmission and modal noise are not fully
+ implemented at this time.
+ This tool gives also a minium bend radius, which depends on the input f-ratio.
+\end_layout
+
+\begin_layout Subsection
+TSI
+\end_layout
+
+\begin_layout Standard
+The telescope-spectrograph-interface tool is used to specify details of
+ the connection between telescope and spectrograph.
+ This connection takes the optical train from the telescope focus to the
+ spectrograph main collimator into account.
+ This tool is currently not fully implemented.
+ Pressing the 
+\begin_inset Quotes eld
+\end_inset
+
+Apply
+\begin_inset Quotes erd
+\end_inset
+
+ button will generate a configuration file, which will be used for the spectrogr
+aph calculations.
+ Click 
+\begin_inset Quotes eld
+\end_inset
+
+Remove
+\begin_inset Quotes erd
+\end_inset
+
+ to delete that file.
+\end_layout
+
+\end_body
+\end_document

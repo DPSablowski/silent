@@ -13,7 +13,8 @@
 using namespace std;
 
 double x1, x2, y11, y2;
-string zeile, one, two;
+string zeile, one, two, ePath;
+QString qePath;
 
 Echelle::Echelle(QWidget *parent) : QDialog(parent),
     ui(new Ui::Echelle)
@@ -75,9 +76,11 @@ void Echelle::showPointToolTip(QMouseEvent *event)
     setToolTip(QString("%1 , %2").arg(xc).arg(yc));
 }
 
-void Echelle::seData(QString str)
+void Echelle::seData(QString str, int pix, int piy)
 {
     ui->lineEdit_2->setText(str);
+    ui->spinBox->setValue(pix);
+    ui->spinBox_2->setValue(piy);
 }
 
 //plot file
@@ -90,19 +93,25 @@ this->setCursor(QCursor(Qt::WaitCursor));
     y11=ui->doubleSpinBox_3->value();
     y2=ui->doubleSpinBox_4->value();
 
+    qePath=ui->lineEdit_2->text();
+    ePath =qePath.toUtf8().constData();
 
 
     if(ui->comboBox->currentIndex()==0){
 
-        ifstream toplot1("resolution.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/resolution.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("resolution.txt");
+
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
-            QMessageBox::information(this, "Error", "Parameters not calculated.");
+            QMessageBox::information(this, "Error", "Parameters "+checkfile3.fileName()+" not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -136,15 +145,19 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==1){
 
-        ifstream toplot1("twopixR.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/twopixR.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("twopixR.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
+
 
         int number_of_lines =0;
 
@@ -178,15 +191,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==2){
 
-        ifstream toplot2("dispersion.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/dispersion.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("dispersion.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -220,15 +236,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==3){
 
-        ifstream toplot2("anamorphism.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/anamorphism.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("anamorphism.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -260,15 +279,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==4){
 
-        ifstream toplot2("nyquist.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/nyquist.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("nyquist.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -300,15 +322,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==5){
 
-        ifstream toplot2("slit.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/slit.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("slit.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -340,15 +365,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==6){
 
-        ifstream toplot2("atmosphere.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/atmosphere.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("atmosphere.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+         ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -381,15 +409,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==7){
 
-        ifstream toplot2("telescope.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/telescope.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("telescope.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -421,15 +452,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==8){
 
-        ifstream toplot2("ccd.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/ccd.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("ccd.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -461,15 +495,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==9){
 
-        ifstream toplot2("echelle.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/echelle.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("echelle.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -501,15 +538,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==10){
 
-        ifstream toplot2("grating.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/grating.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("grating.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -541,15 +581,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==11){
 
-        ifstream toplot2("gratings.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/gratings.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("gratings.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -581,15 +624,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==12){
 
-        ifstream toplot2("efficiency.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/efficiency.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("efficiency.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -621,15 +667,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==13){
 
-        ifstream toplot2("overall.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/overall.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("overall.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -662,15 +711,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==14){
 
-        ifstream toplot2("surfaces.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/surfaces.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("surfaces.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -703,7 +755,9 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==15){
 
-        ifstream toplot2("echello.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/echello.txt";
+        std::string datName = datNameStream.str();
 
         QFile checkfile3("echello.txt");
 
@@ -712,6 +766,7 @@ this->setCursor(QCursor(Qt::WaitCursor));
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot2(datName.c_str());
 
         int number_of_lines =0;
 
@@ -751,18 +806,25 @@ this->setCursor(QCursor(Qt::ArrowCursor));
 void Echelle::on_pushButton_3_clicked()
 {
     ui->customPlot->clearGraphs();
-this->setCursor(QCursor(Qt::WaitCursor));
+    this->setCursor(QCursor(Qt::WaitCursor));
+
+    qePath=ui->lineEdit_2->text();
+    ePath =qePath.toUtf8().constData();
+
     if(ui->comboBox->currentIndex()==0){
 
-        ifstream toplot1("resolution.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/resolution.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("resolution.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
-            QMessageBox::information(this, "Error", "Parameters not calculated.");
+            QMessageBox::information(this, "Error", "Parameters "+checkfile3.fileName()+" not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -791,15 +853,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==1){
 
-        ifstream toplot1("twopixR.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/twopixR.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("twopixR.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -828,15 +893,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==2){
 
-        ifstream toplot1("dispersion.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/dispersion.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("dispersion.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -866,15 +934,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==3){
 
-        ifstream toplot1("anamorphism.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/anamorphism.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("anamorphism.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -904,15 +975,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==4){
 
-        ifstream toplot1("nyquist.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/nyquist.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("nyquist.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -941,15 +1015,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
     if(ui->comboBox->currentIndex()==5){
 
-        ifstream toplot1("slit.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/slit.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("slit.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -977,15 +1054,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==6){
 
-        ifstream toplot1("atmosphere.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/atmosphere.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("atmosphere.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1013,15 +1093,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==7){
 
-        ifstream toplot1("telescope.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/telescope.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("telescope.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1049,15 +1132,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==8){
 
-        ifstream toplot1("ccd.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/ccd.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("ccd.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1084,15 +1170,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==9){
 
-        ifstream toplot1("echelle.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/echelle.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("echelle.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1119,15 +1208,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==10){
 
-        ifstream toplot1("grating.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/grating.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("grating.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1154,15 +1246,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
     if(ui->comboBox->currentIndex()==11){
 
-        ifstream toplot1("gratings.txt");
+        std::ostringstream datNameStream(ePath);
+        datNameStream<<ePath<<"/gratings.txt";
+        std::string datName = datNameStream.str();
 
-        QFile checkfile3("gratings.txt");
+        QFile checkfile3(datName.c_str());
 
         if(!checkfile3.exists()){
             QMessageBox::information(this, "Error", "Parameters not calculated.");
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream toplot1(datName.c_str());
 
         int number_of_lines =0;
 
@@ -1190,15 +1285,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
     }
         if(ui->comboBox->currentIndex()==12){
 
-            ifstream toplot1("efficiency.txt");
+            std::ostringstream datNameStream(ePath);
+            datNameStream<<ePath<<"/efficiency.txt";
+            std::string datName = datNameStream.str();
 
-            QFile checkfile3("efficiency.txt");
+            QFile checkfile3(datName.c_str());
 
             if(!checkfile3.exists()){
                 QMessageBox::information(this, "Error", "Parameters not calculated.");
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -1225,15 +1323,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
         }
             if(ui->comboBox->currentIndex()==13){
 
-                ifstream toplot1("overall.txt");
+                std::ostringstream datNameStream(ePath);
+                datNameStream<<ePath<<"/overall.txt";
+                std::string datName = datNameStream.str();
 
-                QFile checkfile3("overall.txt");
+                QFile checkfile3(datName.c_str());
 
                 if(!checkfile3.exists()){
                     QMessageBox::information(this, "Error", "Parameters not calculated.");
                     this->setCursor(QCursor(Qt::ArrowCursor));
                    return;
                 }
+                ifstream toplot1(datName.c_str());
 
                 int number_of_lines =0;
 
@@ -1260,15 +1361,18 @@ this->setCursor(QCursor(Qt::WaitCursor));
 
             if(ui->comboBox->currentIndex()==14){
 
-                ifstream toplot1("surfaces.txt");
+                std::ostringstream datNameStream(ePath);
+                datNameStream<<ePath<<"/surfaces.txt";
+                std::string datName = datNameStream.str();
 
-                QFile checkfile3("surfaces.txt");
+                QFile checkfile3(datName.c_str());
 
                 if(!checkfile3.exists()){
                     QMessageBox::information(this, "Error", "Parameters not calculated.");
                     this->setCursor(QCursor(Qt::ArrowCursor));
                    return;
                 }
+                ifstream toplot1(datName.c_str());
 
                 int number_of_lines =0;
 
@@ -1299,13 +1403,15 @@ this->setCursor(QCursor(Qt::ArrowCursor));
 
 void Echelle::on_pushButton_4_clicked()
 {
-    QString save=ui->lineEdit->text();
+    QString save;
 
     if(ui->checkBox_16->isChecked()){
+        save=ui->lineEdit_2->text()+"/"+ui->lineEdit->text()+".pdf";
         ui->customPlot->savePdf(save);
     }
 
     if(ui->checkBox_17->isChecked()){
+       save=ui->lineEdit_2->text()+"/"+ui->lineEdit->text()+".png";
         ui->customPlot->savePng(save);
     }
 }

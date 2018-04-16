@@ -1792,7 +1792,8 @@ void pthreed::on_pushButton_3_clicked()
 
 void pthreed::on_pushButton_4_clicked()
 {
-    QString save=ui->lineEdit->text();
+    QString save=ui->lineEdit_2->text()+"/"+ui->lineEdit->text();
+
     if(ui->checkBox_15->isChecked()){
     ui->customPlot->savePdf(save);
     }

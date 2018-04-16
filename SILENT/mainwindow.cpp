@@ -26,6 +26,9 @@ double l1; // lower wavelength
   double l2; // upper wavelength
   double f1; // collimator focal length
   double f2; // camera focal length
+  double f2nd; //2nd collimator focal length
+  double ftrans; // tranfer collimator focal length
+  double PhiWP; // WP imaging constant f2nd/ftrans
   double g; // grating groove density
   double t; // total angle at grating
   double p; // pixel size
@@ -92,7 +95,7 @@ double l1; // lower wavelength
   double nh1;
   int nl=1;
   int nh=0;
-  int aal=0, aag=0, abb=0, aaluv=0, aau=0;
+  int aal=0, aag=0, abb=0, aaluv=0, aau=0, nglass=0;
   double llow;
   double lhigh;
   double nDCG; // refractive index of DCG layer
@@ -106,11 +109,16 @@ double l1; // lower wavelength
   QVector<double> Frp(unc);
   QVector<double> Frs(unc);
   QVector<double> Fr(unc);
-  int vars=47;
+  QVector<double> SeB1(1), SeB2(1),SeB3(1),SeC1(1),SeC2(1),SeC3(1);
+  QVector<string> GLASS(1);
+  QVector<double> CGain(1), CNoise(1), CEff(1), Cpx(1), Cpy(1), Cpsx(1), Cpsy(1), CEw(1);
+  QVector<string> CCDt(1);
+  int vars=49;
+  int nccd=0;
   QVector<double> variables(vars);
 
   double Frenl=1;
-  string line, eins, zwei;
+  string line, eins, zwei, drei, vier, fuenf, sechs, sieben, acht, neun;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -143,23 +151,152 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->doubleSpinBox_27->setEnabled(true);
 
     ui->lineEdit_2->setText(QDir::currentPath());
+    ui->lineEdit_5->setText(QDir::currentPath());
+    ui->lineEdit_3->setText("GlassData.slib");
 
-    B1=1.39757037;
-    B2=0.159201403;
-    B3=1.26865432;
-    C1=0.00995906143;
-    C2=0.0546931752;
-    C3=119.248346;
+    QString qPath = ui->lineEdit_2->text()+"/GlassData.slib";
+
+    string path = qPath.toUtf8().constData();
+    std::ostringstream datNameStream(path);
+    datNameStream<<path;
+    std::string datName = datNameStream.str();
+
+    QFile checkfile1(datName.c_str());
+
+    if(!checkfile1.exists()){
+        QMessageBox::information(this, "Warning", "Glass data "+checkfile1.fileName()+" not available!");
+    }
+
+    else{
+
+    ifstream glass(datName.c_str());
+
+    while(std::getline(glass, line))
+       ++ nglass;
+
+    glass.clear();
+    glass.seekg(0, ios::beg);
+
+    SeB1.resize(nglass);
+    SeB2.resize(nglass);
+    SeB3.resize(nglass);
+    SeC1.resize(nglass);
+    SeC2.resize(nglass);
+    SeC3.resize(nglass);
+    GLASS.resize(nglass);
+
+    for (int i =0; i < nglass; i++){
+        glass >> eins >> zwei >> drei >> vier >> fuenf >> sechs >> sieben;
+        istringstream istr(eins);
+        istr >> GLASS[i];
+        istringstream istr1(zwei);
+        istr1 >> SeB1[i];
+        istringstream istr2(drei);
+        istr2 >> SeB2[i];
+        istringstream istr3(vier);
+        istr3 >> SeB3[i];
+        istringstream istr4(fuenf);
+        istr4 >> SeC1[i];
+        istringstream istr5(sechs);
+        istr5 >> SeC2[i];
+        istringstream istr6(sieben);
+        istr6 >> SeC3[i];
+
+        QString gele=QString::fromStdString(istr.str());
+        ui->comboBox->addItem(gele);
+    }
+    glass.close();
+
+
+    B1=SeB1[0];
+    B2=SeB2[0];
+    B3=SeB3[0];
+    C1=SeC1[0];
+    C2=SeC2[0];
+    C3=SeC3[0];
+    }
+
+    ui->lineEdit_4->setText("CCD_Data.slib");
+
+    QString cPath = ui->lineEdit_2->text()+"/CCD_Data.slib";
+
+    string cpath = cPath.toUtf8().constData();
+    std::ostringstream dat2NameStream(cpath);
+    dat2NameStream<<cpath;
+    std::string dat2Name = dat2NameStream.str();
+
+    QFile checkfile2(dat2Name.c_str());
+
+    if(!checkfile2.exists()){
+        QMessageBox::information(this, "Warning", "CCD data "+checkfile2.fileName()+" not available!");
+    }
+
+    else{
+
+    ifstream ccd(dat2Name.c_str());
+
+    while(std::getline(ccd, line))
+       ++ nccd;
+
+    ccd.clear();
+    ccd.seekg(0, ios::beg);
+
+    CGain.resize(nccd);
+    CEff.resize(nccd);
+    CNoise.resize(nccd);
+    Cpx.resize(nccd);
+    Cpy.resize(nccd);
+    Cpsx.resize(nccd);
+    Cpsy.resize(nccd);
+    CEw.resize(nccd);
+    CCDt.resize(nccd);
+
+    for (int i =0; i < nccd; i++){
+        ccd >> eins >> zwei >> drei >> vier >> fuenf >> sechs >> sieben >> acht >> neun;
+        istringstream istr(eins);
+        istr >> CCDt[i];
+        istringstream istr1(zwei);
+        istr1 >> Cpx[i];
+        istringstream istr2(drei);
+        istr2 >> Cpy[i];
+        istringstream istr3(vier);
+        istr3 >> Cpsx[i];
+        Cpsx[i]=Cpsx[i]/1000;
+        istringstream istr4(fuenf);
+        istr4 >> Cpsy[i];
+        Cpsy[i]=Cpsy[i]/1000;
+        istringstream istr5(sechs);
+        istr5 >> CNoise[i];
+        istringstream istr6(sieben);
+        istr6 >> CGain[i];
+        istringstream istr7(acht);
+        istr7 >> CEw[i];
+        istringstream istr8(neun);
+        istr8 >> CEff[i];
+
+        QString gele=QString::fromStdString(istr.str());
+        ui->comboBox_4->addItem(gele);
+    }
+    ccd.close();
+
+    lx = Cpx[0];
+    ly = Cpy[0];
+    p = Cpsx[0];
+    readnoise = CNoise[0];
+    CCDl = CEw[0];
+    CCDp = CEff[0];
+    gain = CGain[0];
+    }
 
     l1=ui->doubleSpinBox->value();
     l2=ui->doubleSpinBox_2->value();
 
     ui->tableWidget->setHorizontalHeaderLabels(QStringList()<<"Index"<<"Angle");
 
-    ui->doubleSpinBox_22->setValue(75);
+    ui->doubleSpinBox_22->setValue(79);
     g=ui->doubleSpinBox_22->value();
 
-    ui->doubleSpinBox_23->setValue(63);
+    ui->doubleSpinBox_23->setValue(63.4);
     theta=ui->doubleSpinBox_23->value();
 
     ui->doubleSpinBox_24->setValue(5);
@@ -207,17 +344,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->doubleSpinBox_34->setValue(254);
     dtel=ui->doubleSpinBox_34->value();
 
-    ui->doubleSpinBox_33->setValue(0.009);
-    p=ui->doubleSpinBox_33->value();
+    // CCD Data
+    ui->doubleSpinBox_33->setValue(p);
 
-    ui->spinBox_10->setValue(1500);
-    lx=ui->spinBox_10->value();
+    ui->spinBox_10->setValue(lx);
 
-    ui->spinBox_11->setValue(1024);
-    ly=ui->spinBox_11->value();
+    ui->spinBox_11->setValue(ly);
 
-    ui->doubleSpinBox_17->setValue(7);
-    readnoise=ui->doubleSpinBox_17->value();
+    ui->doubleSpinBox_17->setValue(readnoise);
+
+    ui->doubleSpinBox_4->setValue(CCDl);
+
+    ui->doubleSpinBox_3->setValue(CCDp);
+
+    ui->doubleSpinBox_16->setValue(gain);
+
 
     ui->doubleSpinBox_15->setValue(0);
     sl=ui->doubleSpinBox_15->value();
@@ -227,12 +368,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->spinBox_5->setValue(1);
     By=ui->spinBox_5->value();
-
-    ui->doubleSpinBox_4->setValue(550);
-    CCDl=ui->doubleSpinBox_4->value();
-
-    ui->doubleSpinBox_3->setValue(0.85);
-    CCDp=ui->doubleSpinBox_3->value();
 
     ui->doubleSpinBox_6->setValue(4.25);
     thetac=ui->doubleSpinBox_6->value();
@@ -261,9 +396,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->doubleSpinBox_7->setValue(0.75);
     etac=ui->doubleSpinBox_7->value();
 
-    ui->doubleSpinBox_16->setValue(1.5);
-    gain=ui->doubleSpinBox_16->value();
-
     ui->spinBox_9->setValue(200);
     offset=ui->spinBox_9->value();
 
@@ -288,39 +420,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->doubleSpinBox_21->setValue((l2-l1)/2+l1);
     tDCG=ui->doubleSpinBox_21->value();
 
-    ui->comboBox->addItem("N-F2");
-    ui->comboBox->addItem("N-SF2");
-    ui->comboBox->addItem("N-BK7");
-    ui->comboBox->addItem("N-SF5");
-    ui->comboBox->addItem("CaF2");
-    ui->comboBox->addItem("F2");
-    ui->comboBox->addItem("F5");
-    ui->comboBox->addItem("K10");
-    ui->comboBox->addItem("K7");
-    ui->comboBox->addItem("KZFS12");
-    ui->comboBox->addItem("KZFS5");
-    ui->comboBox->addItem("LAFN7");
-    ui->comboBox->addItem("LF5");
-    ui->comboBox->addItem("LLF1");
-    ui->comboBox->addItem("N-BAF10");
-    ui->comboBox->addItem("N-BAF4");
-    ui->comboBox->addItem("N-BAF51");
-    ui->comboBox->addItem("N-BAF52");
-    ui->comboBox->addItem("N-BAK1");
-    ui->comboBox->addItem("N-BAK2");
-    ui->comboBox->addItem("N-BAK4");
-    ui->comboBox->addItem("N-BALF4");
-    ui->comboBox->addItem("N-BALF5");
-    ui->comboBox->addItem("N-BASF2");
-    ui->comboBox->addItem("N-BASF64");
-    ui->comboBox->addItem("N-BK10");
-    ui->comboBox->addItem("N-FK5");
-    ui->comboBox->addItem("N-KF9");
-    ui->comboBox->addItem("N-KZFS11");
-    ui->comboBox->addItem("N-SF11");
-    ui->comboBox->addItem("ZnSe");
-    ui->comboBox->addItem("N-SF10");
-    ui->comboBox->addItem("Fused Silica");
+    ui->doubleSpinBox_37->setEnabled(false);
+    ui->doubleSpinBox_32->setEnabled(false);
+    ui->checkBox_3->setEnabled(false);
+
 
     ui->comboBox_2->addItem("Grating");
     ui->comboBox_2->addItem("Prism");
@@ -603,6 +706,7 @@ void MainWindow::on_checkBox_clicked()
 // slit efficiency
 void MainWindow::on_pushButton_3_clicked()
 {
+    sdisc = sdisc/2.3548;
     // circular slit
     if(ui->checkBox_8->isChecked()){
 
@@ -610,9 +714,9 @@ void MainWindow::on_pushButton_3_clicked()
         int steps=s/2/slitstep+1;
         double relativ=0;
         for(int i =0; i<steps-1; i++){
-            relativ+=(exp(-2*i*slitstep*i*slitstep/sdisc/sdisc)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc/sdisc))/2*slitstep;
+            relativ+=(exp(-i*slitstep*i*slitstep/2/sdisc/sdisc)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc/sdisc))/2*slitstep;//relativ+=(exp(-2*i*slitstep*i*slitstep/sdisc/sdisc)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc/sdisc))/2*slitstep;
         }
-        slitEff=pow((2*relativ/(sdisc*sqrt(M_PI/2))),2);
+        slitEff=pow((2*relativ/(sdisc*sqrt(M_PI*2))),2);
         ui->doubleSpinBox_30->setValue(slitEff*100);
     }
 
@@ -624,16 +728,17 @@ void MainWindow::on_pushButton_3_clicked()
         int steps2=sl/2/slitstep+1;
         double relativ1=0, relativ2=0;
         for(int i =0; i<steps1-1; i++){
-            relativ1+=(exp(-2*i*slitstep*i*slitstep/sdisc/sdisc)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc/sdisc))/2*slitstep;
+            relativ1+=(exp(-i*slitstep*i*slitstep/2/sdisc/sdisc)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc/sdisc))/2*slitstep;
         }
         if(sl!=0){
-        for(int i =0; i<steps2-1; i++){
-            relativ2+=(exp(-2*i*slitstep*i*slitstep/sdisc/sdisc)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc/sdisc))/2*slitstep;
-        }}
-        else{
-            relativ2+=sdisc*sqrt(M_PI/2)/2;
+            for(int i =0; i<steps2-1; i++){
+                relativ2+=(exp(-i*slitstep*i*slitstep/2/sdisc/sdisc)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc/sdisc))/2*slitstep;
+            }
         }
-        slitEff=2*relativ1*2*relativ2/pow((sdisc*sqrt(M_PI/2)),2);
+        else{
+            relativ2+=sdisc*sqrt(M_PI*2)/2;
+        }
+        slitEff=2*relativ1*2*relativ2/pow((sdisc*sqrt(2*M_PI)),2);
         ui->doubleSpinBox_30->setValue(slitEff*100);
     }
 
@@ -642,6 +747,7 @@ void MainWindow::on_pushButton_3_clicked()
         slitEff=1.0;
         ui->doubleSpinBox_30->setValue(100);
     }
+    sdisc=sdisc*2.3548;
 
 }
 
@@ -651,119 +757,176 @@ void MainWindow::overview(){
     d=cos(M_PI/180*theta)/g;
 
     QString Output;
+
+    f2nd = ui->doubleSpinBox_37->value();
+    ftrans = ui->doubleSpinBox_32->value();
+    PhiWP = f2nd/ftrans;
+
     // for grating CD
     if(e==1){
-    bm = atan(lx*p/2/f2)*180/M_PI;
-    lz = (l1+(l2-l1)/2)/1000000;
 
-    dc = cos(M_PI/180*thetac)/gc;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx*p/2/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx*p/2/f2)*180/M_PI;
+        }
 
-    a = theta+t/2;
-    b = theta-t/2;
+        lz = (l1+(l2-l1)/2)/1000000;
+        dc = cos(M_PI/180*thetac)/gc;
+        a = theta+t/2;
+        b = theta-t/2;
 
-    acc = asin(ncd*l1/1000000*gc/(2*cos(M_PI/180*tc/2)))*180/M_PI+tc/2;
-    bcc = acc-tc;
-    bmc = atan(ly*p/2/f2)*180/M_PI;
-    atc = sin(M_PI/180*(acc-thetac));
-    at = sin(M_PI/180*(a-theta));
+        acc = asin(ncd*l1/1000000*gc/(2*cos(M_PI/180*tc/2)))*180/M_PI+tc/2;
+        bcc = acc-tc;
 
-    nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
-    nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
+        if(ui->checkBox_2->isChecked()){
+            bmc = atan(ly*p/2/f2)*180/M_PI;
+        }
+        else{
+            bmc = atan(ly*p/2/f2/PhiWP)*180/M_PI;
+        }
 
-    llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
-    llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
+        atc = sin(M_PI/180*(acc-thetac));
+        at = sin(M_PI/180*(a-theta));
 
-    nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
-    nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
+        nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
+        nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
 
-    llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
-    lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
+        llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
+        llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
 
-    Output=QString::number(lz*1000000);
-    ui->lineEdit_25->setText(Output);
+        nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
+        nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
 
-    Output=QString::number(acc);
-    ui->lineEdit_26->setText(Output);
+        llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
+        lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
 
-    Output=QString::number(bcc);
-    ui->lineEdit_27->setText(Output);
+        Output=QString::number(lz*1000000);
+        ui->lineEdit_25->setText(Output);
 
-    //lower central wavelength
-    Output=QString::number(llc*1000000);
-    ui->lineEdit_28->setText(Output);
+        Output=QString::number(acc);
+        ui->lineEdit_26->setText(Output);
 
-    Output=QString::number(llh*1000000);
-    ui->lineEdit_29->setText(Output);
+        Output=QString::number(bcc);
+        ui->lineEdit_27->setText(Output);
 
-    Output=QString::number(llow*1000000);
-    ui->lineEdit_30->setText(Output);
+        //lower central wavelength
+        Output=QString::number(llc*1000000);
+        ui->lineEdit_28->setText(Output);
 
-    Output=QString::number(lhigh*1000000);
-    ui->lineEdit_31->setText(Output);
+        Output=QString::number(llh*1000000);
+        ui->lineEdit_29->setText(Output);
 
-    Output=QString::number(nl1);
-    ui->lineEdit_32->setText(Output);
+        Output=QString::number(llow*1000000);
+        ui->lineEdit_30->setText(Output);
 
-    Output=QString::number(nh1);
-    ui->lineEdit_33->setText(Output);
+        Output=QString::number(lhigh*1000000);
+        ui->lineEdit_31->setText(Output);
+
+        Output=QString::number(nl1);
+        ui->lineEdit_32->setText(Output);
+
+        Output=QString::number(nh1);
+        ui->lineEdit_33->setText(Output);
     }
 
     // for prism CD
     if(e==0){
-        bm = atan(lx*p/2/f2)*180/M_PI;
-           lz = (l1+(l2-l1)/2)/1000000;
-           a = theta+t/2;
-           b = theta-t/2;
-           at = sin(M_PI/180*(a-theta));
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx*p/2/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx*p/2/f2)*180/M_PI;
+        }
 
-           l1 = l1/1000;
-               np = sqrt(1+B1*l1*l1/(l1*l1-C1)+B2*l1*l1/(l1*l1-C2)+B3*l1*l1/(l1*l1-C3));
-               l1 = l1*1000;
+        lz = (l1+(l2-l1)/2);
+        a = theta+t/2;
+        b = theta-t/2;
+        at = sin(M_PI/180*(a-theta));
 
-               bmc = atan(ly*p/2/f2)*180/M_PI;
-               acc = asin(ncd*l1/1000000*gc/(2*cos(M_PI/180*tc/2)))*180/M_PI+tc/2;
-               bcc = acc-tc;
-               atc = sin(M_PI/180*(acc-thetac));
+        l1 = l1/1000;
+        l2 = l2/1000;
+        lz = lz/1000;
+        np = sqrt(1+B1*l1*l1/(l1*l1-C1)+B2*l1*l1/(l1*l1-C2)+B3*l1*l1/(l1*l1-C3));
+        double n2 = sqrt(1+B1*l2*l2/(l2*l2-C1)+B2*l2*l2/(l2*l2-C2)+B3*l2*l2/(l2*l2-C3));
+        double nz = sqrt(1+B1*lz*lz/(lz*lz-C1)+B2*lz*lz/(lz*lz-C2)+B3*lz*lz/(lz*lz-C3));
+        cout<<np<<endl;
+        cout<<n2<<endl;
+        cout<<nz<<endl;
+        l1 = l1*1000;
+        l2 = l2*1000;
+        lz = lz*1000;
 
-               nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
-               nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
+        if(ui->checkBox_2->isChecked()){
+            bmc = atan(ly*p/2/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bmc = atan(ly*p/2/f2)*180/M_PI;
+        }
 
-               llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
-               llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
+        acc = asin(nz*sin(M_PI/180*30))*180/M_PI;
+        double acp = asin(np*sin(M_PI/180*30))*180/M_PI;
+        double ac2 = asin(n2*sin(M_PI/180*30))*180/M_PI;
+        double lyp=0, ly2=0;
+        if(ui->checkBox_2->isChecked()){
+            if(ui->checkBox_3->isChecked()){
+                lyp = tan(2*(acp-acc)/180*M_PI)*f2*PhiWP;
+                ly2 = tan(2*(ac2-acc)/180*M_PI)*f2*PhiWP;
+            }
+            else{
+                lyp = tan((acp-acc)/180*M_PI)*f2*PhiWP;
+                ly2 = tan((ac2-acc)/180*M_PI)*f2*PhiWP;
+            }
+        }
+        else{
+            lyp = tan((acp-acc)/180*M_PI)*f2;
+            ly2 = tan((ac2-acc)/180*M_PI)*f2;
+        }
 
-               nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
-               nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
+        cout<<"ly: "<<ly*p<<"; lyp: "<<lyp<<"; ly2"<<ly2<<endl;
+        bcc = acc;
+        atc = sin(M_PI/180*(acc-thetac));
 
-               llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
-               lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
+        nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
+        nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
 
-               Output=QString::number(lz*1000000);
-               ui->lineEdit_25->setText(Output);
+        llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
+        llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
 
-               Output=QString::number(acc);
-               ui->lineEdit_26->setText(Output);
+        nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
+        nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
 
-               Output=QString::number(bcc);
-               ui->lineEdit_27->setText(Output);
+        llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
+        lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
 
-               //lower central wavelength
-               Output=QString::number(llc*1000000);
-               ui->lineEdit_28->setText(Output);
+        Output=QString::number(lz);
+        ui->lineEdit_25->setText(Output);
 
-               Output=QString::number(llh*1000000);
-               ui->lineEdit_29->setText(Output);
+        Output=QString::number(acc);
+        ui->lineEdit_26->setText(Output);
 
-               Output=QString::number(llow*1000000);
-               ui->lineEdit_30->setText(Output);
+        Output=QString::number(bcc);
+        ui->lineEdit_27->setText(Output);
 
-               Output=QString::number(lhigh*1000000);
-               ui->lineEdit_31->setText(Output);
+        //lower central wavelength
+        Output=QString::number(llc*1000000);
+        ui->lineEdit_28->setText(Output);
 
-               Output=QString::number(nl1);
-               ui->lineEdit_32->setText(Output);
+        Output=QString::number(llh*1000000);
+        ui->lineEdit_29->setText(Output);
 
-               Output=QString::number(nh1);
-               ui->lineEdit_33->setText(Output);
+        Output=QString::number(llow*1000000);
+        ui->lineEdit_30->setText(Output);
+
+        Output=QString::number(lhigh*1000000);
+        ui->lineEdit_31->setText(Output);
+
+        Output=QString::number(nl1);
+        ui->lineEdit_32->setText(Output);
+
+        Output=QString::number(nh1);
+        ui->lineEdit_33->setText(Output);
     }
 
     // for VPH Grating CD
@@ -778,45 +941,45 @@ void MainWindow::overview(){
         bmc = atan(ly*p/2/f2)*180/M_PI;
         atc = sin(M_PI/180*(acc-thetac));
 
-            nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
-            nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
+        nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
+        nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
 
-            llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
-            llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
+        llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
+        llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
 
-            nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
-            nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
+        nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
+        nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
 
-            llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
-            lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
+        llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
+        lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
 
-            Output=QString::number(lz*1000000);
-            ui->lineEdit_25->setText(Output);
+        Output=QString::number(lz*1000000);
+        ui->lineEdit_25->setText(Output);
 
-            Output=QString::number(acc);
-            ui->lineEdit_26->setText(Output);
+        Output=QString::number(acc);
+        ui->lineEdit_26->setText(Output);
 
-            Output=QString::number(bcc);
-            ui->lineEdit_27->setText(Output);
+        Output=QString::number(bcc);
+        ui->lineEdit_27->setText(Output);
 
-            //lower central wavelength
-            Output=QString::number(llc*1000000);
-            ui->lineEdit_28->setText(Output);
+        //lower central wavelength
+        Output=QString::number(llc*1000000);
+        ui->lineEdit_28->setText(Output);
 
-            Output=QString::number(llh*1000000);
-            ui->lineEdit_29->setText(Output);
+        Output=QString::number(llh*1000000);
+        ui->lineEdit_29->setText(Output);
 
-            Output=QString::number(llow*1000000);
-            ui->lineEdit_30->setText(Output);
+        Output=QString::number(llow*1000000);
+        ui->lineEdit_30->setText(Output);
 
-            Output=QString::number(lhigh*1000000);
-            ui->lineEdit_31->setText(Output);
+        Output=QString::number(lhigh*1000000);
+        ui->lineEdit_31->setText(Output);
 
-            Output=QString::number(nl1);
-            ui->lineEdit_32->setText(Output);
+        Output=QString::number(nl1);
+        ui->lineEdit_32->setText(Output);
 
-            Output=QString::number(nh1);
-            ui->lineEdit_33->setText(Output);
+        Output=QString::number(nh1);
+        ui->lineEdit_33->setText(Output);
 
     }
 
@@ -828,45 +991,45 @@ void MainWindow::overview(){
         b = theta-t/2;
         at = sin(M_PI/180*(a-theta));
 
-            nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
-            nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
+        nl = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l1*1000000;
+        nh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/l2*1000000;
 
-            llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
-            llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
+        llc = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nl*g);
+        llh = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/(nh*g);
 
-            nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
-            nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
+        nl1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llc;
+        nh1 = (sin(M_PI/180*a)+sin(M_PI/180*(b)))/g/llh;
 
-            llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
-            lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
+        llow = llc - p*Bx*cos(b*M_PI/180)/(f2*nl*g)*lx/2;
+        lhigh = llh + p*Bx*cos(b*M_PI/180)/(f2*nh*g)*lx/2;
 
-            Output=QString::number(lz*1000000);
-            ui->lineEdit_25->setText(Output);
+        Output=QString::number(lz*1000000);
+        ui->lineEdit_25->setText(Output);
 
-            Output=QString::number(acc);
-            ui->lineEdit_26->setText(Output);
+        Output=QString::number(acc);
+        ui->lineEdit_26->setText(Output);
 
-            Output=QString::number(bcc);
-            ui->lineEdit_27->setText(Output);
+        Output=QString::number(bcc);
+        ui->lineEdit_27->setText(Output);
 
-            //lower central wavelength
-            Output=QString::number(llc*1000000);
-            ui->lineEdit_28->setText(Output);
+        //lower central wavelength
+        Output=QString::number(llc*1000000);
+        ui->lineEdit_28->setText(Output);
 
-            Output=QString::number(llh*1000000);
-            ui->lineEdit_29->setText(Output);
+        Output=QString::number(llh*1000000);
+        ui->lineEdit_29->setText(Output);
 
-            Output=QString::number(llow*1000000);
-            ui->lineEdit_30->setText(Output);
+        Output=QString::number(llow*1000000);
+        ui->lineEdit_30->setText(Output);
 
-            Output=QString::number(lhigh*1000000);
-            ui->lineEdit_31->setText(Output);
+        Output=QString::number(lhigh*1000000);
+        ui->lineEdit_31->setText(Output);
 
-            Output=QString::number(nl1);
-            ui->lineEdit_32->setText(Output);
+        Output=QString::number(nl1);
+        ui->lineEdit_32->setText(Output);
 
-            Output=QString::number(nh1);
-            ui->lineEdit_33->setText(Output);
+        Output=QString::number(nh1);
+        ui->lineEdit_33->setText(Output);
     }
 }
 
@@ -931,6 +1094,9 @@ void MainWindow::parameters()
     MainWindow::on_pushButton_2_clicked();
     ui->progressBar->setValue(0);
 
+    QString qPath = ui->lineEdit_2->text();
+    string path = qPath.toUtf8().constData();
+
     if(ui->checkBox->isChecked()){
         s = tan(ui->doubleSpinBox_29->value()/3600*M_PI/180)*ui->doubleSpinBox_35->value();
     }
@@ -938,29 +1104,92 @@ void MainWindow::parameters()
         s = ui->doubleSpinBox_14->value();
     }
 
-    int counter=0, bini=0, bini2=0, bini3=0, bini4=0, bini5=0, bini6=0, progress=0;
+    int counter=0, bini=0, bini2=0, bini3=0, bini4=0, bini5=0, bini6=0;
     double Il1, Il2, Il1c, Il2c, reflectance=1, index;
 
-    ofstream file1("resolution.txt");
-    ofstream file2("anamorphism.txt");
-    ofstream file3("slit.txt");
-    ofstream file4("nyquist.txt");
-    ofstream file5("dispersion.txt");
-    ofstream file6("atmosphere.txt");
-    ofstream file7("telescope.txt");
-    ofstream file8("ccd.txt");
-    ofstream file9("echelle.txt");
-    ofstream file10("grating.txt");
-    ofstream file11("gratings.txt");
-    ofstream file12("efficiency.txt");
-    ofstream file13("overall.txt");
-    ofstream file14("surfaces.txt");
-    ofstream file15("twopixR.txt");
+    std::ostringstream datNameStream(path);
+    datNameStream<<path<<"/resolution.txt";
+    std::string datName = datNameStream.str();
+    ofstream file1(datName.c_str());
+
+    std::ostringstream dat2NameStream(path);
+    dat2NameStream<<path<<"/anamorphism.txt";
+    std::string dat2Name = dat2NameStream.str();
+    ofstream file2(dat2Name.c_str());
+
+    std::ostringstream dat3NameStream(path);
+    dat3NameStream<<path<<"/slit.txt";
+    std::string dat3Name = dat3NameStream.str();
+    ofstream file3(dat3Name.c_str());
+
+    std::ostringstream dat4NameStream(path);
+    dat4NameStream<<path<<"/nyquist.txt";
+    std::string dat4Name = dat4NameStream.str();
+    ofstream file4(dat4Name.c_str());
+
+    std::ostringstream dat5NameStream(path);
+    dat5NameStream<<path<<"/dispersion.txt";
+    std::string dat5Name = dat5NameStream.str();
+    ofstream file5(dat5Name.c_str());
+
+    std::ostringstream dat6NameStream(path);
+    dat6NameStream<<path<<"/atmosphere.txt";
+    std::string dat6Name = dat6NameStream.str();
+    ofstream file6(dat6Name.c_str());
+
+    std::ostringstream dat7NameStream(path);
+    dat7NameStream<<path<<"/telescope.txt";
+    std::string dat7Name = dat7NameStream.str();
+    ofstream file7(dat7Name.c_str());
+
+    std::ostringstream dat8NameStream(path);
+    dat8NameStream<<path<<"/ccd.txt";
+    std::string dat8Name = dat8NameStream.str();
+    ofstream file8(dat8Name.c_str());
+
+    std::ostringstream dat9NameStream(path);
+    dat9NameStream<<path<<"/echelle.txt";
+    std::string dat9Name = dat9NameStream.str();
+    ofstream file9(dat9Name.c_str());
+
+    std::ostringstream dat10NameStream(path);
+    dat10NameStream<<path<<"/grating.txt";
+    std::string dat10Name = dat10NameStream.str();
+    ofstream file10(dat10Name.c_str());
+
+    std::ostringstream dat11NameStream(path);
+    dat11NameStream<<path<<"/gratings.txt";
+    std::string dat11Name = dat11NameStream.str();
+    ofstream file11(dat11Name.c_str());
+
+    std::ostringstream dat12NameStream(path);
+    dat12NameStream<<path<<"/efficiency.txt";
+    std::string dat12Name = dat12NameStream.str();
+    ofstream file12(dat12Name.c_str());
+
+    std::ostringstream dat13NameStream(path);
+    dat13NameStream<<path<<"/overall.txt";
+    std::string dat13Name = dat13NameStream.str();
+    ofstream file13(dat13Name.c_str());
+
+    std::ostringstream dat14NameStream(path);
+    dat14NameStream<<path<<"/surfaces.txt";
+    std::string dat14Name = dat14NameStream.str();
+    ofstream file14(dat14Name.c_str());
+
+    std::ostringstream dat15NameStream(path);
+    dat15NameStream<<path<<"/twopixR.txt";
+    std::string dat15Name = dat15NameStream.str();
+    ofstream file15(dat15Name.c_str());
+
 
     if(al>0){
-    ifstream input("protected_Al.txt");
 
-    QFile checkfile1("protected_Al.txt");
+        std::ostringstream datNameStream(path);
+        datNameStream<<path<<"/protected_Al.txt";
+        std::string datName = datNameStream.str();
+
+    QFile checkfile1(datName.c_str());
 
     if(!checkfile1.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected aluminium not available!");
@@ -972,29 +1201,32 @@ void MainWindow::parameters()
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input1(datName.c_str());
 
-    while(std::getline(input, line))
+    while(std::getline(input1, line))
        ++ bini;
 
-    input.clear();
-    input.seekg(0, ios::beg);
+    input1.clear();
+    input1.seekg(0, ios::beg);
 
     ali.resize(bini);
     alw.resize(bini);
 
     for (int i =0; i < bini; i++){
-    input >> eins >> zwei;
-    istringstream istr(eins);
-    istr >> ali[i];
-    istringstream istr1(zwei);
-    istr1 >> alw[i];
+        input1 >> eins >> zwei;
+        istringstream istr(eins);
+        istr >> ali[i];
+        istringstream istr1(zwei);
+        istr1 >> alw[i];
     }
-    input.close();
+    input1.close();
 }
     if(aluv>0){
-    ifstream input2("UVEnhanced_Al.txt");
+        std::ostringstream dat2NameStream(path);
+        dat2NameStream<<path<<"/UVEnhanced_Al.txt";
+        std::string dat2Name = dat2NameStream.str();
 
-    QFile checkfile2("UVEnhanced_Al.txt");
+    QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
         QMessageBox::information(this, "Error", "Reflection data of UV enhanced aluminium not available!");
@@ -1006,6 +1238,7 @@ void MainWindow::parameters()
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input2(dat2Name.c_str());
 
     while(std::getline(input2, line))
        ++ bini2;
@@ -1017,18 +1250,20 @@ void MainWindow::parameters()
     aluvw.resize(bini2);
 
     for (int i =0; i < bini2; i++){
-    input2 >> eins >> zwei;
-    istringstream istr2(eins);
-    istr2 >> aluvw[i];
-    istringstream istr3(zwei);
-    istr3 >> aluvi[i];
+        input2 >> eins >> zwei;
+        istringstream istr2(eins);
+        istr2 >> aluvw[i];
+        istringstream istr3(zwei);
+        istr3 >> aluvi[i];
     }
     input2.close();
 }
     if(ag>0){
-    ifstream input3("protected_Ag.txt");
+        std::ostringstream dat3NameStream(path);
+        dat3NameStream<<path<<"/protected_Ag.txt";
+        std::string dat3Name = dat3NameStream.str();
 
-    QFile checkfile3("protected_Ag.txt");
+    QFile checkfile3(dat3Name.c_str());
 
     if(!checkfile3.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected silver not available!");
@@ -1040,7 +1275,7 @@ void MainWindow::parameters()
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
-
+    ifstream input3(dat3Name.c_str());
 
     while(std::getline(input3, line))
        ++ bini3;
@@ -1052,19 +1287,21 @@ void MainWindow::parameters()
     agw.resize(bini3);
 
     for (int i =0; i < bini3; i++){
-    input3 >> eins >> zwei;
-    istringstream istr4(eins);
-    istr4 >> agw[i];
-    istringstream istr5(zwei);
-    istr5 >> agi[i];
+        input3 >> eins >> zwei;
+        istringstream istr4(eins);
+        istr4 >> agw[i];
+        istringstream istr5(zwei);
+        istr5 >> agi[i];
     }
     input3.close();
 }
 
     if(au>0){
-    ifstream input4("protected_Au.txt");
+        std::ostringstream dat4NameStream(path);
+        dat4NameStream<<path<<"/protected_Au.txt";
+        std::string dat4Name = dat4NameStream.str();
 
-    QFile checkfile4("protected_Au.txt");
+    QFile checkfile4(dat4Name.c_str());
 
     if(!checkfile4.exists()){
         QMessageBox::information(this, "Error", "Reflection data of protected gold not available!");
@@ -1076,6 +1313,7 @@ void MainWindow::parameters()
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input4(dat4Name.c_str());
 
     while(std::getline(input4, line))
        ++ bini4;
@@ -1087,19 +1325,21 @@ void MainWindow::parameters()
     auw.resize(bini4);
 
     for (int i =0; i < bini4; i++){
-    input4 >> eins >> zwei;
-    istringstream istr6(eins);
-    istr6 >> auw[i];
-    istringstream istr7(zwei);
-    istr7 >> aui[i];
+        input4 >> eins >> zwei;
+        istringstream istr6(eins);
+        istr6 >> auw[i];
+        istringstream istr7(zwei);
+        istr7 >> aui[i];
     }
     input4.close();
 }
 
     if(bb>0){
-    ifstream input5("vis_ar.txt");
+        std::ostringstream dat5NameStream(path);
+        dat5NameStream<<path<<"/vis_ar.txt";
+        std::string dat5Name = dat5NameStream.str();
 
-    QFile checkfile5("vis_ar.txt");
+    QFile checkfile5(dat5Name.c_str());
 
     if(!checkfile5.exists()){
         QMessageBox::information(this, "Error", "Transmission data of VIS AR coating not available!");
@@ -1111,6 +1351,7 @@ void MainWindow::parameters()
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input5(dat5Name.c_str());
 
     while(std::getline(input5, line))
        ++ bini5;
@@ -1122,11 +1363,11 @@ void MainWindow::parameters()
     bbw.resize(bini5);
 
     for (int i =0; i < bini5; i++){
-    input5 >> eins >> zwei;
-    istringstream istr8(eins);
-    istr8 >> bbw[i];
-    istringstream istr9(zwei);
-    istr9 >> bbi[i];
+        input5 >> eins >> zwei;
+        istringstream istr8(eins);
+        istr8 >> bbw[i];
+        istringstream istr9(zwei);
+        istr9 >> bbi[i];
     }
     input5.close();
 }
@@ -1135,12 +1376,12 @@ void MainWindow::parameters()
 
         QString in16=ui->lineEdit->text();
         string in6 = in16.toUtf8().constData();
-        std::ostringstream in6NameStream(in6);
-        std::string in6Name = in6NameStream.str();
-        ifstream input6(in6Name.c_str());
 
+        std::ostringstream dat6NameStream(path);
+        dat6NameStream<<path<<in6;
+        std::string dat6Name = dat6NameStream.str();
 
-        QFile checkfile6(in6Name.c_str());
+        QFile checkfile6(dat6Name.c_str());
 
         if(!checkfile6.exists()){
             QMessageBox::information(this, "Error", "Transmission file not available!");
@@ -1152,6 +1393,7 @@ void MainWindow::parameters()
             this->setCursor(QCursor(Qt::ArrowCursor));
            return;
         }
+        ifstream input6(dat6Name.c_str());
 
         while(std::getline(input6, line))
            ++ bini6;
@@ -1163,11 +1405,11 @@ void MainWindow::parameters()
         ctw.resize(bini6);
 
         for (int i =0; i < bini6; i++){
-        input6 >> eins >> zwei;
-        istringstream istr8(eins);
-        istr8 >> ctw[i];
-        istringstream istr9(zwei);
-        istr9 >> cti[i];
+            input6 >> eins >> zwei;
+            istringstream istr8(eins);
+            istr8 >> ctw[i];
+            istringstream istr9(zwei);
+            istr9 >> cti[i];
         }
         input6.close();
     }
@@ -1175,13 +1417,24 @@ void MainWindow::parameters()
     // grating CD
     if(ui->comboBox_2->currentIndex()==0){
 
-        bm = atan((lx/2)*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan((lx/2)*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan((lx/2)*p/f2)*180/M_PI;
+        }
 
         for(int i=0; i<nl-nh; i++){
             n[i]=nl-i;
             lw[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g);
             b1c[i] = asin(ncd*lw[i]*gc-sin(M_PI/180*acc))*180/M_PI;
-            o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2/p);
+            if(ui->checkBox_2->isChecked()){
+                o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2*PhiWP/p);
+            }
+            else{
+                o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2/p);
+            }
+
             if(o[i]>0){
                 ++counter;
             }
@@ -1221,7 +1474,13 @@ void MainWindow::parameters()
         snr[m]=0;
 
         if(m>0){
-            bm = atan((lx/2)*p/f2)*180/M_PI;
+            if(ui->checkBox_2->isChecked()){
+                bm = atan((lx/2)*p/f2/PhiWP)*180/M_PI;
+            }
+            else{
+                bm = atan((lx/2)*p/f2)*180/M_PI;
+            }
+
             l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
             overlap[m]=(l11[lx/Bx-1]-l11[0])*1000000;
@@ -1229,7 +1488,13 @@ void MainWindow::parameters()
         }
 
         for(int i=0; i<lx/Bx; i++){
-            bm = atan((lx/2-i)*p*Bx/f2)*180/M_PI;
+            if(ui->checkBox_2->isChecked()){
+                bm = atan((lx/2-i)*p*Bx/f2/PhiWP)*180/M_PI;
+            }
+            else{
+                bm = atan((lx/2-i)*p*Bx/f2)*180/M_PI;
+            }
+
             l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
             if(al>0){
@@ -1343,13 +1608,26 @@ void MainWindow::parameters()
             b1[i] = asin(n[m]*l11[i]*g-sin(M_PI/180*a))*180/M_PI;
             bt[i] = sin(M_PI/180*(b1[i]-theta));
 
-            R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s);
-
             A[i] = cos(M_PI/180*a)/cos(M_PI/180*(b-bm));
-            s2[i] = A[i] * f2/f1*s;
+
+            if(ui->checkBox_2->isChecked()){
+                s2[i] = A[i] * f2/f1*s*PhiWP;
+            }
+            else{
+                s2[i] = A[i] * f2/f1*s;
+            }
+
+            R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s*A[i]);
+
             Nf[i] = s2[i]/p/2;
             Tr[i] = 1-0.0091224/cos(M_PI/180*z)/(pow(l11[i]*1000,4));
-            D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+            if(ui->checkBox_2->isChecked()){
+                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g*PhiWP);
+            }
+            else{
+                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+            }
+
             l11[i]=l11[i]*10000000;
             P[i] = Tr[i]*dtel*dtel/400*M_PI*ap/(l11[i]*l11[i]*l11[i]*l11[i])/(exp(k/T/l11[i])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
             CCD[i] = ap/(l11[i]*l11[i]*l11[i]*l11[i]*l11[i])/(exp(143877500/l11[i]/CCDT)-1)/CCDm*CCDp;
@@ -1385,9 +1663,10 @@ void MainWindow::parameters()
         }
         for(int i=0; i<lx/Bx; i++){
             if((Ef[i]>=0)&(Tr[i]>=0)&(P[i]>=0)){
-            average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
-            sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
-            }}
+                average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
+                sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
+            }
+        }
         snr[m]=sign[m]/(sqrt(sign[m]+lx/Bx*pow((readnoise),2)));
         ui->progressBar->setValue((m+1)*100/(nl-nh));
         qApp->processEvents(QEventLoop::AllEvents);
@@ -1528,14 +1807,32 @@ void MainWindow::parameters()
 
             n[m]=nl-m;
             if(m>0){
-               bm = atan(lx*p/2/f2)*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan(lx*p/2/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan(lx*p/2/f2)*180/M_PI;
+                }
+
                l11[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
                index=sqrt(1+B1*l11[m]*l11[m]/(l11[m]*l11[m]-C1)+B2*l11[m]*l11[m]/(l11[m]*l11[m]-C2)+B3*l11[m]*l11[m]/(l11[m]*l11[m]-C3));
                l11[m]=l11[m]/1000;
                b1c[m]=einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
                gamma2=einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
-               o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2/p);
-                //cout<<b1c[m]<<endl;
+
+               if(ui->checkBox_2->isChecked()){
+                   if(ui->checkBox_3->isChecked()){
+                       o[m] = -((ly-4*sdisc/p)-tan(2*(startb-b1c[m])*M_PI/180)*f2*PhiWP/p);
+                   }
+                   else{
+                       o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2*PhiWP/p);
+                   }
+
+               }
+               else{
+                   o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2/p);
+               }
+
                summe+=o[m];
                if(o[m]>0){
                    ++counter;
@@ -1544,129 +1841,148 @@ void MainWindow::parameters()
                overlap[m]=(l11[lx/Bx-1]-l11[m])*1000000;
                separation[0]=0;
                if(m>0){
-               separation[m]=-o[m-1]+o[m];
+                   separation[m]=-o[m-1]+o[m];
                }
             }
 
             for(int i=0; i<lx/Bx; i++){
 
-                bm = atan((lx/2-i)*p*Bx/f2)*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-i)*p*Bx/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan((lx/2-i)*p*Bx/f2)*180/M_PI;
+                }
+
                 l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
                 index=sqrt(1+B1*l11[i]*l11[i]/(l11[i]*l11[i]-C1)+B2*l11[i]*l11[i]/(l11[i]*l11[i]-C2)+B3*l11[i]*l11[i]/(l11[i]*l11[i]-C3));
                 l11[i]=l11[i]/1000;
 
                 if(al>0){
-                if(i==0){
-                    for (int n=0; n<bini; n++){
-                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                            aal=n;
+                    if(i==0){
+                        for (int n=0; n<bini; n++){
+                            if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                                alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                                aal=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aal-2; n<aal+3; n++){
-                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                            aal=n;
+                    else{
+                        for(int n=aal-2; n<aal+3; n++){
+                            if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                                alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                                aal=n;
+                            }
                         }
                     }
-                }
-                alt[i]=pow(alt[i]/100,al);
-                reflectance=reflectance*alt[i];
+                    alt[i]=pow(alt[i]/100,al);
+                    reflectance=reflectance*alt[i];
                 }
 
                 if(aluv>0){
-                if(i==0){
-                    for (int n=0; n<bini2; n++){
-                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                            aaluv=n;
+                    if(i==0){
+                        for (int n=0; n<bini2; n++){
+                            if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                                aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                                aaluv=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aaluv-2; n<aaluv+3; n++){
-                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                            aaluv=n;
+                    else{
+                        for(int n=aaluv-2; n<aaluv+3; n++){
+                            if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                                aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                                aaluv=n;
+                            }
                         }
                     }
-                }
-                aluvt[i]=pow(aluvt[i]/100,aluv);
-                reflectance=reflectance*aluvt[i];
+                    aluvt[i]=pow(aluvt[i]/100,aluv);
+                    reflectance=reflectance*aluvt[i];
                 }
 
                 if(ag>0){
-                if(i==0){
-                    for (int n=0; n<bini3; n++){
-                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                            aag=n;
+                    if(i==0){
+                        for (int n=0; n<bini3; n++){
+                            if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                                agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                                aag=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aag-2; n<aag+3; n++){
-                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                            aag=n;
+                    else{
+                        for(int n=aag-2; n<aag+3; n++){
+                            if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                                agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                                aag=n;
+                            }
                         }
                     }
-                }
-                agt[i]=pow(agt[i]/100,ag);
-                reflectance=reflectance*agt[i];
+                    agt[i]=pow(agt[i]/100,ag);
+                    reflectance=reflectance*agt[i];
                 }
 
                 if(au>0){
-                if(i==0){
-                    for (int n=0; n<bini4; n++){
-                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                            aau=n;
+                    if(i==0){
+                        for (int n=0; n<bini4; n++){
+                            if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                                aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                                aau=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aau-2; n<aau+3; n++){
-                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                            aau=n;
+                    else{
+                        for(int n=aau-2; n<aau+3; n++){
+                            if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                                aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                                aau=n;
+                            }
                         }
                     }
-                }
-                aut[i]=pow(aut[i]/100,au);
-                reflectance=reflectance*aut[i];
+                    aut[i]=pow(aut[i]/100,au);
+                    reflectance=reflectance*aut[i];
                 }
 
                 if(bb>0){
-                if(i==0){
-                    for (int n=0; n<bini5; n++){
-                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                            abb=n;
+                    if(i==0){
+                        for (int n=0; n<bini5; n++){
+                            if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                                bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                                abb=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=abb-2; n<abb+3; n++){
-                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                            abb=n;
+                    else{
+                        for(int n=abb-2; n<abb+3; n++){
+                            if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                                bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                                abb=n;
+                            }
                         }
                     }
-                }
-                bbt[i]=pow((100-bbt[i])/100,bb);
-                reflectance=reflectance*bbt[i];
+                    bbt[i]=pow((100-bbt[i])/100,bb);
+                    reflectance=reflectance*bbt[i];
                 }
 
                 b1[i] = asin(n[m]*l11[i]*g-sin(M_PI/180*a))*180/M_PI;
                 bt[i] = sin(M_PI/180*(b1[i]-theta));
 
-                R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s);
-                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
                 A[i] = cos(M_PI/180*a)/cos(M_PI/180*(b-bm));
-                s2[i] = A[i] * f2/f1*s;
+
+                if(ui->checkBox_2->isChecked()){
+                    s2[i] = A[i] * f2/f1*s*PhiWP;
+                }
+                else{
+                    s2[i] = A[i] * f2/f1*s;
+                }
+
+                R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s*A[i]);
+                if(ui->checkBox_2->isChecked()){
+                    D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g*PhiWP);
+                }
+                else{
+                    D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+                }
+
                 Nf[i] = s2[i]/p/2;
                 Tr[i] = 1-0.0091224/cos(M_PI/180*z)/(pow(l11[i]*1000,4));
                 l11[i]=l11[i]*10000000;
@@ -1701,9 +2017,11 @@ void MainWindow::parameters()
             }
             for(int i=0; i<lx/Bx; i++){
                 if((Ef[i]>=0)&(Tr[i]>=0)&(P[i]>=0)){
-                average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
-                sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
-                }}
+                    average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
+                    sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
+                }
+            }
+
             snr[m]=sign[m]/(sqrt(sign[m]+lx/Bx*pow((readnoise),2)));
             ui->progressBar->setValue((m+1)*100/(nl-nh));
             qApp->processEvents(QEventLoop::AllEvents);
@@ -1834,14 +2152,26 @@ void MainWindow::parameters()
         indexlz=sqrt(1+B1*lz*lz/(lz*lz-C1)+B2*lz*lz/(lz*lz-C2)+B3*lz*lz/(lz*lz-C3));
         lz=lz/1000;
 
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
         alpha_2b=asin(ncd*tDCG/1000000/nDCG/2*gc)*180/M_PI;
 
         for(int i=0; i<nl-nh; i++){
             n[i]=nl-i;
             lw[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g);
             b1c[i] = asin(ncd*lw[i]*gc-sin(M_PI/180*acc))*180/M_PI;
-            o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2/p);
+            if(ui->checkBox_2->isChecked()){
+                o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2*PhiWP/p);
+            }
+            else{
+                o[i] = -((ly-4*sdisc/p)-tan((b1c[i]-b1c[0])*M_PI/180)*f2/p);
+            }
+
             if(o[i]>0){
                 ++counter;
             }
@@ -1856,132 +2186,158 @@ void MainWindow::parameters()
 
             n[m]=nl-m;
             if(m>0){
-            bm = atan((lx/2)*p/f2)*180/M_PI;
-            l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan(lx/2*p/f2)*180/M_PI;
+                }
 
-            overlap[m]=(l11[lx/Bx-1]-l11[0])*1000000;
-            separation[m]=o[m]-o[m-1];
+                l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
+
+                overlap[m]=(l11[lx/Bx-1]-l11[0])*1000000;
+                separation[m]=o[m]-o[m-1];
             }
 
         for(int i=0; i<lx/Bx; i++){
-            bm = atan((lx/2-i)*p*Bx/f2)*180/M_PI;
+            if(ui->checkBox_2->isChecked()){
+                bm = atan((lx/2-i)*Bx*p/f2/PhiWP)*180/M_PI;
+            }
+            else{
+                bm = atan((lx/2-i)*Bx*p/f2)*180/M_PI;
+            }
+
             l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
             if(al>0){
-            if(i==0){
-                for (int n=0; n<bini; n++){
-                    if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                        alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                        aal=n;
+                if(i==0){
+                    for (int n=0; n<bini; n++){
+                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                            aal=n;
+                        }
                     }
                 }
-            }
-            else{
-                for(int n=aal-2; n<aal+3; n++){
-                    if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                        alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                        aal=n;
+                else{
+                    for(int n=aal-2; n<aal+3; n++){
+                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                            aal=n;
+                        }
                     }
                 }
-            }
-            alt[i]=pow(alt[i]/100,al);
-            reflectance=reflectance*alt[i];
+                alt[i]=pow(alt[i]/100,al);
+                reflectance=reflectance*alt[i];
             }
 
             if(aluv>0){
-            if(i==0){
-                for (int n=0; n<bini2; n++){
-                    if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                        aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                        aaluv=n;
+                if(i==0){
+                    for (int n=0; n<bini2; n++){
+                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                            aaluv=n;
+                        }
                     }
                 }
-            }
-            else{
-                for(int n=aaluv-2; n<aaluv+3; n++){
-                    if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                        aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                        aaluv=n;
+                else{
+                    for(int n=aaluv-2; n<aaluv+3; n++){
+                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                            aaluv=n;
+                        }
                     }
                 }
-            }
-            aluvt[i]=pow(aluvt[i]/100,aluv);
-            reflectance=reflectance*aluvt[i];
+                aluvt[i]=pow(aluvt[i]/100,aluv);
+                reflectance=reflectance*aluvt[i];
             }
 
             if(ag>0){
-            if(i==0){
-                for (int n=0; n<bini3; n++){
-                    if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                        agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                        aag=n;
+                if(i==0){
+                    for (int n=0; n<bini3; n++){
+                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                            aag=n;
+                        }
                     }
                 }
-            }
-            else{
-                for(int n=aag-2; n<aag+3; n++){
-                    if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                        agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                        aag=n;
+                else{
+                    for(int n=aag-2; n<aag+3; n++){
+                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                            aag=n;
+                        }
                     }
                 }
-            }
-            agt[i]=pow(agt[i]/100,ag);
-            reflectance=reflectance*agt[i];
+                agt[i]=pow(agt[i]/100,ag);
+                reflectance=reflectance*agt[i];
             }
 
             if(au>0){
-            if(i==0){
-                for (int n=0; n<bini4; n++){
-                    if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                        aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                        aau=n;
+                if(i==0){
+                    for (int n=0; n<bini4; n++){
+                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                            aau=n;
+                        }
                     }
                 }
-            }
-            else{
-                for(int n=aau-2; n<aau+3; n++){
-                    if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                        aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                        aau=n;
+                else{
+                    for(int n=aau-2; n<aau+3; n++){
+                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                            aau=n;
+                        }
                     }
                 }
-            }
-            aut[i]=pow(aut[i]/100,au);
-            reflectance=reflectance*aut[i];
+                aut[i]=pow(aut[i]/100,au);
+                reflectance=reflectance*aut[i];
             }
 
             if(bb>0){
-            if(i==0){
-                for (int n=0; n<bini5; n++){
-                    if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                        bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                        abb=n;
+                if(i==0){
+                    for (int n=0; n<bini5; n++){
+                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                            abb=n;
+                        }
                     }
                 }
-            }
-            else{
-                for(int n=abb-2; n<abb+3; n++){
-                    if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                        bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                        abb=n;
+                else{
+                    for(int n=abb-2; n<abb+3; n++){
+                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                            abb=n;
+                        }
                     }
                 }
-            }
-            bbt[i]=pow((100-bbt[i])/100,bb);
-            reflectance=reflectance*bbt[i];
+                bbt[i]=pow((100-bbt[i])/100,bb);
+                reflectance=reflectance*bbt[i];
             }
 
             b1[i] = asin(n[m]*l11[i]*g-sin(M_PI/180*a))*180/M_PI;
             bt[i] = sin(M_PI/180*(b1[i]-theta));
 
-            R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s);
-
             A[i] = cos(M_PI/180*a)/cos(M_PI/180*(b-bm));
-            s2[i] = A[i] * f2/f1*s;
+
+            if(ui->checkBox_2->isChecked()){
+                s2[i] = A[i] * f2/f1*s*PhiWP;
+            }
+            else{
+                s2[i] = A[i] * f2/f1*s;
+            }
+
+            R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s*A[i]);
+
             Nf[i] = s2[i]/p/2;
             Tr[i] = 1-0.0091224/cos(M_PI/180*z)/(pow(l11[i]*1000,4));
-            D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+
+            if(ui->checkBox_2->isChecked()){
+                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g*PhiWP);
+            }
+            else{
+                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+            }
+
             l11[i]=l11[i]*10000000;
             P[i] = Tr[i]*dtel*dtel/400*M_PI*ap/(l11[i]*l11[i]*l11[i]*l11[i])/(exp(k/T/l11[i])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
             CCD[i] = ap/(l11[i]*l11[i]*l11[i]*l11[i]*l11[i])/(exp(143877500/l11[i]/CCDT)-1)/CCDm*CCDp;
@@ -2016,9 +2372,10 @@ void MainWindow::parameters()
         }
         for(int i=0; i<lx/Bx; i++){
             if((Ef[i]>=0)&(Tr[i]>=0)&(P[i]>=0)){
-            average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
-            sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
-            }}
+                average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
+                sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
+            }
+        }
         snr[m]=sign[m]/(sqrt(sign[m]+lx/Bx*pow(readnoise,2)));
         ui->progressBar->setValue((m+1)*100/(nl-nh));
         qApp->processEvents(QEventLoop::AllEvents);
@@ -2168,7 +2525,13 @@ void MainWindow::parameters()
             snr[m]=0;
 
             n[m]=nl-m;
-            bm = atan((lx/2)*p/f2)*180/M_PI;
+            if(ui->checkBox_2->isChecked()){
+                bm = atan((lx/2)*p/f2/PhiWP)*180/M_PI;
+            }
+            else{
+                bm = atan((lx/2)*p/f2)*180/M_PI;
+            }
+
             lw[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
             index=sqrt(1+B1*lw[m]*lw[m]/(lw[m]*lw[m]-C1)+B2*lw[m]*lw[m]/(lw[m]*lw[m]-C2)+B3*lw[m]*lw[m]/(lw[m]*lw[m]-C3));
             lw[m]=lw[m]/1000;
@@ -2177,10 +2540,16 @@ void MainWindow::parameters()
             b12=asin(lw[m]*gc/index*ncd-sin(theta2*M_PI/180-b11*M_PI/180))*180/M_PI;
 
             b1c[m]=asin(index*sin(theta2*M_PI/180-b12*M_PI/180))*180/M_PI;
-            o[m] = -((ly-4*sdisc/p)-tan((b1c[0]-b1c[m])*M_PI/180)*f2/p);
+            if(ui->checkBox_2->isChecked()){
+                o[m] = -((ly-4*sdisc/p)-tan((b1c[0]-b1c[m])*M_PI/180)*f2*PhiWP/p);
+            }
+            else{
+                o[m] = -((ly-4*sdisc/p)-tan((b1c[0]-b1c[m])*M_PI/180)*f2/p);
+            }
+
             if(m>0){
-            separation[m]=o[m]-o[m-1];
-            overlap[m]=(l11[lx/Bx-1]-lw[m])*1000000;
+                separation[m]=o[m]-o[m-1];
+                overlap[m]=(l11[lx/Bx-1]-lw[m])*1000000;
             }
             if(o[m]>0){
                 ++counter;
@@ -2188,121 +2557,140 @@ void MainWindow::parameters()
 
             for(int i=0; i<lx/Bx; i++){
 
-                bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-i*Bx)*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
+                }
+
                 l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
                 if(al>0){
-                if(i==0){
-                    for (int n=0; n<bini; n++){
-                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                            aal=n;
+                    if(i==0){
+                        for (int n=0; n<bini; n++){
+                            if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                                alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                                aal=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aal-2; n<aal+3; n++){
-                        if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
-                            alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
-                            aal=n;
+                    else{
+                        for(int n=aal-2; n<aal+3; n++){
+                            if((alw[n]>l11[i]*1000) &(alw[n+1]<l11[i]*1000)){
+                                alt[i]=ali[n+1]+(l11[i]*1000-alw[n+1])/(alw[n]-alw[n+1])*(ali[n]-ali[n+1]);
+                                aal=n;
+                            }
                         }
                     }
-                }
-                alt[i]=pow(alt[i]/100,al);
-                reflectance=reflectance*alt[i];
+                    alt[i]=pow(alt[i]/100,al);
+                    reflectance=reflectance*alt[i];
                 }
 
                 if(aluv>0){
-                if(i==0){
-                    for (int n=0; n<bini2; n++){
-                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                            aaluv=n;
+                    if(i==0){
+                        for (int n=0; n<bini2; n++){
+                            if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                                aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                                aaluv=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aaluv-2; n<aaluv+3; n++){
-                        if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
-                            aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
-                            aaluv=n;
+                    else{
+                        for(int n=aaluv-2; n<aaluv+3; n++){
+                            if((aluvw[n]>l11[i]*1000) &(aluvw[n+1]<l11[i]*1000)){
+                                aluvt[i]=aluvi[n+1]+(l11[i]*1000-aluvw[n+1])/(aluvw[n]-aluvw[n+1])*(aluvi[n]-aluvi[n+1]);
+                                aaluv=n;
+                            }
                         }
                     }
-                }
-                aluvt[i]=pow(aluvt[i]/100,aluv);
-                reflectance=reflectance*aluvt[i];
+                    aluvt[i]=pow(aluvt[i]/100,aluv);
+                    reflectance=reflectance*aluvt[i];
                 }
 
                 if(ag>0){
-                if(i==0){
-                    for (int n=0; n<bini3; n++){
-                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                            aag=n;
+                    if(i==0){
+                        for (int n=0; n<bini3; n++){
+                            if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                                agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                                aag=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aag-2; n<aag+3; n++){
-                        if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
-                            agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
-                            aag=n;
+                    else{
+                        for(int n=aag-2; n<aag+3; n++){
+                            if((agw[n]>l11[i]*1000) &(agw[n+1]<l11[i]*1000)){
+                                agt[i]=agi[n+1]+(l11[i]*1000-agw[n+1])/(agw[n]-agw[n+1])*(agi[n]-agi[n+1]);
+                                aag=n;
+                            }
                         }
                     }
-                }
-                agt[i]=pow(agt[i]/100,ag);
-                reflectance=reflectance*agt[i];
+                    agt[i]=pow(agt[i]/100,ag);
+                    reflectance=reflectance*agt[i];
                 }
 
                 if(au>0){
-                if(i==0){
-                    for (int n=0; n<bini4; n++){
-                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                            aau=n;
+                    if(i==0){
+                        for (int n=0; n<bini4; n++){
+                            if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                                aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                                aau=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=aau-2; n<aau+3; n++){
-                        if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
-                            aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
-                            aau=n;
+                    else{
+                        for(int n=aau-2; n<aau+3; n++){
+                            if((auw[n]>l11[i]*1000) &(auw[n+1]<l11[i]*1000)){
+                                aut[i]=aui[n+1]+(l11[i]*1000-auw[n+1])/(auw[n]-auw[n+1])*(aui[n]-aui[n+1]);
+                                aau=n;
+                            }
                         }
                     }
-                }
-                aut[i]=pow(aut[i]/100,au);
-                reflectance=reflectance*aut[i];
+                    aut[i]=pow(aut[i]/100,au);
+                    reflectance=reflectance*aut[i];
                 }
 
                 if(bb>0){
-                if(i==0){
-                    for (int n=0; n<bini5; n++){
-                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                            abb=n;
+                    if(i==0){
+                        for (int n=0; n<bini5; n++){
+                            if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                                bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                                abb=n;
+                            }
                         }
                     }
-                }
-                else{
-                    for(int n=abb-2; n<abb+3; n++){
-                        if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
-                            bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
-                            abb=n;
+                    else{
+                        for(int n=abb-2; n<abb+3; n++){
+                            if((bbw[n]<l11[i]*1000000) &(bbw[n+1]>l11[i]*1000000)){
+                                bbt[i]=bbi[n]+(l11[i]*1000000-bbw[n])/(bbw[n+1]-bbw[n])*(bbi[n+1]-bbi[n]);
+                                abb=n;
+                            }
                         }
                     }
-                }
-                bbt[i]=pow((100-bbt[i])/100,bb);
-                reflectance=reflectance*bbt[i];
+                    bbt[i]=pow((100-bbt[i])/100,bb);
+                    reflectance=reflectance*bbt[i];
                 }
 
                 b1[i] = asin(n[m]*l11[i]*g-sin(M_PI/180*a))*180/M_PI;
                 bt[i] = sin(M_PI/180*(b1[i]-theta));
 
-                R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s);
-                D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
                 A[i] = cos(M_PI/180*a)/cos(M_PI/180*(b-bm));
-                s2[i] = A[i] * f2/f1*s;
+                if(ui->checkBox_2->isChecked()){
+                    s2[i] = A[i] * f2/f1*s*PhiWP;
+                }
+                else{
+                    s2[i] = A[i] * f2/f1*s;
+                }
+
+                R[i] = l11[i]*n[m]*f1*g/(cos(M_PI/180*a)*s*A[i]);
+
+                if(ui->checkBox_2->isChecked()){
+                    D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g*PhiWP);
+                }
+                else{
+                    D[i] = p*Bx*cos((b-bm)*M_PI/180)/(f2*n[m]*g);
+                }
+
                 Nf[i] = s2[i]/p/2;
                 Tr[i] = 1-0.0091224/cos(M_PI/180*z)/(pow(l11[i]*1000,4));
                 l11[i]=l11[i]*10000000;
@@ -2339,9 +2727,10 @@ void MainWindow::parameters()
             }
             for(int i=0; i<lx/Bx; i++){
                 if((Ef[i]>=0)&(Tr[i]>=0)&(P[i]>=0)){
-                average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
-                sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
-                }}
+                    average[m]+=Ef[i]*100/(lx/Bx)/Tr[i];
+                    sign[m]+=Ef[i]*P[i]*exptime/gain/(lx/Bx);
+                }
+            }
             snr[m]=sign[m]/(sqrt(sign[m]+lx/Bx*pow(readnoise,2)));
             ui->progressBar->setValue((m+1)*100/(nl-nh));
             qApp->processEvents(QEventLoop::AllEvents);
@@ -2445,17 +2834,52 @@ void MainWindow::parameters()
     this->setCursor(QCursor(Qt::ArrowCursor));
 }
 
+//********************************
 // calculate Échellogram
+//********************************
 void MainWindow::Echellogram()
 {
 
     this->setCursor(QCursor(Qt::WaitCursor));
 
+    QString qPath = ui->lineEdit_2->text();
+    string path = qPath.toUtf8().constData();
+
+    std::ostringstream datNameStream(path);
+    datNameStream<<path<<"/echello.txt";
+    std::string datName = datNameStream.str();
+    ofstream file1(datName.c_str());
+
+    int yoff = ui->spinBox_12->value();
+
+
     if(ui->checkBox->isChecked()){
         s = tan(ui->doubleSpinBox_29->value()/3600*M_PI/180)*ui->doubleSpinBox_35->value();
+        if(ui->checkBox_2->isChecked()){
+            FWHM=s/p*f2/f1*PhiWP;
+        }
+        else{
+           FWHM=s/p*f2/f1;
+        }
     }
     else{
         s = ui->doubleSpinBox_14->value();
+        if(ui->checkBox_8->isChecked()){
+            if(ui->checkBox_2->isChecked()){
+                FWHM=s/p*f2/f1*PhiWP;
+            }
+            else{
+                FWHM=s/p*f2/f1;
+            }
+        }
+        else{
+            if(ui->checkBox_2->isChecked()){
+                FWHM=sl/p*f2/f1*PhiWP;
+            }
+            else{
+               FWHM=sl/p*f2/f1;
+            }
+        }
     }
 
 
@@ -2466,25 +2890,26 @@ void MainWindow::Echellogram()
 
     double startb, index;
 
-    ofstream file1("echello.txt");
-
-    if(ui->checkBox_8->isChecked()){
-        FWHM=s/p*f2/f1;
-    }
-    if(ui->checkBox_9->isChecked()){
-        FWHM=sl/p*f2/f1;
-    }
-
     int ovlap=0;
 
-     ofstream egram("echellogram.dat");
-     egram<<"rel. order.\tabs. order\tlower wave\tmiddle wave\tupper wave\toverlap"<<endl;
+    std::ostringstream dat2NameStream(path);
+    dat2NameStream<<path<<"/echellogram.dat";
+    std::string dat2Name = dat2NameStream.str();
+    ofstream egram(dat2Name.c_str());
 
-     // Échellogram Prism
+    egram<<"rel. order.\tabs. order\tlower wave\tmiddle wave\tupper wave\toverlap"<<endl;
+
+    // Échellogram Prism
     if(e==0){
 
-        bm = atan((lx)*p/2/f2)*180/M_PI;
-        o[0]=(ly-4*sdisc/p);
+        if(ui->checkBox_2->isChecked()){
+            bm = atan((lx)*p/2/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan((lx)*p/2/f2)*180/M_PI;
+        }
+
+        o[0]=(ly-4*sdisc/p+yoff);
         l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g)*1000;
         index=sqrt(1+B1*l11[0]*l11[0]/(l11[0]*l11[0]-C1)+B2*l11[0]*l11[0]/(l11[0]*l11[0]-C2)+B3*l11[0]*l11[0]/(l11[0]*l11[0]-C3));
         l11[0]=l11[0]/1000;
@@ -2500,27 +2925,45 @@ void MainWindow::Echellogram()
             n[m]=nl-m;
             egram<<m<<"\t\t"<<n[m]<<"\t\t";
             for(int i=0; i<lx/Bx; i++){
-               bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
-               l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
-               index=sqrt(1+B1*l11[i]*l11[i]/(l11[i]*l11[i]-C1)+B2*l11[i]*l11[i]/(l11[i]*l11[i]-C2)+B3*l11[i]*l11[i]/(l11[i]*l11[i]-C3));
-               l11[i]=l11[i]/1000;
-               b1c[i]=einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
-               //b1c[i]=180/M_PI*asin(sin(M_PI/180*60)*sqrt(index*index-sin(einf*M_PI/180)*sin(M_PI/180*einf))-sin(einf*M_PI/180)*cos(M_PI/180*60));
-               o[i] = ((ly-4*sdisc/p)-tan((startb-b1c[i])*M_PI/180)*f2/p);
-             file1<<i<<" "<<o[i]<<endl;
-             file1<<i<<" "<<o[i]+FWHM<<endl;
-             file1<<i<<" "<<o[i]-FWHM<<endl;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-i*Bx)*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
+                }
 
-             if((i==0) or (i==lx/Bx/2) or (i==lx/Bx-1)){
-                 egram<<l11[i]*1000000<<"\t\t";
-             }
-             if(i==0){
-                 if(l11[0]<l11[lx/Bx-1]){
-                     ovlap=1;
-                 }
-             }
-
+                l11[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
+                index=sqrt(1+B1*l11[i]*l11[i]/(l11[i]*l11[i]-C1)+B2*l11[i]*l11[i]/(l11[i]*l11[i]-C2)+B3*l11[i]*l11[i]/(l11[i]*l11[i]-C3));
+                l11[i]=l11[i]/1000;
+                b1c[i]=einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
+                //b1c[i]=180/M_PI*asin(sin(M_PI/180*60)*sqrt(index*index-sin(einf*M_PI/180)*sin(M_PI/180*einf))-sin(einf*M_PI/180)*cos(M_PI/180*60));
+                if(ui->checkBox_2->isChecked()){
+                    if(ui->checkBox_3->isChecked()){
+                        o[i] = ((ly-4*sdisc/p+yoff)-tan(2*(startb-b1c[i])*M_PI/180)*f2*PhiWP/p);
                     }
+                    else{
+                        o[i] = ((ly-4*sdisc/p+yoff)-tan((startb-b1c[i])*M_PI/180)*f2*PhiWP/p);
+                    }
+                }
+                else{
+                    o[i] = ((ly-4*sdisc/p+yoff)-tan((startb-b1c[i])*M_PI/180)*f2/p);
+                }
+
+
+                file1<<i<<" "<<o[i]<<endl;
+                file1<<i<<" "<<o[i]+FWHM<<endl;
+                 file1<<i<<" "<<o[i]-FWHM<<endl;
+
+                if((i==0) or (i==lx/Bx/2) or (i==lx/Bx-1)){
+                    egram<<l11[i]*1000000<<"\t\t";
+                }
+                if(i==0){
+                    if(l11[0]<l11[lx/Bx-1]){
+                        ovlap=1;
+                    }
+                }
+
+            }
             if(ovlap==1){
                 ovlap=0;
                 egram<<"yes";
@@ -2529,13 +2972,19 @@ void MainWindow::Echellogram()
             egram<<endl;
             ui->progressBar->setValue((m+1)*100/(nl-nh));
             qApp->processEvents(QEventLoop::AllEvents);
-            }
+        }
     }
 
     // Échellogram Grating
     if(e==1){
 
-        bm = atan((lx/2)*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan((lx/2)*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan((lx/2)*p/f2)*180/M_PI;
+        }
+
         lw[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g);
         startb= asin(ncd*lw[0]*gc-sin(M_PI/180*acc))*180/M_PI;
 
@@ -2544,26 +2993,36 @@ void MainWindow::Echellogram()
             egram<<i<<"\t\t"<<n[i]<<"\t\t";
 
             for(int m=0; m<lx/Bx; m++){
-            bm = atan((lx/2-m*Bx)*p/f2)*180/M_PI;
-            lw[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g);
-            b1c[m] = asin(ncd*lw[m]*gc-sin(M_PI/180*acc))*180/M_PI;
-            o[m] = (ly-4*sdisc/p)-tan((b1c[m]-startb)*M_PI/180)*f2/p;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-m*Bx)*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan((lx/2-m*Bx)*p/f2)*180/M_PI;
+                }
 
-           file1<<m<<" "<<o[m]<<endl;
-           file1<<m<<" "<<o[m]+FWHM<<endl;
-           file1<<m<<" "<<o[m]-FWHM<<endl;
+                lw[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g);
+                b1c[m] = asin(ncd*lw[m]*gc-sin(M_PI/180*acc))*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    o[m] = (ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*M_PI/180)*f2*PhiWP/p;
+                }
+                else{
+                    o[m] = (ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*M_PI/180)*f2/p;
+                }
 
-           if((m==0) or (m==lx/Bx/2) or (m==lx/Bx-1)){
-               egram<<lw[m]*1000000<<"\t\t";
-           }
-           if(m==0){
-               if(lw[0]<lw[lx/Bx-1]){
-                   ovlap=1;
-               }
+                file1<<m<<" "<<o[m]<<endl;
+                file1<<m<<" "<<o[m]+FWHM<<endl;
+                file1<<m<<" "<<o[m]-FWHM<<endl;
 
+                if((m==0) or (m==lx/Bx/2) or (m==lx/Bx-1)){
+                    egram<<lw[m]*1000000<<"\t\t";
+                }
+                if(m==0){
+                    if(lw[0]<lw[lx/Bx-1]){
+                        ovlap=1;
+                    }
                 }
             }
-           if(ovlap==1){
+            if(ovlap==1){
                ovlap=0;
                egram<<"yes";
            }
@@ -2577,7 +3036,13 @@ void MainWindow::Echellogram()
     // Échellogram VPH Grating
     if(e==2){
 
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
         double alpha_2b=asin(ncd*tDCG/1000000/nDCG/2*gc)*180/M_PI;
 
         lw[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g);
@@ -2587,23 +3052,34 @@ void MainWindow::Echellogram()
             n[m]=nl-m;
             egram<<m<<"\t\t"<<n[m]<<"\t\t";
             for(int i=0; i<lx/Bx; i++){
-            bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
-            lw[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
-            b1c[i] = asin(ncd*lw[i]*gc-sin(M_PI/180*acc))*180/M_PI;
-            o[i] = (ly-4*sdisc/p)-tan((b1c[i]-startb)*M_PI/180)*f2/p;
-            file1<<i<<" "<<o[i]<<endl;
-            file1<<i<<" "<<o[i]+FWHM<<endl;
-            file1<<i<<" "<<o[i]-FWHM<<endl;
-
-            if((i==0) or (i==lx/Bx/2) or (i==lx/Bx-1)){
-                egram<<lw[i]*1000000<<"\t\t";
-            }
-            if(i==0){
-                if(lw[0]<lw[lx/Bx-1]){
-                    ovlap=1;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-i*Bx)*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                    bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
                 }
 
-                 }
+                lw[i] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
+                b1c[i] = asin(ncd*lw[i]*gc-sin(M_PI/180*acc))*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    o[i] = (ly-4*sdisc/p+yoff)-tan((b1c[i]-startb)*M_PI/180)*f2*PhiWP/p;
+                }
+                else{
+                    o[i] = (ly-4*sdisc/p+yoff)-tan((b1c[i]-startb)*M_PI/180)*f2/p;
+                }
+
+                file1<<i<<" "<<o[i]<<endl;
+                file1<<i<<" "<<o[i]+FWHM<<endl;
+                file1<<i<<" "<<o[i]-FWHM<<endl;
+
+                if((i==0) or (i==lx/Bx/2) or (i==lx/Bx-1)){
+                    egram<<lw[i]*1000000<<"\t\t";
+                }
+                if(i==0){
+                    if(lw[0]<lw[lx/Bx-1]){
+                        ovlap=1;
+                    }
+                }
             }
             if(ovlap==1){
                 ovlap=0;
@@ -2614,7 +3090,7 @@ void MainWindow::Echellogram()
 
             ui->progressBar->setValue((m+1)*100/(nl-nh));
             qApp->processEvents(QEventLoop::AllEvents);
-            }
+        }
     }
 
     // Échellogram VPH Grism
@@ -2636,7 +3112,13 @@ void MainWindow::Echellogram()
             }
         }
 
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
         l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g)*1000;
         index=sqrt(1+B1*l11[0]*l11[0]/(l11[0]*l11[0]-C1)+B2*l11[0]*l11[0]/(l11[0]*l11[0]-C2)+B3*l11[0]*l11[0]/(l11[0]*l11[0]-C3));
         l11[0]=l11[0]/1000;
@@ -2648,29 +3130,40 @@ void MainWindow::Echellogram()
             n[i]=nl-i;
             egram<<i<<"\t\t"<<n[i]<<"\t\t";
             for(int m=0; m<lx/Bx; m++){
-            bm = atan((lx/2-m*Bx)*p/f2)*180/M_PI;
-            lw[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g)*1000;
-            index=sqrt(1+B1*lw[m]*lw[m]/(lw[m]*lw[m]-C1)+B2*lw[m]*lw[m]/(lw[m]*lw[m]-C2)+B3*lw[m]*lw[m]/(lw[m]*lw[m]-C3));
-            lw[m]=lw[m]/1000;
-
-            b11=asin(sin(theta2*M_PI/180/index))*180/M_PI;
-            b12=asin(lw[m]*gc/index*ncd-sin(theta2*M_PI/180-b11*M_PI/180))*180/M_PI;
-
-            b1c[m]=asin(index*sin(theta2*M_PI/180-b12*M_PI/180))*180/M_PI;
-            o[m] = (ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2/p;
-            file1<<m<<" "<<o[m]<<endl;
-            file1<<m<<" "<<o[m]+FWHM<<endl;
-            file1<<m<<" "<<o[m]-FWHM<<endl;
-
-            if((m==0) or (m==lx/Bx/2) or (m==lx/Bx-1)){
-                egram<<lw[m]*1000000<<"\t\t";
-            }
-            if(m==0){
-                if(lw[0]<lw[lx/Bx-1]){
-                    ovlap=1;
+                if(ui->checkBox_2->isChecked()){
+                    bm = atan((lx/2-m*Bx)*p/f2/PhiWP)*180/M_PI;
+                }
+                else{
+                   bm = atan((lx/2-m*Bx)*p/f2)*180/M_PI;
                 }
 
-                 }
+                lw[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[i]*g)*1000;
+                index=sqrt(1+B1*lw[m]*lw[m]/(lw[m]*lw[m]-C1)+B2*lw[m]*lw[m]/(lw[m]*lw[m]-C2)+B3*lw[m]*lw[m]/(lw[m]*lw[m]-C3));
+                lw[m]=lw[m]/1000;
+
+                b11=asin(sin(theta2*M_PI/180/index))*180/M_PI;
+                b12=asin(lw[m]*gc/index*ncd-sin(theta2*M_PI/180-b11*M_PI/180))*180/M_PI;
+
+                b1c[m]=asin(index*sin(theta2*M_PI/180-b12*M_PI/180))*180/M_PI;
+                if(ui->checkBox_2->isChecked()){
+                    o[m] = (ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*M_PI/180)*f2*PhiWP/p;
+                }
+                else{
+                    o[m] = (ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*M_PI/180)*f2/p;
+                }
+
+                file1<<m<<" "<<o[m]<<endl;
+                file1<<m<<" "<<o[m]+FWHM<<endl;
+                file1<<m<<" "<<o[m]-FWHM<<endl;
+
+                if((m==0) or (m==lx/Bx/2) or (m==lx/Bx-1)){
+                    egram<<lw[m]*1000000<<"\t\t";
+                }
+                if(m==0){
+                    if(lw[0]<lw[lx/Bx-1]){
+                        ovlap=1;
+                    }
+                }
             }
             if(ovlap==1){
                 ovlap=0;
@@ -2709,7 +3202,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_actionParameters_triggered()
 {
     qEchelle = new Echelle(this);
-    qEchelle->seData(ui->lineEdit_2->text());
+    qEchelle->seData(ui->lineEdit_2->text(), ui->spinBox_10->value(), ui->spinBox_11->value());
     qEchelle->show();
 }
 
@@ -2909,15 +3402,26 @@ void MainWindow::on_action3D_Frame_triggered()
 void MainWindow::on_actionEchelle_Frame_triggered()
 {
     qFrameEchelle = new FrameEchelle(this);
-    qFrameEchelle->seData(ui->lineEdit_2->text());
+    qFrameEchelle->seData(ui->lineEdit_2->text(), ui->spinBox_10->value(), ui->spinBox_11->value());
     qFrameEchelle->show();
 }
 
-
+//**********************************
 // Create CCD Frame
+//**********************************
 void MainWindow::on_pushButton_7_clicked()
 {   
+    this->setCursor(QCursor(Qt::WaitCursor));
+
     ui->progressBar->setValue(0);
+
+    QString qPath = ui->lineEdit_2->text();
+    string path = qPath.toUtf8().constData();
+
+    int yoff = ui->spinBox_12->value();
+
+
+    //ofstream file1(datName.c_str());
 
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Warning!", "This will delete all existing frames.\n\nSave or export them first, if you want to keep.\n\nDo you wish to continue?",
@@ -2931,11 +3435,32 @@ void MainWindow::on_pushButton_7_clicked()
 
     int progress=0;
 
-    ofstream out1("neonech.txt");
-    ofstream out2("balmerech.txt");
+    std::ostringstream datNameStream(path);
+
+    if(ui->comboBox_3->currentIndex()==0){
+      datNameStream<<path<<"/planckech.txt";
+    }
+    if(ui->comboBox_3->currentIndex()==1){
+      datNameStream<<path<<"/neonech.txt";
+    }
+    if(ui->comboBox_3->currentIndex()==2){
+      datNameStream<<path<<"/balmerech.txt";
+    }
+    if(ui->comboBox_3->currentIndex()==3){
+      datNameStream<<path<<"/tharech.txt";
+    }
+
+    std::string datName = datNameStream.str();
+
+    ofstream out1(datName.c_str());
+    /*ofstream out2("balmerech.txt");
     ofstream out3("planckech.txt");
-    ofstream out4("tharech.txt");
-    ofstream file1("framech1.txt");
+    ofstream out4("tharech.txt");*/
+
+    std::ostringstream dat2NameStream(path);
+    dat2NameStream<<path<<"/framech1.txt";
+    std::string dat2Name = dat2NameStream.str();
+    ofstream file1(dat2Name.c_str());
 
     MainWindow::revectors();
     MainWindow::overview();
@@ -2946,127 +3471,155 @@ void MainWindow::on_pushButton_7_clicked()
     int number_of_lines;
     string zeile, one, two;
 
-    this->setCursor(QCursor(Qt::WaitCursor));
-
     if(ui->comboBox_3->currentIndex()==1){
-    ifstream input("neon_line.txt");
-    QFile checkfile2("neon_line.txt");
 
-    if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Neon line list neon_line.txt not available!");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
-    }
+        std::ostringstream datNameStream(path);
+        datNameStream<<path<<"/neon_line.txt";
+        std::string datName = datNameStream.str();
 
-    if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Neon line list neon_line.txt is empty.");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
-    }
+        QFile checkfile2(datName.c_str());
 
-    number_of_lines =0;
+        if(!checkfile2.exists()){
+            QMessageBox::information(this, "Error", "Neon line list neon_line.txt not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+            return;
+        }
 
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
+        if(checkfile2.size()==0){
+            QMessageBox::information(this, "Error", "Neon line list neon_line.txt is empty.");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+            return;
+        }
+        ifstream input(datName.c_str());
 
-    input.clear();
-    input.seekg(0, ios::beg);
+        number_of_lines =0;
 
-    al.resize(number_of_lines);
-    bl.resize(number_of_lines);
-    lineech.resize(number_of_lines);
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
 
-    for (int i=0; i<number_of_lines; i++){
-    input >> one >>two;
-    istringstream ist(one);
-    ist >> al[i];
-    istringstream ist2(two);
-    ist2 >> bl[i];
-    }
-    input.close();
+        input.clear();
+        input.seekg(0, ios::beg);
+
+        al.resize(number_of_lines);
+        bl.resize(number_of_lines);
+        lineech.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> al[i];
+            istringstream ist2(two);
+            ist2 >> bl[i];
+        }
+        input.close();
     }
     if(ui->comboBox_3->currentIndex()==2){
-    ifstream input("absor_line.txt");
+        std::ostringstream datNameStream(path);
+        datNameStream<<path<<"/absor_line.txt";
+        std::string datName = datNameStream.str();
 
-    QFile checkfile2("absor_line.txt");
+        QFile checkfile2(datName.c_str());
 
-    if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Absorption line list absor_line.txt not available!");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
-    }
+        if(!checkfile2.exists()){
+            QMessageBox::information(this, "Error", "Absorption line list absor_line.txt not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+            return;
+        }
 
-    if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Absorption line list absor_line.txt is empty.");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
-    }
+        if(checkfile2.size()==0){
+            QMessageBox::information(this, "Error", "Absorption line list absor_line.txt is empty.");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+            return;
+        }
 
-    number_of_lines =0;
+        ifstream input(datName.c_str());
 
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
+        number_of_lines =0;
 
-    input.clear();
-    input.seekg(0, ios::beg);
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
 
-    al.resize(number_of_lines);
-    bl.resize(number_of_lines);
-    lineech.resize(number_of_lines);
+        input.clear();
+        input.seekg(0, ios::beg);
 
-    for (int i=0; i<number_of_lines; i++){
-    input >> one >>two;
-    istringstream ist(one);
-    ist >> al[i];
-    istringstream ist2(two);
-    ist2 >> bl[i];
-    }
-    input.close();
+        al.resize(number_of_lines);
+        bl.resize(number_of_lines);
+        lineech.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one >>two;
+            istringstream ist(one);
+            ist >> al[i];
+            istringstream ist2(two);
+            ist2 >> bl[i];
+        }
+        input.close();
     }
 
     if(ui->comboBox_3->currentIndex()==3){
-    ifstream input("thar_uves.txt");
+        std::ostringstream datNameStream(path);
+        datNameStream<<path<<"/thar_uves.txt";
+        std::string datName = datNameStream.str();
 
-    QFile checkfile2("thar_uves.txt");
+        QFile checkfile2(datName.c_str());
 
-    if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Th/Ar line list thar_uves.txt not available!");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
+        if(!checkfile2.exists()){
+            QMessageBox::information(this, "Error", "Th/Ar line list thar_uves.txt not available!");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+        return;
+        }
+
+        if(checkfile2.size()==0){
+            QMessageBox::information(this, "Error", "Th/Ar line list thar_uves.txt is empty.");
+            this->setCursor(QCursor(Qt::ArrowCursor));
+        return;
+        }
+        ifstream input(datName.c_str());
+
+        number_of_lines =0;
+
+        while(std::getline(input, zeile))
+            ++ number_of_lines;
+
+        input.clear();
+        input.seekg(0, ios::beg);
+
+        al.resize(number_of_lines);
+        bl.resize(number_of_lines);
+        lineech.resize(number_of_lines);
+
+        for (int i=0; i<number_of_lines; i++){
+            input >> one;
+            istringstream ist(one);
+            ist >> al[i];
+            bl[i]=0.8;
+        }
+        input.close();
     }
 
-    if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Th/Ar line list thar_uves.txt is empty.");
-        this->setCursor(QCursor(Qt::ArrowCursor));
-       return;
+    if(ui->checkBox_9->isChecked()){
+        sdisc = ui->doubleSpinBox_15->value();
     }
-
-    number_of_lines =0;
-
-    while(std::getline(input, zeile))
-       ++ number_of_lines;
-
-    input.clear();
-    input.seekg(0, ios::beg);
-
-    al.resize(number_of_lines);
-    bl.resize(number_of_lines);
-    lineech.resize(number_of_lines);
-
-    for (int i=0; i<number_of_lines; i++){
-    input >> one;
-    istringstream ist(one);
-    ist >> al[i];
-    bl[i]=0.8;
-    }
-    input.close();
+    else{
+        if(ui->checkBox_8->isChecked()){
+            sdisc = ui->doubleSpinBox_14->value();
+        }
+        else{
+            sdisc = sdisc;
+        }
     }
 
 
     // Prism
     if(e==0){
 
-        bm = atan((lx)*p/2/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
         l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g)*1000;
                 double index=sqrt(1+B1*l11[0]*l11[0]/(l11[0]*l11[0]-C1)+B2*l11[0]*l11[0]/(l11[0]*l11[0]-C2)+B3*l11[0]*l11[0]/(l11[0]*l11[0]-C3));
                 l11[0]=l11[0]/1000;
@@ -3078,7 +3631,12 @@ void MainWindow::on_pushButton_7_clicked()
                 double startb= einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
 
         for (int i=0; i < lx/Bx; i++){
-            bm = atan((lx/2-i*Bx)*p/f2)*180/M_PI;
+            if(ui->checkBox_2->isChecked()){
+                bm = atan((lx/2-i)*p/f2/PhiWP)*180/M_PI;
+            }
+            else{
+                bm = atan((lx/2-i)*p/f2)*180/M_PI;
+            }
 
              for (int v=0; v < ly/By; v++){
 
@@ -3088,17 +3646,39 @@ void MainWindow::on_pushButton_7_clicked()
                         n[m]=nl-m;
                         l11[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g)*1000;
                         index=sqrt(1+B1*l11[m]*l11[m]/(l11[m]*l11[m]-C1)+B2*l11[m]*l11[m]/(l11[m]*l11[m]-C2)+B3*l11[m]*l11[m]/(l11[m]*l11[m]-C3));
+
                         Tr[m] = 1-0.0091224/cos(M_PI/180*z)/(pow(l11[m],4));
+                        //l11[m]=l11[m]/1000;
+                        l11[m]=l11[m]*10000;
                         CCD[m] = ap/(l11[m]*l11[m]*l11[m]*l11[m]*l11[m])/(exp(143877500/l11[m]/CCDT)-1)/CCDm*CCDp;
-                        b1c[m]=einf-60+180/M_PI*asin(sin(60*M_PI/180)*sqrt(index*index-sin(einf*M_PI/180)*sin(einf*M_PI/180))-sin(einf*M_PI/180)*cos(60*M_PI/180));
-                        l11[m]=l11[m]/1000;
+                        l11[m]=l11[m]/10000000;
+                        b1c[m]=einf-60+asin(index*sin(M_PI/180*(60-asin(indexlz/2/index)*180/M_PI)))*180/M_PI;
+                        //b1c[m]=einf-60+180/M_PI*asin(sin(60*M_PI/180)*sqrt(index*index-sin(einf*M_PI/180)*sin(einf*M_PI/180))-sin(einf*M_PI/180)*cos(60*M_PI/180));
+                        //l11[m]=l11[m]/1000;
                         b1[m] = asin(n[m]*l11[m]*g-sin(M_PI/180*a))*180/M_PI;
                         bt[m] = sin(M_PI/180*(b1[m]-theta));
                         D[m] = p*Bx*cos(b1[m]*M_PI/180)/(f2*n[m]*g);
                         A[m] = cos(M_PI/180*a)/cos(M_PI/180*b1[m]);
-                        s2[m] = A[m] * f2/f1*s;
+                        if(ui->checkBox_2->isChecked()){
+                            s2[m] = A[m] * f2/f1*s*PhiWP;
+                        }
+                        else{
+                            s2[m] = A[m] * f2/f1*s;
+                        }
 
-                        o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2/p)/By;
+                        if(ui->checkBox_2->isChecked()){
+                            if(ui->checkBox_3->isChecked()){
+                                o[m] = -((ly-4*sdisc/p+yoff)-tan(2*(startb-b1c[m])*M_PI/180)*f2*PhiWP/p)/By;
+                            }
+                            else{
+                                o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*M_PI/180)*f2*PhiWP/p)/By;
+                            }
+                        }
+                        else{
+                            o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*M_PI/180)*f2/p)/By;
+                        }
+
+                        //o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*M_PI/180)*f2/p)/By;
                         Il1 = sin(M_PI*d/l11[m]*(at+bt[m]));
                         Il2 = M_PI*d/l11[m]*(at+bt[m]);
                         In[m] = eta*Il1*Il1/Il2/Il2;
@@ -3106,10 +3686,10 @@ void MainWindow::on_pushButton_7_clicked()
 
                         // Planck
                         if(ui->comboBox_3->currentIndex()==0){
-                        l11[m] = l11[m]*10000000;
-                        P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
-                        l11[m] = l11[m]/10000000;
-                        I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
+                            l11[m] = l11[m]*10000000;
+                            P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
+                            l11[m] = l11[m]/10000000;
+                            I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
                         }
 
                         // Neon
@@ -3141,70 +3721,56 @@ void MainWindow::on_pushButton_7_clicked()
                         if(ui->comboBox_3->currentIndex()==3){
 
                             for (int e=0; e < number_of_lines; e++){
-                                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                            }
+                                  lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
+                            }
 
-                                        for (int e=0; e < number_of_lines; e++){
-                                            I1[m] += lineech[e];
-                                            }
-                                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                            for (int e=0; e < number_of_lines; e++){
+                                 I1[m] += lineech[e];
+                            }
+                            I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                         }
-
-
-                              }
+                    }
 
                   for (int m=0; m < nl-nh; m++){
                       I += I1[m];
 
                          }
-                  if(ui->comboBox_3->currentIndex()==0){
-                  out3<<i<<" "<<v<<" "<<I<<endl;
-                  }
-                  if(ui->comboBox_3->currentIndex()==1){
-                  out1<<i<<" "<<v<<" "<<I<<endl;
-                  }
-                  if(ui->comboBox_3->currentIndex()==2){
-                  out2<<i<<" "<<v<<" "<<I<<endl;
-                  }
-                  if(ui->comboBox_3->currentIndex()==3){
-                  out4<<i<<" "<<v<<" "<<I<<endl;
-                  }
-                  file1<<I<<" ";
-                  I = 0;
+
+                    out1<<scientific<<i<<" "<<v<<" "<<I<<endl;
+
+                    file1<<scientific<<I<<" ";
+                    I = 0;
                   }
              file1<<endl;
              progress++;
              if(progress>=lx/Bx/100){
-             ui->progressBar->setValue((i+1)*100/(lx/Bx));
-                  qApp->processEvents(QEventLoop::AllEvents);
-                  progress=0;
+                ui->progressBar->setValue((i+1)*100/(lx/Bx));
+                qApp->processEvents(QEventLoop::AllEvents);
+                progress=0;
              }
-             }
-        if(ui->comboBox_3->currentIndex()==0){
-            out3.close();
         }
-        if(ui->comboBox_3->currentIndex()==1){
+
             out1.close();
-        }
-        if(ui->comboBox_3->currentIndex()==2){
-            out2.close();
-        }
-        if(ui->comboBox_3->currentIndex()==3){
-            out4.close();
-        }
+
     }
 
     // Grating
     if(e==1){
 
         n[0]=nl;
-        o[0] = -(ly-4*sdisc/p)/By;
+        o[0] = -(ly-4*sdisc/p+yoff)/By;
         l[0] = (sin(Pi/180*a)+sin(Pi/180*(b)))/(nl*g);
         lw[0] = (sin(Pi/180*a)+sin(Pi/180*(b-bm)))/(nl*g);
         b1c[0] = asin(ncd*lw[0]*gc-sin(Pi/180*acc))*180/Pi;
         b1[0] = asin(nl*lw[0]*g-sin(Pi/180*a))*180/Pi;
 
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
 
         lw[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g);
         double startb = asin(ncd*lw[0]*gc-sin(M_PI/180*acc))*180/M_PI;
@@ -3217,7 +3783,13 @@ void MainWindow::on_pushButton_7_clicked()
             lh[m] = (sin(Pi/180*a)+sin(Pi/180*(b+bm)))/(n[m]*g);
             b1c[m] = asin(ncd*lw[m]*gc-sin(Pi/180*acc))*180/Pi;
             b1[m] = asin(n[m]*lw[m]*g-sin(Pi/180*a))*180/Pi;
-            o[m] = -((ly-4*sdisc/p)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+            if(ui->checkBox_2->isChecked()){
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2*PhiWP/p)/By;
+            }
+            else{
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+            }
+            //o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
                                     }
 
         for (int i=0; i < lx/Bx; i++){
@@ -3226,7 +3798,13 @@ void MainWindow::on_pushButton_7_clicked()
 
                  for (int m =0; m < nl-nh; m++){
                     n[m]=nl-m;
-                    bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    if(ui->checkBox_2->isChecked()){
+                        bm = atan((lx/2-i)*p/f2/PhiWP)*180/M_PI;
+                    }
+                    else{
+                        bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    }
+
                     l11[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
                     b1c[m] = asin(ncd*l11[m]*gc-sin(M_PI/180*acc))*180/M_PI;
@@ -3237,9 +3815,20 @@ void MainWindow::on_pushButton_7_clicked()
 
                     D[m] = p*Bx*cos(b1[m]*Pi/180)/(f2*n[m]*g);
                     A[m] = cos(Pi/180*a)/cos(Pi/180*b1[m]);
-                    s2[m] = A[m] * f2/f1*s;
+                    if(ui->checkBox_2->isChecked()){
+                        s2[m] = A[m] * f2/f1*s*PhiWP;
+                    }
+                    else{
+                        s2[m] = A[m] * f2/f1*s;
+                    }
+                    if(ui->checkBox_2->isChecked()){
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2*PhiWP/p)/By;
+                    }
+                    else{
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+                    }
 
-                    o[m] = -((ly-4*sdisc/p)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+                    //o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
                     l11[m]=l11[m]*1000;
                     Tr[m] = 1-0.0091224/cos(Pi/180*z)/(pow(l11[m],4));
                     l11[m] = l11[m]*10000;
@@ -3257,23 +3846,22 @@ void MainWindow::on_pushButton_7_clicked()
 
                     // Planck
                     if(ui->comboBox_3->currentIndex()==0){
-                    l11[m] = l11[m]*10000000;
-                    P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
-                    l11[m] = l11[m]/10000000;
-                    I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
+                        l11[m] = l11[m]*10000000;
+                        P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
+                        l11[m] = l11[m]/10000000;
+                        I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
                     }
 
                     // Neon
                     if(ui->comboBox_3->currentIndex()==1){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
-
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
+                        }
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
 
                     // Balmer
@@ -3282,71 +3870,51 @@ void MainWindow::on_pushButton_7_clicked()
                         P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
                         l11[m] = l11[m]/10000000;
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
-                                        }
+                            lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
                     // Th/Ar
                     if(ui->comboBox_3->currentIndex()==3){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
-
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
-                    }
-
-                    }
-
-                    for (int m=0; m < nl-nh; m++){
-                        I += I1[m];
-                        I1[m]=0;
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
                         }
 
-                    if(ui->comboBox_3->currentIndex()==0){
-                    out3<<i<<" "<<v<<" "<<I<<endl;
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
-                    if(ui->comboBox_3->currentIndex()==1){
+
+                }
+
+                for (int m=0; m < nl-nh; m++){
+                    I += I1[m];
+                    I1[m]=0;
+                }
+
+
                     out1<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==2){
-                    out2<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==3){
-                    out4<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                  file1<<I<<" ";
-                  I = 0;
-                 }
-                  file1<<endl;
-                  progress++;
-                  if(progress>=lx/Bx/100){
-                  ui->progressBar->setValue((i+1)*100/(lx/Bx));
-                       qApp->processEvents(QEventLoop::AllEvents);
-                       progress=0;
-                  }
-              }
-        if(ui->comboBox_3->currentIndex()==0){
-            out3.close();
-        }
-        if(ui->comboBox_3->currentIndex()==1){
-            out1.close();
-        }
-        if(ui->comboBox_3->currentIndex()==2){
-            out2.close();
-        }
-        if(ui->comboBox_3->currentIndex()==3){
-            out4.close();
+
+                file1<<I<<" ";
+                I = 0;
+            }
+            file1<<endl;
+            progress++;
+            if(progress>=lx/Bx/100){
+               ui->progressBar->setValue((i+1)*100/(lx/Bx));
+               qApp->processEvents(QEventLoop::AllEvents);
+               progress=0;
+            }
         }
 
-        }
+            out1.close();
+    }
 
     // VPH Grating
     if(e==2){
@@ -3354,13 +3922,18 @@ void MainWindow::on_pushButton_7_clicked()
         double alpha_2b, eta_s, eta_p;
         alpha_2b=asin(ncd*lz/indexlz/2*g)*180/M_PI;
 
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
 
         lw[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g);
         double startb = asin(ncd*lw[0]*gc-sin(M_PI/180*acc))*180/M_PI;
 
         n[0]=nl;
-        o[0] = -(ly-4*sdisc/p)/By;
+        o[0] = -(ly-4*sdisc/p+yoff)/By;
         l[0] = (sin(Pi/180*a)+sin(Pi/180*(b)))/(nl*g);
         lw[0] = (sin(Pi/180*a)+sin(Pi/180*(b-bm)))/(nl*g);
         b1c[0] = asin(ncd*lw[0]*gc-sin(Pi/180*acc))*180/Pi;
@@ -3372,8 +3945,15 @@ void MainWindow::on_pushButton_7_clicked()
             lw[m] = (sin(Pi/180*a)+sin(Pi/180*(b-bm)))/(n[m]*g);
             lh[m] = (sin(Pi/180*a)+sin(Pi/180*(b+bm)))/(n[m]*g);
             b1c[m] = asin(ncd*lw[m]*gc-sin(Pi/180*acc))*180/Pi;
-            o[m] = -((ly-4*sdisc/p)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
-                                    }
+            if(ui->checkBox_2->isChecked()){
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2*PhiWP/p)/By;
+            }
+            else{
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+            }
+
+            //o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+        }
 
         for (int i=0; i < lx/Bx; i++){
 
@@ -3381,7 +3961,13 @@ void MainWindow::on_pushButton_7_clicked()
 
                 for (int m =0; m < nl-nh; m++){
                     n[m]=nl-m;
-                    bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    if(ui->checkBox_2->isChecked()){
+                        bm = atan((lx/2-i)*p/f2/PhiWP)*180/M_PI;
+                    }
+                    else{
+                        bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    }
+
                     l11[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
                     b1c[m] = asin(ncd*l11[m]*gc-sin(M_PI/180*acc))*180/M_PI;
@@ -3393,9 +3979,21 @@ void MainWindow::on_pushButton_7_clicked()
                     D[m] = p*Bx*cos(b1[m]*Pi/180)/(f2*n[m]*g);
 
                     A[m] = cos(Pi/180*a)/cos(Pi/180*b1[m]);
-                    s2[m] = A[m] * f2/f1*s;
+                    if(ui->checkBox_2->isChecked()){
+                        s2[m] = A[m] * f2/f1*s*PhiWP;
+                    }
+                    else{
+                        s2[m] = A[m] * f2/f1*s;
+                    }
 
-                    o[m] = -((ly-4*sdisc/p)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+                    if(ui->checkBox_2->isChecked()){
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2*PhiWP/p)/By;
+                    }
+                    else{
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
+                    }
+
+                    //o[m] = -((ly-4*sdisc/p)-tan((b1c[m]-startb)*Pi/180)*f2/p)/By;
                     l11[m]=l11[m]*1000;
                     Tr[m] = 1-0.0091224/cos(Pi/180*z)/(pow(l11[m],4));
                     l11[m] = l11[m]*10000;
@@ -3412,23 +4010,23 @@ void MainWindow::on_pushButton_7_clicked()
 
                     // Planck
                     if(ui->comboBox_3->currentIndex()==0){
-                    l11[m] = l11[m]*10000000;
-                    P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
-                    l11[m] = l11[m]/10000000;
-                    I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
+                        l11[m] = l11[m]*10000000;
+                        P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
+                        l11[m] = l11[m]/10000000;
+                        I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
                     }
 
                     // Neon
                     if(ui->comboBox_3->currentIndex()==1){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
 
                     // Balmer
@@ -3437,69 +4035,50 @@ void MainWindow::on_pushButton_7_clicked()
                         P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
                         l11[m] = l11[m]/10000000;
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
-                                        }
+                            lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
                     // Th/Ar
                     if(ui->comboBox_3->currentIndex()==3){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
-                    }
-
-                    }
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                    }  
+                }
 
                     for (int m=0; m < nl-nh; m++){
                         I += I1[m];
                         I1[m]=0;
-                        }
+                    }
 
-                    if(ui->comboBox_3->currentIndex()==0){
-                    out3<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==1){
-                    out1<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==2){
-                    out2<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==3){
-                    out4<<i<<" "<<v<<" "<<I<<endl;
-                    }
+
+                        out1<<i<<" "<<v<<" "<<I<<endl;
+
               file1<<I<<" ";
               I = 0;
               }
               file1<<endl;
               progress++;
               if(progress>=lx/Bx/100){
-              ui->progressBar->setValue((i+1)*100/(lx/Bx));
-              qApp->processEvents(QEventLoop::AllEvents);
-              progress=0;
+                ui->progressBar->setValue((i+1)*100/(lx/Bx));
+                qApp->processEvents(QEventLoop::AllEvents);
+                progress=0;
               }
-          }
-        if(ui->comboBox_3->currentIndex()==0){
-            out3.close();
-        }
-        if(ui->comboBox_3->currentIndex()==1){
+         }
+
             out1.close();
-        }
-        if(ui->comboBox_3->currentIndex()==2){
-            out2.close();
-        }
-        if(ui->comboBox_3->currentIndex()==3){
-            out4.close();
-        }
+
     }
 
     // Frame VPH Grism
@@ -3509,11 +4088,17 @@ void MainWindow::on_pushButton_7_clicked()
         alpha_2b=asin(ncd*lz/indexlz/2*g)*180/M_PI;
 
         n[0]=nl;
-        o[0] = -(ly-4*sdisc/p)/By;
+        o[0] = -(ly-4*sdisc/p+yoff)/By;
         l[0] = (sin(Pi/180*a)+sin(Pi/180*(b)))/(nl*g);
         lw[0] = (sin(Pi/180*a)+sin(Pi/180*(b-bm)))/(nl*g);
         b1c[0] = asin(ncd*lw[0]*gc-sin(Pi/180*acc))*180/Pi;
-        bm = atan(lx/2*p/f2)*180/M_PI;
+        if(ui->checkBox_2->isChecked()){
+            bm = atan(lx/2*p/f2/PhiWP)*180/M_PI;
+        }
+        else{
+            bm = atan(lx/2*p/f2)*180/M_PI;
+        }
+
         l11[0] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(nl*g)*1000;
         index=sqrt(1+B1*l11[0]*l11[0]/(l11[0]*l11[0]-C1)+B2*l11[0]*l11[0]/(l11[0]*l11[0]-C2)+B3*l11[0]*l11[0]/(l11[0]*l11[0]-C3));
         l11[0]=l11[0]/1000;
@@ -3528,8 +4113,14 @@ void MainWindow::on_pushButton_7_clicked()
             lw[m] = (sin(Pi/180*a)+sin(Pi/180*(b-bm)))/(n[m]*g);
             lh[m] = (sin(Pi/180*a)+sin(Pi/180*(b+bm)))/(n[m]*g);
             b1c[m] = asin(ncd*lw[m]*gc-sin(Pi/180*acc))*180/Pi;
-            o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
-                                   }
+            if(ui->checkBox_2->isChecked()){
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2*PhiWP/p)/By;
+            }
+            else{
+                o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
+            }
+            //o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
+        }
 
         for (int i=0; i < lx/Bx; i++){
 
@@ -3537,7 +4128,13 @@ void MainWindow::on_pushButton_7_clicked()
 
                 for (int m =0; m < nl-nh; m++){
                     n[m]=nl-m;
-                    bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    if(ui->checkBox_2->isChecked()){
+                        bm = atan((lx/2-i)*p/f2/PhiWP)*180/M_PI;
+                    }
+                    else{
+                        bm = atan((lx/2-i)*p/f2)*180/M_PI;
+                    }
+
                     l11[m] = (sin(M_PI/180*a)+sin(M_PI/180*(b-bm)))/(n[m]*g);
 
                     b1[m] = asin(n[m]*l11[m]*g-sin(M_PI/180*a))*180/M_PI;
@@ -3555,9 +4152,21 @@ void MainWindow::on_pushButton_7_clicked()
                     D[m] = p*Bx*cos(b1[m]*Pi/180)/(f2*n[m]*g);
 
                     A[m] = cos(Pi/180*a)/cos(Pi/180*b1[m]);
-                    s2[m] = A[m] * f2/f1*s;
+                    if(ui->checkBox_2->isChecked()){
+                        s2[m] = A[m] * f2/f1*s*PhiWP;
+                    }
+                    else{
+                        s2[m] = A[m] * f2/f1*s;
+                    }
 
-                    o[m] = -((ly-4*sdisc/p)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
+                    if(ui->checkBox_2->isChecked()){
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2*PhiWP/p)/By;
+                    }
+                    else{
+                        o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
+                    }
+
+                    //o[m] = -((ly-4*sdisc/p+yoff)-tan((startb-b1c[m])*Pi/180)*f2/p)/By;
                     l11[m]=l11[m]*1000;
                     Tr[m] = 1-0.0091224/cos(Pi/180*z)/(pow(l11[m],4));
                     l11[m] = l11[m]*10000;
@@ -3574,23 +4183,23 @@ void MainWindow::on_pushButton_7_clicked()
 
                     // Planck
                     if(ui->comboBox_3->currentIndex()==0){
-                    l11[m] = l11[m]*10000000;
-                    P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
-                    l11[m] = l11[m]/10000000;
-                    I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
+                        l11[m] = l11[m]*10000000;
+                        P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
+                        l11[m] = l11[m]/10000000;
+                        I1[m] = In[m]*Ip[m]*P[m]*CCD[m];
                     }
 
                     // Neon
                     if(ui->comboBox_3->currentIndex()==1){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
 
                     // Balmer
@@ -3599,74 +4208,53 @@ void MainWindow::on_pushButton_7_clicked()
                         P[m] = Tr[m]*dtel*dtel/400*M_PI*ap/(l11[m]*l11[m]*l11[m]*l11[m])/(exp(k/T/l11[m])-1)*pow(10,-0.4*(vm-BC))/(pow(T,4)*1.986e-11);
                         l11[m] = l11[m]/10000000;
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
-                                        }
+                            lineech[e] = (1-exp(-2.77254*p*p/s2[m]/s2[m]*pow((l11[m]*10000000-al[e]),2))*bl[e]*number_of_lines)/(nl-nh);
+                        }
 
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
                     // Th/Ar
                     if(ui->comboBox_3->currentIndex()==3){
 
                         for (int e=0; e < number_of_lines; e++){
-                                        lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
-                                        }
-
-                                    for (int e=0; e < number_of_lines; e++){
-                                        I1[m] += lineech[e];
-                                        }
-                                    I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
-                    }
-
-                    }
-
-                    for (int m=0; m < nl-nh; m++){
-                        I += I1[m];
-                        I1[m]=0;
+                            lineech[e] = exp(-2.77254*p*p/s2[m]/s2[m]*100*pow((l11[m]*10000000-al[e]),2))*bl[e];
                         }
 
-                    if(ui->comboBox_3->currentIndex()==0){
-                    out3<<i<<" "<<v<<" "<<I<<endl;
+                        for (int e=0; e < number_of_lines; e++){
+                            I1[m] += lineech[e];
+                        }
+                        I1[m]=I1[m]*Ip[m]*CCD[m]*In[m];
                     }
-                    if(ui->comboBox_3->currentIndex()==1){
+                }
+
+                for (int m=0; m < nl-nh; m++){
+                    I += I1[m];
+                    I1[m]=0;
+                }
+
                     out1<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==2){
-                    out2<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                    if(ui->comboBox_3->currentIndex()==3){
-                    out4<<i<<" "<<v<<" "<<I<<endl;
-                    }
-                  file1<<I<<" ";
-                  I = 0;
-                 }
-                  file1<<endl;
-                  progress++;
-                  if(progress>=lx/Bx/100){
-                  ui->progressBar->setValue((i+1)*100/(lx/Bx));
-                       qApp->processEvents(QEventLoop::AllEvents);
-                       progress=0;
-                  }
-              }
-        if(ui->comboBox_3->currentIndex()==0){
-            out3.close();
+
+                file1<<I<<" ";
+                I = 0;
+            }
+            file1<<endl;
+            progress++;
+            if(progress>=lx/Bx/100){
+               ui->progressBar->setValue((i+1)*100/(lx/Bx));
+               qApp->processEvents(QEventLoop::AllEvents);
+               progress=0;
+            }
         }
-        if(ui->comboBox_3->currentIndex()==1){
+
             out1.close();
-        }
-        if(ui->comboBox_3->currentIndex()==2){
-            out2.close();
-        }
-        if(ui->comboBox_3->currentIndex()==3){
-            out4.close();
-        }
 
     }
 
     qFrameEchelle = new FrameEchelle(this);
-    qFrameEchelle->seData(ui->lineEdit_2->text());
+    qFrameEchelle->seData(ui->lineEdit_2->text(), ui->spinBox_10->value(), ui->spinBox_11->value());
     qFrameEchelle->show();
 
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -3690,57 +4278,73 @@ void MainWindow::on_actionManual_triggered()
     QDesktopServices::openUrl(QUrl("Manual.pdf"));
 }
 
-// write values to config file
+// reload Glass data
 void MainWindow::on_pushButton_8_clicked()
 {
-    ofstream file("config.conf");
+    QString qPath = ui->lineEdit_2->text()+"/GlassData.slib";
 
-    file<<g<<endl;
-    file<<eta<<endl;
-    file<<theta<<endl;
-    file<<t<<endl;
-    file<<l1<<endl;
-    file<<l2<<endl;
-    file<<f1<<endl;
-    file<<f2<<endl;
-    file<<gc<<endl;
-    file<<tc<<endl;
-    file<<thetac<<endl;
-    file<<etac<<endl;
-    file<<nDCG<<endl;
-    file<<dDCG<<endl;
-    file<<dnDCG<<endl;
-    file<<tDCG<<endl;
-    file<<ag<<endl;
-    file<<al<<endl;
-    file<<aluv<<endl;
-    file<<au<<endl;
-    file<<bb<<endl;
-    file<<unc<<endl;
-    file<<T<<endl;
-    file<<BC<<endl;
-    file<<vm<<endl;
-    file<<z<<endl;
-    file<<exptime<<endl;
-    file<<seeing<<endl;
-    file<<ftel<<endl;
-    file<<dtel<<endl;
-    file<<s<<endl;
-    file<<sl<<endl;
-    file<<slitEff<<endl;
-    file<<skyslit<<endl;
-    file<<p<<endl;
-    file<<lx<<endl;
-    file<<ly<<endl;
-    file<<Bx<<endl;
-    file<<By<<endl;
-    file<<offset<<endl;
-    file<<readnoise<<endl;
-    file<<CCDl<<endl;
-    file<<CCDp<<endl;
-    file<<gain<<endl;
+    string path = qPath.toUtf8().constData();
+    std::ostringstream datNameStream(path);
+    datNameStream<<path;
+    std::string datName = datNameStream.str();
 
-    file.close();
+    QFile checkfile1(datName.c_str());
+
+    if(!checkfile1.exists()){
+        QMessageBox::information(this, "Error", "Glass data "+checkfile1.fileName()+" not available!");
+        this->setCursor(QCursor(Qt::ArrowCursor));
+       return;
+    }
+
+    else{
+
+    ifstream glass(datName.c_str());
+
+    while(std::getline(glass, line))
+       ++ nglass;
+
+    glass.clear();
+    glass.seekg(0, ios::beg);
+
+    SeB1.resize(nglass);
+    SeB2.resize(nglass);
+    SeB3.resize(nglass);
+    SeC1.resize(nglass);
+    SeC2.resize(nglass);
+    SeC3.resize(nglass);
+    GLASS.resize(nglass);
+
+    for (int i =0; i < nglass; i++){
+        glass >> eins >> zwei >> drei >> vier >> fuenf >> sechs >> sieben;
+        istringstream istr(eins);
+        istr >> GLASS[i];
+        istringstream istr1(zwei);
+        istr1 >> SeB1[i];
+        istringstream istr2(drei);
+        istr2 >> SeB2[i];
+        istringstream istr3(vier);
+        istr3 >> SeB3[i];
+        istringstream istr4(fuenf);
+        istr4 >> SeC1[i];
+        istringstream istr5(sechs);
+        istr5 >> SeC2[i];
+        istringstream istr6(sieben);
+        istr6 >> SeC3[i];
+
+        QString gele=QString::fromStdString(istr.str());
+        ui->comboBox->addItem(gele);
+    }
+    glass.close();
+
+
+    B1=SeB1[0];
+    B2=SeB2[0];
+    B3=SeB3[0];
+    C1=SeC1[0];
+    C2=SeC2[0];
+    C3=SeC3[0];
+    }
+
 }
 
 
@@ -3766,312 +4370,12 @@ void MainWindow::on_comboBox_currentIndexChanged()
 {
     int ce = ui->comboBox->currentIndex();
 
-    //N-F2
-    if(ce==0){
-        B1=1.39757037;
-        B2=0.159201403;
-        B3=1.26865432;
-        C1=0.00995906143;
-        C2=0.0546931752;
-        C3=119.248346;
-    }
-    //N-SF2
-    if(ce==1){
-        B1=1.47460789;
-        B2=0.193584488;
-        B3=1.26589974;
-        C1=0.00986143816;
-        C2=0.0445477583;
-        C3=106.436258;
-    }
-    //N-BK7
-    if(ce==2){
-        B1=1.03961212;
-        B2=0.231792344;
-        B3=1.01046945;
-        C1=6.00069867e-3;
-        C2=2.00179144e-2;
-        C3=103.560653;
-    }
-    //N-SF5
-    if(ce==3){
-        B1=1.52481889;
-        B2=0.187085527;
-        B3=1.42729015;
-        C1=0.011254756;
-        C2=0.0588995392;
-        C3=129.141675;
-    }
-    // CaF2
-    if(ce==4){
-        B1=0.5676;
-        B2=0.4711;
-        B3=3.848;
-        C1=0.002526;
-        C2=0.01008;
-        C3=120.1;
-    }
-    //F2
-    if(ce==5){
-        B1=1.34533359;
-        B2=0.209073176;
-        B3=0.937357162;
-        C1=0.00997743871;
-        C2=0.0470450767;
-        C3=111.886764;
-    }
-    // F5
-    if(ce==6){
-        B1=1.31044630;
-        B2=0.19603426;
-        B3=0.96612977;
-        C1=0.0095633048;
-        C2=0.0457627627;
-        C3=115.011883;
-    }
-    // K10
-    if(ce==7){
-        B1=1.15687082;
-        B2=0.0642625444;
-        B3=0.872376139;
-        C1=0.00809424251;
-        C2=0.0386051284;
-        C3=104.74773;
-    }
-    // K7
-    if(ce==8){
-        B1=1.1273555;
-        B2=0.124412303;
-        B3=0.827100531;
-        C1=0.00720341707;
-        C2=0.0269835916;
-        C3=100.384588;
-    }
-    // KZFS12
-    if(ce==9){
-        B1=1.55624873;
-        B2=0.239769276;
-        B3=0.947887658;
-        C1=0.0102012744;
-        C2=0.0469277969;
-        C3=60.98370722;
-    }
-    //KZFSN5
-    if(ce==10){
-        B1=1.47727858;
-        B2=0.191686941;
-        B3=0.897333608;
-        C1=0.00975488335;
-        C2=0.0450495404;
-        C3=67.8786495;
-    }
-    //LAFN7
-    if(ce==11){
-        B1=1.66842615;
-        B2=0.298512803;
-        B3=1.0774376;
-        C1=0.0103159999;
-        C2=0.0469216348;
-        C3=82.5078509;
-    }
-    //LF5
-    if(ce==12){
-        B1=1.28035628;
-        B2=0.163505973;
-        B3=0.893930112;
-        C1=0.00929854416;
-        C2=0.0449135769;
-        C3=110.493685;
-    }
-    //LLF1
-    if(ce==13){
-        B1=1.21640125;
-        B2=0.133664540;
-        B3=0.883399468;
-        C1=0.00857807248;
-        C2=0.0420143003;
-        C3=107.59306;
-    }
-    //N-BAF10
-    if(ce==14){
-        B1=1.5851495;
-        B2=0.143559385;
-        B3=1.08521269;
-        C1=0.00926681282;
-        C2=0.0424489805;
-        C3=105.613573;
-    }
-    //N-BAF4
-    if(ce==15){
-        B1=1.42056328;
-        B2=0.102721269;
-        B3=1.14380976;
-        C1=0.00942015382;
-        C2=0.0531087291;
-        C3=110.278856;
-    }
-    //N-BAF51
-    if(ce==16){
-        B1=1.51503623;
-        B2=0.153621958;
-        B3=1.15427909;
-        C1=0.00942734715;
-        C2=0.04308265;
-        C3=124.889868;
-    }
-    //N-BAF52
-    if(ce==17){
-        B1=1.43903433;
-        B2=0.0967046052;
-        B3=1.09875818;
-        C1=0.00907800128;
-        C2=0.050821208;
-        C3=105.691856;
-    }
-    //N-BAK1
-    if(ce==18){
-        B1=1.12365662;
-        B2=0.309276848;
-        B3=0.0881511957;
-        C1=0.00644742752;
-        C2=0.0222284402;
-        C3=107.297751;
-    }
-    //N-BAK2
-    if(ce==19){
-        B1=1.01662154;
-        B2=0.319903051;
-        B3=0.937232995;
-        C1=0.00592383763;
-        C2=0.0203828415;
-        C3=113.118417;
-    }
-    //N-BAK4
-    if(ce==20){
-        B1=1.28834642;
-        B2=0.132817724;
-        B3=0.945395373;
-        C1=0.00779980626;
-        C2=0.0315631177;
-        C3=105.965875;
-    }
-    //N-BALF4
-    if(ce==21){
-        B1=1.31004128;
-        B2=0.142038259;
-        B3=0.964929351;
-        C1=0.0079659645;
-        C2=0.0330672072;
-        C3=109.19732;
-    }
-    //N-BALF5
-    if(ce==22){
-        B1=1.28385965;
-        B2=0.0719300942;
-        B3=1.05048927;
-        C1=0.00825815975;
-        C2=0.0441920027;
-        C3=107.097324;
-    }
-    //N-BASF2
-    if(ce==23){
-        B1=1.53652081;
-        B2=0.156971102;
-        B3=1.30196815;
-        C1=0.0108435729;
-        C2=0.0562278762;
-        C3=131.3397;
-    }
-    //N-BASF64
-    if(ce==24){
-        B1=1.65554268;
-        B2=0.17131977;
-        B3=1.33664448;
-        C1=0.0104485644;
-        C2=0.0499394756;
-        C3=118.961472;
-    }
-    //N-BK10
-    if(ce==25){
-        B1=0.888308131;
-        B2=0.328964475;
-        B3=0.984610769;
-        C1=0.00516900822;
-        C2=0.0161190045;
-        C3=99.7575331;
-    }
-    //N-FK5
-    if(ce==26){
-        B1=0.844309338;
-        B2=0.344147824;
-        B3=0.910790213;
-        C1=0.00475111955;
-        C2=0.0149814849;
-        C3=97.8600293;
-    }
-    //N-FK51A
-    if(ce==27){
-        B1=0.971247817;
-        B2=0.216901417;
-        B3=0.904651666;
-        C1=0.00472301995;
-        C2=0.0153575612;
-        C3=168.68133;
-    }
-    //N-K5
-    if(ce==28){
-        B1=1.08511833;
-        B2=0.199562005;
-        B3=0.930511663;
-        C1=0.00661099503;
-        C2=0.024110866;
-        C3=111.982777;
-    }
-    //N-KZFS11
-    if(ce==29){
-        B1=1.3322245;
-        B2=0.28924161;
-        B3=1.15161734;
-        C1=0.0084029848;
-        C2=0.034423972;
-        C3=88.4310532;
-    }
-    //N-SF11
-    if(ce==30){
-        B1=1.737;
-        B2=0.3137;
-        B3=1.899;
-        C1=0.01319;
-        C2=0.06231;
-        C3=1552;
-    }
-    //ZnSe
-    if(ce==31){
-        B1=4.298;
-        B2=0.6278;
-        B3=2.896;
-        C1=0.03689;
-        C2=0.1435;
-        C3=220.8;
-    }
-    //N-SF10
-    if(ce==32){
-        B1=1.62153902;
-        B2=0.256287842;
-        B3=1.64447552;
-        C1=0.0122241457;
-        C2=0.0595736775;
-        C3=147.468793;
-    }
-    //Fused Silica
-    if(ce==33){
-        B1=0.6961663;
-        B2=0.4079426;
-        B3=0.8974794;
-        C1=0.00467914826;
-        C2=0.0135120631;
-        C3=97.9340025;
-    }
+   B1=SeB1[ce];
+   B2=SeB2[ce];
+   B3=SeB3[ce];
+   C1=SeC1[ce];
+   C2=SeC2[ce];
+   C3=SeC3[ce];
 }
 
 // uncoated Surfaces
@@ -4080,16 +4384,25 @@ void MainWindow::on_spinBox_6_valueChanged()
     Frenl=1;
 
     unc=ui->spinBox_6->value();
+    int unc2=ui->tableWidget->rowCount();
     Frea.resize(unc);
     Fren.resize(unc);
     Frp.resize(unc);
     Frs.resize(unc);
     Fr.resize(unc);
-    ui->tableWidget->setRowCount(unc);
-    for(int i=0; i<unc; i++){
-    ui->tableWidget->setItem(i,0,new QTableWidgetItem("1"));
-    ui->tableWidget->setItem(i,1,new QTableWidgetItem("1"));
-    }
+
+        if(unc>unc2){
+            for(int i=0; i<unc-unc2; i++){
+                ui->tableWidget->insertRow(unc2+i);
+            }
+        }
+        if(unc<unc2){
+            for(int i=0; i<unc2-unc; i++){
+                ui->tableWidget->removeRow(unc2-i-1);
+            }
+        }
+        ui->tableWidget->setRowCount(unc);
+
 }
 
 
@@ -4140,7 +4453,8 @@ void MainWindow::warning1() {
   if (reply == QMessageBox::Yes) {
     qDebug() << "Yes was clicked";
     return;
-  } else {
+  }
+  else {
     qDebug() << "Yes was *not* clicked";
   }
 }
@@ -4257,6 +4571,8 @@ void MainWindow::setvalues(){
     ui->comboBox->setCurrentIndex(variables[44]);
     ui->comboBox_2->setCurrentIndex(variables[45]);
     ui->comboBox_3->setCurrentIndex(variables[46]);
+    ui->doubleSpinBox_37->setValue(variables[47]);
+    ui->doubleSpinBox_32->setValue(variables[48]);
 
 
       qApp->processEvents(QEventLoop::AllEvents);
@@ -4264,7 +4580,7 @@ void MainWindow::setvalues(){
 
 void MainWindow::on_actionOpen_triggered()
 {
-    QString file = QFileDialog::getOpenFileName(this, "Open", "","config files (*.conf);;");
+    QString file = QFileDialog::getOpenFileName(this, "Open", "","conf files (*.conf);;");
 
     if(file.isEmpty()){
         QMessageBox::information(this, "Empty File", "This file is empty");
@@ -4280,9 +4596,9 @@ void MainWindow::on_actionOpen_triggered()
         ifstream dat(datName.c_str());
 
         for(int i=0; i<vars; i++){
-        dat >> eins;
-        stringstream str(eins);
-        str>> variables[i];
+            dat >> eins;
+            stringstream str(eins);
+            str>> variables[i];
         }
 
 
@@ -4366,7 +4682,164 @@ void MainWindow::on_actionSave_triggered()
     cint = ui->comboBox_2->currentIndex();
     file<<cint<<endl;
     cint = ui->comboBox_3->currentIndex();
+    file<<cint<<endl;
+    file<<ui->doubleSpinBox_37->value()<<endl;
+    file<<ui->doubleSpinBox_32->value()<<endl;
 
     file.close();
 }
 
+
+void MainWindow::on_actionFPE_triggered()
+{
+    qFPE = new FPE(this);
+    qFPE->show();
+}
+
+void MainWindow::on_actionCzerny_Turner_triggered()
+{
+    qCT = new CzernyTurner(this);
+    qCT->show();
+}
+
+void MainWindow::on_actionPetzval_triggered()
+{
+    qPetzval = new Petzval(this);
+    qPetzval->seData(ui->lineEdit_2->text());
+    qPetzval->show();
+}
+
+// Reload CCD Data
+void MainWindow::on_pushButton_9_clicked()
+{
+    QString cPath = ui->lineEdit_2->text()+"/"+ui->lineEdit_4->text();
+
+    string cpath = cPath.toUtf8().constData();
+    std::ostringstream dat2NameStream(cpath);
+    dat2NameStream<<cpath;
+    std::string dat2Name = dat2NameStream.str();
+
+    QFile checkfile2(dat2Name.c_str());
+
+    if(!checkfile2.exists()){
+        QMessageBox::information(this, "Warning", "CCD data "+checkfile2.fileName()+" not available!");
+    }
+
+    else{
+        nccd=0;
+        ui->comboBox_4->clear();
+
+    ifstream ccd(dat2Name.c_str());
+
+    while(std::getline(ccd, line))
+       ++ nccd;
+
+    ccd.clear();
+    ccd.seekg(0, ios::beg);
+
+    CGain.resize(nccd);
+    CEff.resize(nccd);
+    CNoise.resize(nccd);
+    Cpx.resize(nccd);
+    Cpy.resize(nccd);
+    Cpsx.resize(nccd);
+    Cpsy.resize(nccd);
+    CEw.resize(nccd);
+    CCDt.resize(nccd);
+
+    for (int i =0; i < nccd; i++){
+        ccd >> eins >> zwei >> drei >> vier >> fuenf >> sechs >> sieben >> acht >> neun;
+        istringstream istr(eins);
+        istr >> CCDt[i];
+        istringstream istr1(zwei);
+        istr1 >> Cpx[i];
+        istringstream istr2(drei);
+        istr2 >> Cpy[i];
+        istringstream istr3(vier);
+        istr3 >> Cpsx[i];
+        Cpsx[i]=Cpsx[i]/1000;
+        istringstream istr4(fuenf);
+        istr4 >> Cpsy[i];
+        Cpsy[i]=Cpsy[i]/1000;
+        istringstream istr5(sechs);
+        istr5 >> CNoise[i];
+        istringstream istr6(sieben);
+        istr6 >> CGain[i];
+        istringstream istr7(acht);
+        istr7 >> CEw[i];
+        istringstream istr8(neun);
+        istr8 >> CEff[i];
+
+        QString gele=QString::fromStdString(istr.str());
+        ui->comboBox_4->addItem(gele);
+    }
+    ccd.close();
+
+    lx = Cpx[0];
+    ly = Cpy[0];
+    p = Cpsx[0];
+    readnoise = CNoise[0];
+    CCDl = CEw[0];
+    CCDp = CEff[0];
+    gain = CGain[0];
+    }
+}
+
+void MainWindow::on_comboBox_4_currentIndexChanged()
+{
+    int cc=ui->comboBox_4->currentIndex();
+
+    lx = Cpx[cc];
+    ly = Cpy[cc];
+    p = Cpsx[cc];
+    readnoise = CNoise[cc];
+    CCDl = CEw[cc];
+    CCDp = CEff[cc];
+    gain = CGain[cc];
+
+    ui->doubleSpinBox_33->setValue(p);
+
+    ui->spinBox_10->setValue(lx);
+
+    ui->spinBox_11->setValue(ly);
+
+    ui->doubleSpinBox_17->setValue(readnoise);
+
+    ui->doubleSpinBox_4->setValue(CCDl);
+
+    ui->doubleSpinBox_3->setValue(CCDp);
+
+    ui->doubleSpinBox_16->setValue(gain);
+
+}
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    QFile::copy(ui->lineEdit_5->text()+"/al.txt", ui->lineEdit_2->text()+"/al.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/GlassData.slib", ui->lineEdit_2->text()+"/GlassData.slib");
+    QFile::copy(ui->lineEdit_5->text()+"/LensData.slib", ui->lineEdit_2->text()+"/LensData.slib");
+    QFile::copy(ui->lineEdit_5->text()+"/CCD_Data.slib", ui->lineEdit_2->text()+"/CCD_Data.slib");
+    QFile::copy(ui->lineEdit_5->text()+"/neon_line.txt", ui->lineEdit_2->text()+"/neon_line.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/protected_Ag.txt", ui->lineEdit_2->text()+"/protected_Ag.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/protected_Al.txt", ui->lineEdit_2->text()+"/protected_Al.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/protected_Au.txt", ui->lineEdit_2->text()+"/protected_Au.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/absor_line.txt", ui->lineEdit_2->text()+"/absor_line.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/UVEnhanced_Al.txt", ui->lineEdit_2->text()+"/UVEnhanced_Al.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/unprotected_Au.txt", ui->lineEdit_2->text()+"/unprotected_Au.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/thar_uves.txt", ui->lineEdit_2->text()+"/thar_uves.txt");
+    QFile::copy(ui->lineEdit_5->text()+"/vis_ar.txt", ui->lineEdit_2->text()+"/vis_ar.txt");
+}
+
+void MainWindow::on_checkBox_2_clicked()
+{
+    if(ui->checkBox_2->isChecked()){
+        ui->doubleSpinBox_37->setEnabled(true);
+        ui->doubleSpinBox_32->setEnabled(true);
+        ui->checkBox_3->setEnabled(true);
+    }
+    else{
+        ui->doubleSpinBox_37->setEnabled(false);
+        ui->doubleSpinBox_32->setEnabled(false);
+        ui->checkBox_3->setEnabled(false);
+    }
+}

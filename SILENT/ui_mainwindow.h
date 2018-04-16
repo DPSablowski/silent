@@ -64,6 +64,9 @@ public:
     QAction *actionSave_AS;
     QAction *actionUndo;
     QAction *actionRedo;
+    QAction *actionFPE;
+    QAction *actionCzerny_Turner;
+    QAction *actionPetzval;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *scrollArea;
@@ -95,6 +98,12 @@ public:
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_12;
     QDoubleSpinBox *doubleSpinBox_26;
+    QHBoxLayout *horizontalLayout_76;
+    QCheckBox *checkBox_2;
+    QCheckBox *checkBox_3;
+    QHBoxLayout *horizontalLayout_75;
+    QLabel *label_75;
+    QDoubleSpinBox *doubleSpinBox_37;
     QHBoxLayout *horizontalLayout_70;
     QLabel *label_71;
     QDoubleSpinBox *doubleSpinBox_32;
@@ -135,9 +144,16 @@ public:
     QDoubleSpinBox *doubleSpinBox_36;
     QFrame *line_8;
     QSpacerItem *verticalSpacer_3;
+    QHBoxLayout *horizontalLayout_71;
+    QLabel *label_72;
+    QLineEdit *lineEdit_3;
+    QPushButton *pushButton_8;
     QHBoxLayout *horizontalLayout_69;
     QLabel *label_41;
     QLineEdit *lineEdit_2;
+    QHBoxLayout *horizontalLayout_74;
+    QPushButton *pushButton_10;
+    QLineEdit *lineEdit_5;
     QHBoxLayout *horizontalLayout_13;
     QPushButton *pushButton;
     QFrame *line_3;
@@ -214,6 +230,9 @@ public:
     QLabel *label_56;
     QDoubleSpinBox *doubleSpinBox_31;
     QFrame *line;
+    QHBoxLayout *horizontalLayout_72;
+    QLabel *label_73;
+    QComboBox *comboBox_4;
     QHBoxLayout *horizontalLayout_20;
     QLabel *label_18;
     QDoubleSpinBox *doubleSpinBox_33;
@@ -244,6 +263,10 @@ public:
     QHBoxLayout *horizontalLayout_36;
     QLabel *label_57;
     QDoubleSpinBox *doubleSpinBox_16;
+    QHBoxLayout *horizontalLayout_73;
+    QLabel *label_74;
+    QLineEdit *lineEdit_4;
+    QPushButton *pushButton_9;
     QProgressBar *progressBar;
     QSpacerItem *verticalSpacer;
     QFrame *line_6;
@@ -292,6 +315,9 @@ public:
     QHBoxLayout *horizontalLayout_68;
     QComboBox *comboBox_3;
     QPushButton *pushButton_7;
+    QLabel *label_76;
+    QSpinBox *spinBox_12;
+    QLabel *label_77;
     QCustomPlot *customPlot;
     QFrame *line_7;
     QVBoxLayout *verticalLayout_3;
@@ -327,7 +353,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1612, 1037);
+        MainWindow->resize(1612, 817);
         QPalette palette;
         QBrush brush(QColor(102, 21, 21, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -464,6 +490,12 @@ public:
         actionUndo->setObjectName(QStringLiteral("actionUndo"));
         actionRedo = new QAction(MainWindow);
         actionRedo->setObjectName(QStringLiteral("actionRedo"));
+        actionFPE = new QAction(MainWindow);
+        actionFPE->setObjectName(QStringLiteral("actionFPE"));
+        actionCzerny_Turner = new QAction(MainWindow);
+        actionCzerny_Turner->setObjectName(QStringLiteral("actionCzerny_Turner"));
+        actionPetzval = new QAction(MainWindow);
+        actionPetzval->setObjectName(QStringLiteral("actionPetzval"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -472,12 +504,19 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         scrollArea = new QScrollArea(centralWidget);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
+        QFont font1;
+        font1.setFamily(QStringLiteral("MS Shell Dlg 2"));
+        font1.setPointSize(9);
+        font1.setBold(false);
+        font1.setItalic(false);
+        font1.setWeight(50);
+        scrollArea->setFont(font1);
         scrollArea->setFrameShape(QFrame::NoFrame);
         scrollArea->setLineWidth(0);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-342, 0, 1911, 933));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1580, 832));
         horizontalLayout_61 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_61->setSpacing(6);
         horizontalLayout_61->setContentsMargins(11, 11, 11, 11);
@@ -490,9 +529,6 @@ public:
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
         label = new QLabel(scrollAreaWidgetContents);
         label->setObjectName(QStringLiteral("label"));
-        QFont font1;
-        font1.setPointSize(14);
-        font1.setItalic(false);
         label->setFont(font1);
 
         verticalLayout_6->addWidget(label);
@@ -507,6 +543,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
         label_10->setSizePolicy(sizePolicy);
+        label_10->setFont(font1);
 
         horizontalLayout_2->addWidget(label_10);
 
@@ -517,6 +554,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(doubleSpinBox_22->sizePolicy().hasHeightForWidth());
         doubleSpinBox_22->setSizePolicy(sizePolicy1);
+        doubleSpinBox_22->setFont(font1);
         doubleSpinBox_22->setMaximum(999.99);
 
         horizontalLayout_2->addWidget(doubleSpinBox_22);
@@ -531,6 +569,7 @@ public:
         label_58->setObjectName(QStringLiteral("label_58"));
         sizePolicy.setHeightForWidth(label_58->sizePolicy().hasHeightForWidth());
         label_58->setSizePolicy(sizePolicy);
+        label_58->setFont(font1);
 
         horizontalLayout_52->addWidget(label_58);
 
@@ -541,6 +580,7 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(doubleSpinBox_5->sizePolicy().hasHeightForWidth());
         doubleSpinBox_5->setSizePolicy(sizePolicy2);
+        doubleSpinBox_5->setFont(font1);
         doubleSpinBox_5->setMaximum(1);
         doubleSpinBox_5->setSingleStep(0.1);
         doubleSpinBox_5->setValue(0.75);
@@ -557,6 +597,7 @@ public:
         label_16->setObjectName(QStringLiteral("label_16"));
         sizePolicy.setHeightForWidth(label_16->sizePolicy().hasHeightForWidth());
         label_16->setSizePolicy(sizePolicy);
+        label_16->setFont(font1);
 
         horizontalLayout_3->addWidget(label_16);
 
@@ -567,6 +608,7 @@ public:
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(doubleSpinBox_23->sizePolicy().hasHeightForWidth());
         doubleSpinBox_23->setSizePolicy(sizePolicy3);
+        doubleSpinBox_23->setFont(font1);
         doubleSpinBox_23->setDecimals(3);
         doubleSpinBox_23->setMaximum(90);
 
@@ -582,6 +624,7 @@ public:
         label_13->setObjectName(QStringLiteral("label_13"));
         sizePolicy.setHeightForWidth(label_13->sizePolicy().hasHeightForWidth());
         label_13->setSizePolicy(sizePolicy);
+        label_13->setFont(font1);
 
         horizontalLayout_4->addWidget(label_13);
 
@@ -589,6 +632,7 @@ public:
         doubleSpinBox_24->setObjectName(QStringLiteral("doubleSpinBox_24"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_24->sizePolicy().hasHeightForWidth());
         doubleSpinBox_24->setSizePolicy(sizePolicy3);
+        doubleSpinBox_24->setFont(font1);
         doubleSpinBox_24->setMinimum(-90);
         doubleSpinBox_24->setMaximum(90);
 
@@ -607,6 +651,7 @@ public:
         sizePolicy4.setVerticalStretch(0);
         sizePolicy4.setHeightForWidth(label_33->sizePolicy().hasHeightForWidth());
         label_33->setSizePolicy(sizePolicy4);
+        label_33->setFont(font1);
 
         horizontalLayout_26->addWidget(label_33);
 
@@ -614,6 +659,7 @@ public:
         doubleSpinBox->setObjectName(QStringLiteral("doubleSpinBox"));
         sizePolicy2.setHeightForWidth(doubleSpinBox->sizePolicy().hasHeightForWidth());
         doubleSpinBox->setSizePolicy(sizePolicy2);
+        doubleSpinBox->setFont(font1);
         doubleSpinBox->setMinimum(99);
         doubleSpinBox->setMaximum(999);
         doubleSpinBox->setValue(400);
@@ -624,6 +670,7 @@ public:
         label_34->setObjectName(QStringLiteral("label_34"));
         sizePolicy.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
         label_34->setSizePolicy(sizePolicy);
+        label_34->setFont(font1);
 
         horizontalLayout_26->addWidget(label_34);
 
@@ -631,6 +678,7 @@ public:
         doubleSpinBox_2->setObjectName(QStringLiteral("doubleSpinBox_2"));
         sizePolicy2.setHeightForWidth(doubleSpinBox_2->sizePolicy().hasHeightForWidth());
         doubleSpinBox_2->setSizePolicy(sizePolicy2);
+        doubleSpinBox_2->setFont(font1);
         doubleSpinBox_2->setMinimum(99);
         doubleSpinBox_2->setMaximum(999);
         doubleSpinBox_2->setValue(700);
@@ -647,6 +695,7 @@ public:
         label_11->setObjectName(QStringLiteral("label_11"));
         sizePolicy.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
         label_11->setSizePolicy(sizePolicy);
+        label_11->setFont(font1);
 
         horizontalLayout_6->addWidget(label_11);
 
@@ -654,6 +703,7 @@ public:
         doubleSpinBox_25->setObjectName(QStringLiteral("doubleSpinBox_25"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_25->sizePolicy().hasHeightForWidth());
         doubleSpinBox_25->setSizePolicy(sizePolicy3);
+        doubleSpinBox_25->setFont(font1);
         doubleSpinBox_25->setMaximum(9999.99);
 
         horizontalLayout_6->addWidget(doubleSpinBox_25);
@@ -668,6 +718,7 @@ public:
         label_12->setObjectName(QStringLiteral("label_12"));
         sizePolicy.setHeightForWidth(label_12->sizePolicy().hasHeightForWidth());
         label_12->setSizePolicy(sizePolicy);
+        label_12->setFont(font1);
 
         horizontalLayout_7->addWidget(label_12);
 
@@ -675,6 +726,7 @@ public:
         doubleSpinBox_26->setObjectName(QStringLiteral("doubleSpinBox_26"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_26->sizePolicy().hasHeightForWidth());
         doubleSpinBox_26->setSizePolicy(sizePolicy3);
+        doubleSpinBox_26->setFont(font1);
         doubleSpinBox_26->setMaximum(9999.99);
 
         horizontalLayout_7->addWidget(doubleSpinBox_26);
@@ -682,11 +734,58 @@ public:
 
         verticalLayout_6->addLayout(horizontalLayout_7);
 
+        horizontalLayout_76 = new QHBoxLayout();
+        horizontalLayout_76->setSpacing(6);
+        horizontalLayout_76->setObjectName(QStringLiteral("horizontalLayout_76"));
+        checkBox_2 = new QCheckBox(scrollAreaWidgetContents);
+        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
+        QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(checkBox_2->sizePolicy().hasHeightForWidth());
+        checkBox_2->setSizePolicy(sizePolicy5);
+        checkBox_2->setFont(font1);
+
+        horizontalLayout_76->addWidget(checkBox_2);
+
+        checkBox_3 = new QCheckBox(scrollAreaWidgetContents);
+        checkBox_3->setObjectName(QStringLiteral("checkBox_3"));
+        sizePolicy3.setHeightForWidth(checkBox_3->sizePolicy().hasHeightForWidth());
+        checkBox_3->setSizePolicy(sizePolicy3);
+        checkBox_3->setFont(font1);
+
+        horizontalLayout_76->addWidget(checkBox_3);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_76);
+
+        horizontalLayout_75 = new QHBoxLayout();
+        horizontalLayout_75->setSpacing(6);
+        horizontalLayout_75->setObjectName(QStringLiteral("horizontalLayout_75"));
+        label_75 = new QLabel(scrollAreaWidgetContents);
+        label_75->setObjectName(QStringLiteral("label_75"));
+        label_75->setFont(font1);
+
+        horizontalLayout_75->addWidget(label_75);
+
+        doubleSpinBox_37 = new QDoubleSpinBox(scrollAreaWidgetContents);
+        doubleSpinBox_37->setObjectName(QStringLiteral("doubleSpinBox_37"));
+        sizePolicy3.setHeightForWidth(doubleSpinBox_37->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_37->setSizePolicy(sizePolicy3);
+        doubleSpinBox_37->setFont(font1);
+        doubleSpinBox_37->setMaximum(9999.99);
+
+        horizontalLayout_75->addWidget(doubleSpinBox_37);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_75);
+
         horizontalLayout_70 = new QHBoxLayout();
         horizontalLayout_70->setSpacing(6);
         horizontalLayout_70->setObjectName(QStringLiteral("horizontalLayout_70"));
         label_71 = new QLabel(scrollAreaWidgetContents);
         label_71->setObjectName(QStringLiteral("label_71"));
+        label_71->setFont(font1);
 
         horizontalLayout_70->addWidget(label_71);
 
@@ -710,6 +809,7 @@ public:
         brush14.setStyle(Qt::SolidPattern);
         palette1.setBrush(QPalette::Disabled, QPalette::Highlight, brush14);
         doubleSpinBox_32->setPalette(palette1);
+        doubleSpinBox_32->setFont(font1);
         doubleSpinBox_32->setMaximum(9999.99);
 
         horizontalLayout_70->addWidget(doubleSpinBox_32);
@@ -719,11 +819,12 @@ public:
 
         line_2 = new QFrame(scrollAreaWidgetContents);
         line_2->setObjectName(QStringLiteral("line_2"));
-        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
-        line_2->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(line_2->sizePolicy().hasHeightForWidth());
+        line_2->setSizePolicy(sizePolicy6);
+        line_2->setFont(font1);
         line_2->setFrameShadow(QFrame::Plain);
         line_2->setFrameShape(QFrame::HLine);
 
@@ -736,6 +837,7 @@ public:
         label_2->setObjectName(QStringLiteral("label_2"));
         sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
         label_2->setSizePolicy(sizePolicy);
+        label_2->setFont(font1);
 
         horizontalLayout->addWidget(label_2);
 
@@ -743,6 +845,7 @@ public:
         comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
         sizePolicy3.setHeightForWidth(comboBox_2->sizePolicy().hasHeightForWidth());
         comboBox_2->setSizePolicy(sizePolicy3);
+        comboBox_2->setFont(font1);
 
         horizontalLayout->addWidget(comboBox_2);
 
@@ -762,6 +865,7 @@ public:
         label_27->setObjectName(QStringLiteral("label_27"));
         sizePolicy.setHeightForWidth(label_27->sizePolicy().hasHeightForWidth());
         label_27->setSizePolicy(sizePolicy);
+        label_27->setFont(font1);
 
         horizontalLayout_5->addWidget(label_27);
 
@@ -769,6 +873,7 @@ public:
         doubleSpinBox_27->setObjectName(QStringLiteral("doubleSpinBox_27"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_27->sizePolicy().hasHeightForWidth());
         doubleSpinBox_27->setSizePolicy(sizePolicy3);
+        doubleSpinBox_27->setFont(font1);
         doubleSpinBox_27->setMaximum(9999);
 
         horizontalLayout_5->addWidget(doubleSpinBox_27);
@@ -783,6 +888,7 @@ public:
         label_28->setObjectName(QStringLiteral("label_28"));
         sizePolicy.setHeightForWidth(label_28->sizePolicy().hasHeightForWidth());
         label_28->setSizePolicy(sizePolicy);
+        label_28->setFont(font1);
 
         horizontalLayout_24->addWidget(label_28);
 
@@ -790,6 +896,7 @@ public:
         doubleSpinBox_28->setObjectName(QStringLiteral("doubleSpinBox_28"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_28->sizePolicy().hasHeightForWidth());
         doubleSpinBox_28->setSizePolicy(sizePolicy3);
+        doubleSpinBox_28->setFont(font1);
         doubleSpinBox_28->setMaximum(90);
 
         horizontalLayout_24->addWidget(doubleSpinBox_28);
@@ -804,6 +911,7 @@ public:
         label_59->setObjectName(QStringLiteral("label_59"));
         sizePolicy.setHeightForWidth(label_59->sizePolicy().hasHeightForWidth());
         label_59->setSizePolicy(sizePolicy);
+        label_59->setFont(font1);
 
         horizontalLayout_53->addWidget(label_59);
 
@@ -811,6 +919,7 @@ public:
         doubleSpinBox_6->setObjectName(QStringLiteral("doubleSpinBox_6"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_6->sizePolicy().hasHeightForWidth());
         doubleSpinBox_6->setSizePolicy(sizePolicy3);
+        doubleSpinBox_6->setFont(font1);
         doubleSpinBox_6->setMaximum(90);
 
         horizontalLayout_53->addWidget(doubleSpinBox_6);
@@ -825,6 +934,7 @@ public:
         label_60->setObjectName(QStringLiteral("label_60"));
         sizePolicy.setHeightForWidth(label_60->sizePolicy().hasHeightForWidth());
         label_60->setSizePolicy(sizePolicy);
+        label_60->setFont(font1);
 
         horizontalLayout_54->addWidget(label_60);
 
@@ -832,6 +942,7 @@ public:
         doubleSpinBox_7->setObjectName(QStringLiteral("doubleSpinBox_7"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_7->sizePolicy().hasHeightForWidth());
         doubleSpinBox_7->setSizePolicy(sizePolicy3);
+        doubleSpinBox_7->setFont(font1);
         doubleSpinBox_7->setMaximum(1);
         doubleSpinBox_7->setSingleStep(0.01);
         doubleSpinBox_7->setValue(0.75);
@@ -846,6 +957,7 @@ public:
         horizontalLayout_63->setObjectName(QStringLiteral("horizontalLayout_63"));
         label_67 = new QLabel(scrollAreaWidgetContents);
         label_67->setObjectName(QStringLiteral("label_67"));
+        label_67->setFont(font1);
 
         horizontalLayout_63->addWidget(label_67);
 
@@ -853,6 +965,7 @@ public:
         doubleSpinBox_18->setObjectName(QStringLiteral("doubleSpinBox_18"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_18->sizePolicy().hasHeightForWidth());
         doubleSpinBox_18->setSizePolicy(sizePolicy3);
+        doubleSpinBox_18->setFont(font1);
         doubleSpinBox_18->setDecimals(4);
         doubleSpinBox_18->setMinimum(1);
         doubleSpinBox_18->setMaximum(5);
@@ -868,6 +981,7 @@ public:
         horizontalLayout_65->setObjectName(QStringLiteral("horizontalLayout_65"));
         label_69 = new QLabel(scrollAreaWidgetContents);
         label_69->setObjectName(QStringLiteral("label_69"));
+        label_69->setFont(font1);
 
         horizontalLayout_65->addWidget(label_69);
 
@@ -875,6 +989,7 @@ public:
         doubleSpinBox_19->setObjectName(QStringLiteral("doubleSpinBox_19"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_19->sizePolicy().hasHeightForWidth());
         doubleSpinBox_19->setSizePolicy(sizePolicy3);
+        doubleSpinBox_19->setFont(font1);
         doubleSpinBox_19->setDecimals(4);
         doubleSpinBox_19->setSingleStep(0.001);
 
@@ -888,6 +1003,7 @@ public:
         horizontalLayout_66->setObjectName(QStringLiteral("horizontalLayout_66"));
         label_68 = new QLabel(scrollAreaWidgetContents);
         label_68->setObjectName(QStringLiteral("label_68"));
+        label_68->setFont(font1);
 
         horizontalLayout_66->addWidget(label_68);
 
@@ -904,6 +1020,7 @@ public:
         brush16.setStyle(Qt::SolidPattern);
         palette2.setBrush(QPalette::Disabled, QPalette::WindowText, brush16);
         doubleSpinBox_20->setPalette(palette2);
+        doubleSpinBox_20->setFont(font1);
         doubleSpinBox_20->setDecimals(3);
         doubleSpinBox_20->setMaximum(1);
         doubleSpinBox_20->setSingleStep(0.01);
@@ -918,6 +1035,7 @@ public:
         horizontalLayout_64->setObjectName(QStringLiteral("horizontalLayout_64"));
         label_70 = new QLabel(scrollAreaWidgetContents);
         label_70->setObjectName(QStringLiteral("label_70"));
+        label_70->setFont(font1);
 
         horizontalLayout_64->addWidget(label_70);
 
@@ -925,8 +1043,10 @@ public:
         doubleSpinBox_21->setObjectName(QStringLiteral("doubleSpinBox_21"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_21->sizePolicy().hasHeightForWidth());
         doubleSpinBox_21->setSizePolicy(sizePolicy3);
+        doubleSpinBox_21->setFont(font1);
         doubleSpinBox_21->setMinimum(99);
         doubleSpinBox_21->setMaximum(999);
+        doubleSpinBox_21->setValue(500);
 
         horizontalLayout_64->addWidget(doubleSpinBox_21);
 
@@ -940,6 +1060,7 @@ public:
         label_14->setObjectName(QStringLiteral("label_14"));
         sizePolicy.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
         label_14->setSizePolicy(sizePolicy);
+        label_14->setFont(font1);
 
         horizontalLayout_25->addWidget(label_14);
 
@@ -947,6 +1068,7 @@ public:
         comboBox->setObjectName(QStringLiteral("comboBox"));
         sizePolicy3.setHeightForWidth(comboBox->sizePolicy().hasHeightForWidth());
         comboBox->setSizePolicy(sizePolicy3);
+        comboBox->setFont(font1);
 
         horizontalLayout_25->addWidget(comboBox);
 
@@ -958,6 +1080,7 @@ public:
         horizontalLayout_67->setObjectName(QStringLiteral("horizontalLayout_67"));
         label_35 = new QLabel(scrollAreaWidgetContents);
         label_35->setObjectName(QStringLiteral("label_35"));
+        label_35->setFont(font1);
 
         horizontalLayout_67->addWidget(label_35);
 
@@ -966,6 +1089,7 @@ public:
         doubleSpinBox_36->setEnabled(false);
         sizePolicy3.setHeightForWidth(doubleSpinBox_36->sizePolicy().hasHeightForWidth());
         doubleSpinBox_36->setSizePolicy(sizePolicy3);
+        doubleSpinBox_36->setFont(font1);
         doubleSpinBox_36->setMaximum(90);
 
         horizontalLayout_67->addWidget(doubleSpinBox_36);
@@ -975,8 +1099,9 @@ public:
 
         line_8 = new QFrame(scrollAreaWidgetContents);
         line_8->setObjectName(QStringLiteral("line_8"));
+        line_8->setFont(font1);
+        line_8->setFrameShadow(QFrame::Plain);
         line_8->setFrameShape(QFrame::HLine);
-        line_8->setFrameShadow(QFrame::Sunken);
 
         verticalLayout_5->addWidget(line_8);
 
@@ -984,26 +1109,73 @@ public:
 
         verticalLayout_5->addItem(verticalSpacer_3);
 
+        horizontalLayout_71 = new QHBoxLayout();
+        horizontalLayout_71->setSpacing(6);
+        horizontalLayout_71->setObjectName(QStringLiteral("horizontalLayout_71"));
+        label_72 = new QLabel(scrollAreaWidgetContents);
+        label_72->setObjectName(QStringLiteral("label_72"));
+        label_72->setFont(font1);
+
+        horizontalLayout_71->addWidget(label_72);
+
+        lineEdit_3 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        sizePolicy5.setHeightForWidth(lineEdit_3->sizePolicy().hasHeightForWidth());
+        lineEdit_3->setSizePolicy(sizePolicy5);
+        lineEdit_3->setFont(font1);
+
+        horizontalLayout_71->addWidget(lineEdit_3);
+
+        pushButton_8 = new QPushButton(scrollAreaWidgetContents);
+        pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
+        sizePolicy3.setHeightForWidth(pushButton_8->sizePolicy().hasHeightForWidth());
+        pushButton_8->setSizePolicy(sizePolicy3);
+        pushButton_8->setFont(font1);
+
+        horizontalLayout_71->addWidget(pushButton_8);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_71);
+
         horizontalLayout_69 = new QHBoxLayout();
         horizontalLayout_69->setSpacing(6);
         horizontalLayout_69->setObjectName(QStringLiteral("horizontalLayout_69"));
         label_41 = new QLabel(scrollAreaWidgetContents);
         label_41->setObjectName(QStringLiteral("label_41"));
+        label_41->setFont(font1);
 
         horizontalLayout_69->addWidget(label_41);
 
         lineEdit_2 = new QLineEdit(scrollAreaWidgetContents);
         lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy5);
+        lineEdit_2->setFont(font1);
 
         horizontalLayout_69->addWidget(lineEdit_2);
 
 
         verticalLayout_5->addLayout(horizontalLayout_69);
+
+        horizontalLayout_74 = new QHBoxLayout();
+        horizontalLayout_74->setSpacing(6);
+        horizontalLayout_74->setObjectName(QStringLiteral("horizontalLayout_74"));
+        pushButton_10 = new QPushButton(scrollAreaWidgetContents);
+        pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
+        sizePolicy3.setHeightForWidth(pushButton_10->sizePolicy().hasHeightForWidth());
+        pushButton_10->setSizePolicy(sizePolicy3);
+
+        horizontalLayout_74->addWidget(pushButton_10);
+
+        lineEdit_5 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_5->setObjectName(QStringLiteral("lineEdit_5"));
+        sizePolicy5.setHeightForWidth(lineEdit_5->sizePolicy().hasHeightForWidth());
+        lineEdit_5->setSizePolicy(sizePolicy5);
+
+        horizontalLayout_74->addWidget(lineEdit_5);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_74);
 
         horizontalLayout_13 = new QHBoxLayout();
         horizontalLayout_13->setSpacing(6);
@@ -1026,6 +1198,7 @@ public:
 
         line_3 = new QFrame(scrollAreaWidgetContents);
         line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setFont(font1);
         line_3->setFrameShadow(QFrame::Plain);
         line_3->setFrameShape(QFrame::VLine);
 
@@ -1036,9 +1209,7 @@ public:
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         label_3 = new QLabel(scrollAreaWidgetContents);
         label_3->setObjectName(QStringLiteral("label_3"));
-        QFont font2;
-        font2.setPointSize(14);
-        label_3->setFont(font2);
+        label_3->setFont(font1);
 
         verticalLayout_2->addWidget(label_3);
 
@@ -1049,6 +1220,7 @@ public:
         label_5->setObjectName(QStringLiteral("label_5"));
         sizePolicy.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
         label_5->setSizePolicy(sizePolicy);
+        label_5->setFont(font1);
 
         horizontalLayout_12->addWidget(label_5);
 
@@ -1056,6 +1228,7 @@ public:
         spinBox->setObjectName(QStringLiteral("spinBox"));
         sizePolicy3.setHeightForWidth(spinBox->sizePolicy().hasHeightForWidth());
         spinBox->setSizePolicy(sizePolicy3);
+        spinBox->setFont(font1);
 
         horizontalLayout_12->addWidget(spinBox);
 
@@ -1069,6 +1242,7 @@ public:
         label_6->setObjectName(QStringLiteral("label_6"));
         sizePolicy.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
         label_6->setSizePolicy(sizePolicy);
+        label_6->setFont(font1);
 
         horizontalLayout_11->addWidget(label_6);
 
@@ -1076,6 +1250,7 @@ public:
         spinBox_2->setObjectName(QStringLiteral("spinBox_2"));
         sizePolicy3.setHeightForWidth(spinBox_2->sizePolicy().hasHeightForWidth());
         spinBox_2->setSizePolicy(sizePolicy3);
+        spinBox_2->setFont(font1);
 
         horizontalLayout_11->addWidget(spinBox_2);
 
@@ -1087,6 +1262,7 @@ public:
         horizontalLayout_59->setObjectName(QStringLiteral("horizontalLayout_59"));
         label_65 = new QLabel(scrollAreaWidgetContents);
         label_65->setObjectName(QStringLiteral("label_65"));
+        label_65->setFont(font1);
 
         horizontalLayout_59->addWidget(label_65);
 
@@ -1094,6 +1270,7 @@ public:
         spinBox_7->setObjectName(QStringLiteral("spinBox_7"));
         sizePolicy3.setHeightForWidth(spinBox_7->sizePolicy().hasHeightForWidth());
         spinBox_7->setSizePolicy(sizePolicy3);
+        spinBox_7->setFont(font1);
 
         horizontalLayout_59->addWidget(spinBox_7);
 
@@ -1105,6 +1282,7 @@ public:
         horizontalLayout_60->setObjectName(QStringLiteral("horizontalLayout_60"));
         label_66 = new QLabel(scrollAreaWidgetContents);
         label_66->setObjectName(QStringLiteral("label_66"));
+        label_66->setFont(font1);
 
         horizontalLayout_60->addWidget(label_66);
 
@@ -1119,6 +1297,7 @@ public:
         palette3.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush10);
         palette3.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush10);
         spinBox_8->setPalette(palette3);
+        spinBox_8->setFont(font1);
 
         horizontalLayout_60->addWidget(spinBox_8);
 
@@ -1132,6 +1311,7 @@ public:
         label_8->setObjectName(QStringLiteral("label_8"));
         sizePolicy.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
         label_8->setSizePolicy(sizePolicy);
+        label_8->setFont(font1);
 
         horizontalLayout_10->addWidget(label_8);
 
@@ -1139,6 +1319,7 @@ public:
         spinBox_3->setObjectName(QStringLiteral("spinBox_3"));
         sizePolicy3.setHeightForWidth(spinBox_3->sizePolicy().hasHeightForWidth());
         spinBox_3->setSizePolicy(sizePolicy3);
+        spinBox_3->setFont(font1);
 
         horizontalLayout_10->addWidget(spinBox_3);
 
@@ -1150,6 +1331,7 @@ public:
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
         checkBox_11 = new QCheckBox(scrollAreaWidgetContents);
         checkBox_11->setObjectName(QStringLiteral("checkBox_11"));
+        checkBox_11->setFont(font1);
 
         horizontalLayout_9->addWidget(checkBox_11);
 
@@ -1164,6 +1346,7 @@ public:
         palette4.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush18);
         palette4.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush18);
         lineEdit->setPalette(palette4);
+        lineEdit->setFont(font1);
 
         horizontalLayout_9->addWidget(lineEdit);
 
@@ -1177,6 +1360,7 @@ public:
         label_7->setObjectName(QStringLiteral("label_7"));
         sizePolicy.setHeightForWidth(label_7->sizePolicy().hasHeightForWidth());
         label_7->setSizePolicy(sizePolicy);
+        label_7->setFont(font1);
 
         horizontalLayout_30->addWidget(label_7);
 
@@ -1184,6 +1368,7 @@ public:
         spinBox_6->setObjectName(QStringLiteral("spinBox_6"));
         sizePolicy3.setHeightForWidth(spinBox_6->sizePolicy().hasHeightForWidth());
         spinBox_6->setSizePolicy(sizePolicy3);
+        spinBox_6->setFont(font1);
 
         horizontalLayout_30->addWidget(spinBox_6);
 
@@ -1200,6 +1385,7 @@ public:
         sizePolicy7.setHeightForWidth(tableWidget->sizePolicy().hasHeightForWidth());
         tableWidget->setSizePolicy(sizePolicy7);
         tableWidget->setMinimumSize(QSize(0, 100));
+        tableWidget->setFont(font1);
         tableWidget->setColumnCount(2);
         tableWidget->horizontalHeader()->setDefaultSectionSize(100);
 
@@ -1223,6 +1409,7 @@ public:
         brush21.setStyle(Qt::SolidPattern);
         palette5.setBrush(QPalette::Disabled, QPalette::Base, brush21);
         pushButton_2->setPalette(palette5);
+        pushButton_2->setFont(font1);
 
         horizontalLayout_31->addWidget(pushButton_2);
 
@@ -1231,6 +1418,7 @@ public:
         doubleSpinBox_13->setEnabled(false);
         sizePolicy2.setHeightForWidth(doubleSpinBox_13->sizePolicy().hasHeightForWidth());
         doubleSpinBox_13->setSizePolicy(sizePolicy2);
+        doubleSpinBox_13->setFont(font1);
         doubleSpinBox_13->setMaximum(100);
 
         horizontalLayout_31->addWidget(doubleSpinBox_13);
@@ -1240,6 +1428,7 @@ public:
 
         label_29 = new QLabel(scrollAreaWidgetContents);
         label_29->setObjectName(QStringLiteral("label_29"));
+        label_29->setFont(font1);
 
         verticalLayout_2->addWidget(label_29);
 
@@ -1250,6 +1439,7 @@ public:
         label_30->setObjectName(QStringLiteral("label_30"));
         sizePolicy.setHeightForWidth(label_30->sizePolicy().hasHeightForWidth());
         label_30->setSizePolicy(sizePolicy);
+        label_30->setFont(font1);
 
         horizontalLayout_29->addWidget(label_30);
 
@@ -1257,6 +1447,7 @@ public:
         doubleSpinBox_9->setObjectName(QStringLiteral("doubleSpinBox_9"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_9->sizePolicy().hasHeightForWidth());
         doubleSpinBox_9->setSizePolicy(sizePolicy3);
+        doubleSpinBox_9->setFont(font1);
         doubleSpinBox_9->setAutoFillBackground(true);
         doubleSpinBox_9->setMaximum(100000);
         doubleSpinBox_9->setSingleStep(20);
@@ -1273,6 +1464,7 @@ public:
         label_38->setObjectName(QStringLiteral("label_38"));
         sizePolicy.setHeightForWidth(label_38->sizePolicy().hasHeightForWidth());
         label_38->setSizePolicy(sizePolicy);
+        label_38->setFont(font1);
 
         horizontalLayout_57->addWidget(label_38);
 
@@ -1281,6 +1473,7 @@ public:
         doubleSpinBox_11->setEnabled(false);
         sizePolicy2.setHeightForWidth(doubleSpinBox_11->sizePolicy().hasHeightForWidth());
         doubleSpinBox_11->setSizePolicy(sizePolicy2);
+        doubleSpinBox_11->setFont(font1);
         doubleSpinBox_11->setMinimum(-99);
 
         horizontalLayout_57->addWidget(doubleSpinBox_11);
@@ -1295,6 +1488,7 @@ public:
         label_31->setObjectName(QStringLiteral("label_31"));
         sizePolicy.setHeightForWidth(label_31->sizePolicy().hasHeightForWidth());
         label_31->setSizePolicy(sizePolicy);
+        label_31->setFont(font1);
 
         horizontalLayout_28->addWidget(label_31);
 
@@ -1302,6 +1496,7 @@ public:
         doubleSpinBox_10->setObjectName(QStringLiteral("doubleSpinBox_10"));
         sizePolicy2.setHeightForWidth(doubleSpinBox_10->sizePolicy().hasHeightForWidth());
         doubleSpinBox_10->setSizePolicy(sizePolicy2);
+        doubleSpinBox_10->setFont(font1);
 
         horizontalLayout_28->addWidget(doubleSpinBox_10);
 
@@ -1355,6 +1550,7 @@ public:
 
         line_4 = new QFrame(scrollAreaWidgetContents);
         line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFont(font1);
         line_4->setFrameShadow(QFrame::Plain);
         line_4->setFrameShape(QFrame::VLine);
 
@@ -1367,6 +1563,7 @@ public:
         label_4->setObjectName(QStringLiteral("label_4"));
         sizePolicy.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
         label_4->setSizePolicy(sizePolicy);
+        label_4->setFont(font1);
 
         verticalLayout->addWidget(label_4);
 
@@ -1377,6 +1574,7 @@ public:
         label_17->setObjectName(QStringLiteral("label_17"));
         sizePolicy.setHeightForWidth(label_17->sizePolicy().hasHeightForWidth());
         label_17->setSizePolicy(sizePolicy);
+        label_17->setFont(font1);
 
         horizontalLayout_23->addWidget(label_17);
 
@@ -1384,6 +1582,7 @@ public:
         doubleSpinBox_29->setObjectName(QStringLiteral("doubleSpinBox_29"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_29->sizePolicy().hasHeightForWidth());
         doubleSpinBox_29->setSizePolicy(sizePolicy3);
+        doubleSpinBox_29->setFont(font1);
 
         horizontalLayout_23->addWidget(doubleSpinBox_29);
 
@@ -1397,6 +1596,7 @@ public:
         label_21->setObjectName(QStringLiteral("label_21"));
         sizePolicy.setHeightForWidth(label_21->sizePolicy().hasHeightForWidth());
         label_21->setSizePolicy(sizePolicy);
+        label_21->setFont(font1);
 
         horizontalLayout_22->addWidget(label_21);
 
@@ -1404,6 +1604,7 @@ public:
         doubleSpinBox_35->setObjectName(QStringLiteral("doubleSpinBox_35"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_35->sizePolicy().hasHeightForWidth());
         doubleSpinBox_35->setSizePolicy(sizePolicy3);
+        doubleSpinBox_35->setFont(font1);
         doubleSpinBox_35->setMaximum(1e+6);
 
         horizontalLayout_22->addWidget(doubleSpinBox_35);
@@ -1418,6 +1619,7 @@ public:
         label_22->setObjectName(QStringLiteral("label_22"));
         sizePolicy.setHeightForWidth(label_22->sizePolicy().hasHeightForWidth());
         label_22->setSizePolicy(sizePolicy);
+        label_22->setFont(font1);
 
         horizontalLayout_21->addWidget(label_22);
 
@@ -1425,6 +1627,7 @@ public:
         doubleSpinBox_34->setObjectName(QStringLiteral("doubleSpinBox_34"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_34->sizePolicy().hasHeightForWidth());
         doubleSpinBox_34->setSizePolicy(sizePolicy3);
+        doubleSpinBox_34->setFont(font1);
         doubleSpinBox_34->setMaximum(1e+6);
 
         horizontalLayout_21->addWidget(doubleSpinBox_34);
@@ -1434,6 +1637,7 @@ public:
 
         line_5 = new QFrame(scrollAreaWidgetContents);
         line_5->setObjectName(QStringLiteral("line_5"));
+        line_5->setFont(font1);
         line_5->setFrameShadow(QFrame::Plain);
         line_5->setFrameShape(QFrame::HLine);
 
@@ -1444,8 +1648,9 @@ public:
         horizontalLayout_34->setObjectName(QStringLiteral("horizontalLayout_34"));
         label_15 = new QLabel(scrollAreaWidgetContents);
         label_15->setObjectName(QStringLiteral("label_15"));
-        sizePolicy6.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
-        label_15->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy5);
+        label_15->setFont(font1);
 
         horizontalLayout_34->addWidget(label_15);
 
@@ -1453,6 +1658,7 @@ public:
         checkBox_8->setObjectName(QStringLiteral("checkBox_8"));
         sizePolicy2.setHeightForWidth(checkBox_8->sizePolicy().hasHeightForWidth());
         checkBox_8->setSizePolicy(sizePolicy2);
+        checkBox_8->setFont(font1);
 
         horizontalLayout_34->addWidget(checkBox_8);
 
@@ -1460,13 +1666,15 @@ public:
         checkBox_9->setObjectName(QStringLiteral("checkBox_9"));
         sizePolicy2.setHeightForWidth(checkBox_9->sizePolicy().hasHeightForWidth());
         checkBox_9->setSizePolicy(sizePolicy2);
+        checkBox_9->setFont(font1);
 
         horizontalLayout_34->addWidget(checkBox_9);
 
         checkBox = new QCheckBox(scrollAreaWidgetContents);
         checkBox->setObjectName(QStringLiteral("checkBox"));
-        sizePolicy6.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
-        checkBox->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(checkBox->sizePolicy().hasHeightForWidth());
+        checkBox->setSizePolicy(sizePolicy5);
+        checkBox->setFont(font1);
 
         horizontalLayout_34->addWidget(checkBox);
 
@@ -1480,6 +1688,7 @@ public:
         doubleSpinBox_14->setObjectName(QStringLiteral("doubleSpinBox_14"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_14->sizePolicy().hasHeightForWidth());
         doubleSpinBox_14->setSizePolicy(sizePolicy3);
+        doubleSpinBox_14->setFont(font1);
         doubleSpinBox_14->setDecimals(3);
         doubleSpinBox_14->setSingleStep(0.005);
 
@@ -1492,6 +1701,7 @@ public:
         sizePolicy8.setVerticalStretch(0);
         sizePolicy8.setHeightForWidth(label_40->sizePolicy().hasHeightForWidth());
         label_40->setSizePolicy(sizePolicy8);
+        label_40->setFont(font1);
 
         horizontalLayout_8->addWidget(label_40);
 
@@ -1499,6 +1709,7 @@ public:
         doubleSpinBox_15->setObjectName(QStringLiteral("doubleSpinBox_15"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_15->sizePolicy().hasHeightForWidth());
         doubleSpinBox_15->setSizePolicy(sizePolicy3);
+        doubleSpinBox_15->setFont(font1);
         doubleSpinBox_15->setDecimals(3);
         doubleSpinBox_15->setSingleStep(0.005);
 
@@ -1506,6 +1717,7 @@ public:
 
         label_39 = new QLabel(scrollAreaWidgetContents);
         label_39->setObjectName(QStringLiteral("label_39"));
+        label_39->setFont(font1);
 
         horizontalLayout_8->addWidget(label_39);
 
@@ -1519,6 +1731,7 @@ public:
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
         sizePolicy2.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
         pushButton_3->setSizePolicy(sizePolicy2);
+        pushButton_3->setFont(font1);
 
         horizontalLayout_35->addWidget(pushButton_3);
 
@@ -1527,6 +1740,7 @@ public:
         doubleSpinBox_30->setEnabled(false);
         sizePolicy3.setHeightForWidth(doubleSpinBox_30->sizePolicy().hasHeightForWidth());
         doubleSpinBox_30->setSizePolicy(sizePolicy3);
+        doubleSpinBox_30->setFont(font1);
         doubleSpinBox_30->setMaximum(100);
 
         horizontalLayout_35->addWidget(doubleSpinBox_30);
@@ -1541,6 +1755,7 @@ public:
         label_56->setObjectName(QStringLiteral("label_56"));
         sizePolicy.setHeightForWidth(label_56->sizePolicy().hasHeightForWidth());
         label_56->setSizePolicy(sizePolicy);
+        label_56->setFont(font1);
 
         horizontalLayout_51->addWidget(label_56);
 
@@ -1549,6 +1764,7 @@ public:
         doubleSpinBox_31->setEnabled(false);
         sizePolicy3.setHeightForWidth(doubleSpinBox_31->sizePolicy().hasHeightForWidth());
         doubleSpinBox_31->setSizePolicy(sizePolicy3);
+        doubleSpinBox_31->setFont(font1);
 
         horizontalLayout_51->addWidget(doubleSpinBox_31);
 
@@ -1557,10 +1773,31 @@ public:
 
         line = new QFrame(scrollAreaWidgetContents);
         line->setObjectName(QStringLiteral("line"));
+        line->setFont(font1);
         line->setFrameShadow(QFrame::Plain);
         line->setFrameShape(QFrame::HLine);
 
         verticalLayout->addWidget(line);
+
+        horizontalLayout_72 = new QHBoxLayout();
+        horizontalLayout_72->setSpacing(6);
+        horizontalLayout_72->setObjectName(QStringLiteral("horizontalLayout_72"));
+        label_73 = new QLabel(scrollAreaWidgetContents);
+        label_73->setObjectName(QStringLiteral("label_73"));
+        label_73->setFont(font1);
+
+        horizontalLayout_72->addWidget(label_73);
+
+        comboBox_4 = new QComboBox(scrollAreaWidgetContents);
+        comboBox_4->setObjectName(QStringLiteral("comboBox_4"));
+        sizePolicy3.setHeightForWidth(comboBox_4->sizePolicy().hasHeightForWidth());
+        comboBox_4->setSizePolicy(sizePolicy3);
+        comboBox_4->setFont(font1);
+
+        horizontalLayout_72->addWidget(comboBox_4);
+
+
+        verticalLayout->addLayout(horizontalLayout_72);
 
         horizontalLayout_20 = new QHBoxLayout();
         horizontalLayout_20->setSpacing(6);
@@ -1569,6 +1806,7 @@ public:
         label_18->setObjectName(QStringLiteral("label_18"));
         sizePolicy.setHeightForWidth(label_18->sizePolicy().hasHeightForWidth());
         label_18->setSizePolicy(sizePolicy);
+        label_18->setFont(font1);
 
         horizontalLayout_20->addWidget(label_18);
 
@@ -1576,6 +1814,7 @@ public:
         doubleSpinBox_33->setObjectName(QStringLiteral("doubleSpinBox_33"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_33->sizePolicy().hasHeightForWidth());
         doubleSpinBox_33->setSizePolicy(sizePolicy3);
+        doubleSpinBox_33->setFont(font1);
         doubleSpinBox_33->setDecimals(4);
         doubleSpinBox_33->setMaximum(0.99);
         doubleSpinBox_33->setSingleStep(0.001);
@@ -1592,6 +1831,7 @@ public:
         label_19->setObjectName(QStringLiteral("label_19"));
         sizePolicy.setHeightForWidth(label_19->sizePolicy().hasHeightForWidth());
         label_19->setSizePolicy(sizePolicy);
+        label_19->setFont(font1);
 
         horizontalLayout_19->addWidget(label_19);
 
@@ -1599,6 +1839,7 @@ public:
         spinBox_10->setObjectName(QStringLiteral("spinBox_10"));
         sizePolicy3.setHeightForWidth(spinBox_10->sizePolicy().hasHeightForWidth());
         spinBox_10->setSizePolicy(sizePolicy3);
+        spinBox_10->setFont(font1);
         spinBox_10->setMaximum(99999);
 
         horizontalLayout_19->addWidget(spinBox_10);
@@ -1613,6 +1854,7 @@ public:
         label_20->setObjectName(QStringLiteral("label_20"));
         sizePolicy.setHeightForWidth(label_20->sizePolicy().hasHeightForWidth());
         label_20->setSizePolicy(sizePolicy);
+        label_20->setFont(font1);
 
         horizontalLayout_18->addWidget(label_20);
 
@@ -1620,6 +1862,7 @@ public:
         spinBox_11->setObjectName(QStringLiteral("spinBox_11"));
         sizePolicy3.setHeightForWidth(spinBox_11->sizePolicy().hasHeightForWidth());
         spinBox_11->setSizePolicy(sizePolicy3);
+        spinBox_11->setFont(font1);
         spinBox_11->setMaximum(99999);
 
         horizontalLayout_18->addWidget(spinBox_11);
@@ -1634,6 +1877,7 @@ public:
         label_23->setObjectName(QStringLiteral("label_23"));
         sizePolicy.setHeightForWidth(label_23->sizePolicy().hasHeightForWidth());
         label_23->setSizePolicy(sizePolicy);
+        label_23->setFont(font1);
 
         horizontalLayout_17->addWidget(label_23);
 
@@ -1641,6 +1885,7 @@ public:
         spinBox_4->setObjectName(QStringLiteral("spinBox_4"));
         sizePolicy3.setHeightForWidth(spinBox_4->sizePolicy().hasHeightForWidth());
         spinBox_4->setSizePolicy(sizePolicy3);
+        spinBox_4->setFont(font1);
         spinBox_4->setMinimum(1);
         spinBox_4->setValue(1);
 
@@ -1656,6 +1901,7 @@ public:
         label_24->setObjectName(QStringLiteral("label_24"));
         sizePolicy.setHeightForWidth(label_24->sizePolicy().hasHeightForWidth());
         label_24->setSizePolicy(sizePolicy);
+        label_24->setFont(font1);
 
         horizontalLayout_16->addWidget(label_24);
 
@@ -1663,6 +1909,7 @@ public:
         spinBox_5->setObjectName(QStringLiteral("spinBox_5"));
         sizePolicy3.setHeightForWidth(spinBox_5->sizePolicy().hasHeightForWidth());
         spinBox_5->setSizePolicy(sizePolicy3);
+        spinBox_5->setFont(font1);
         spinBox_5->setMinimum(1);
         spinBox_5->setValue(1);
 
@@ -1678,6 +1925,7 @@ public:
         label_25->setObjectName(QStringLiteral("label_25"));
         sizePolicy.setHeightForWidth(label_25->sizePolicy().hasHeightForWidth());
         label_25->setSizePolicy(sizePolicy);
+        label_25->setFont(font1);
 
         horizontalLayout_15->addWidget(label_25);
 
@@ -1685,6 +1933,7 @@ public:
         spinBox_9->setObjectName(QStringLiteral("spinBox_9"));
         sizePolicy3.setHeightForWidth(spinBox_9->sizePolicy().hasHeightForWidth());
         spinBox_9->setSizePolicy(sizePolicy3);
+        spinBox_9->setFont(font1);
         spinBox_9->setMaximum(9999);
 
         horizontalLayout_15->addWidget(spinBox_9);
@@ -1699,6 +1948,7 @@ public:
         label_26->setObjectName(QStringLiteral("label_26"));
         sizePolicy.setHeightForWidth(label_26->sizePolicy().hasHeightForWidth());
         label_26->setSizePolicy(sizePolicy);
+        label_26->setFont(font1);
 
         horizontalLayout_14->addWidget(label_26);
 
@@ -1706,6 +1956,7 @@ public:
         doubleSpinBox_17->setObjectName(QStringLiteral("doubleSpinBox_17"));
         sizePolicy2.setHeightForWidth(doubleSpinBox_17->sizePolicy().hasHeightForWidth());
         doubleSpinBox_17->setSizePolicy(sizePolicy2);
+        doubleSpinBox_17->setFont(font1);
 
         horizontalLayout_14->addWidget(doubleSpinBox_17);
 
@@ -1719,6 +1970,7 @@ public:
         label_36->setObjectName(QStringLiteral("label_36"));
         sizePolicy.setHeightForWidth(label_36->sizePolicy().hasHeightForWidth());
         label_36->setSizePolicy(sizePolicy);
+        label_36->setFont(font1);
 
         horizontalLayout_32->addWidget(label_36);
 
@@ -1726,6 +1978,7 @@ public:
         doubleSpinBox_4->setObjectName(QStringLiteral("doubleSpinBox_4"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_4->sizePolicy().hasHeightForWidth());
         doubleSpinBox_4->setSizePolicy(sizePolicy3);
+        doubleSpinBox_4->setFont(font1);
         doubleSpinBox_4->setMinimum(99);
         doubleSpinBox_4->setMaximum(999);
         doubleSpinBox_4->setValue(550);
@@ -1742,6 +1995,7 @@ public:
         label_37->setObjectName(QStringLiteral("label_37"));
         sizePolicy.setHeightForWidth(label_37->sizePolicy().hasHeightForWidth());
         label_37->setSizePolicy(sizePolicy);
+        label_37->setFont(font1);
 
         horizontalLayout_33->addWidget(label_37);
 
@@ -1749,6 +2003,7 @@ public:
         doubleSpinBox_3->setObjectName(QStringLiteral("doubleSpinBox_3"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_3->sizePolicy().hasHeightForWidth());
         doubleSpinBox_3->setSizePolicy(sizePolicy3);
+        doubleSpinBox_3->setFont(font1);
         doubleSpinBox_3->setMaximum(1);
         doubleSpinBox_3->setSingleStep(0.05);
 
@@ -1764,6 +2019,7 @@ public:
         label_57->setObjectName(QStringLiteral("label_57"));
         sizePolicy.setHeightForWidth(label_57->sizePolicy().hasHeightForWidth());
         label_57->setSizePolicy(sizePolicy);
+        label_57->setFont(font1);
 
         horizontalLayout_36->addWidget(label_57);
 
@@ -1771,6 +2027,7 @@ public:
         doubleSpinBox_16->setObjectName(QStringLiteral("doubleSpinBox_16"));
         sizePolicy3.setHeightForWidth(doubleSpinBox_16->sizePolicy().hasHeightForWidth());
         doubleSpinBox_16->setSizePolicy(sizePolicy3);
+        doubleSpinBox_16->setFont(font1);
         doubleSpinBox_16->setDecimals(3);
         doubleSpinBox_16->setSingleStep(0.1);
 
@@ -1779,10 +2036,37 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_36);
 
+        horizontalLayout_73 = new QHBoxLayout();
+        horizontalLayout_73->setSpacing(6);
+        horizontalLayout_73->setObjectName(QStringLiteral("horizontalLayout_73"));
+        label_74 = new QLabel(scrollAreaWidgetContents);
+        label_74->setObjectName(QStringLiteral("label_74"));
+        label_74->setFont(font1);
+
+        horizontalLayout_73->addWidget(label_74);
+
+        lineEdit_4 = new QLineEdit(scrollAreaWidgetContents);
+        lineEdit_4->setObjectName(QStringLiteral("lineEdit_4"));
+        sizePolicy3.setHeightForWidth(lineEdit_4->sizePolicy().hasHeightForWidth());
+        lineEdit_4->setSizePolicy(sizePolicy3);
+        lineEdit_4->setFont(font1);
+
+        horizontalLayout_73->addWidget(lineEdit_4);
+
+        pushButton_9 = new QPushButton(scrollAreaWidgetContents);
+        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+        pushButton_9->setFont(font1);
+
+        horizontalLayout_73->addWidget(pushButton_9);
+
+
+        verticalLayout->addLayout(horizontalLayout_73);
+
         progressBar = new QProgressBar(scrollAreaWidgetContents);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        sizePolicy6.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
-        progressBar->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(progressBar->sizePolicy().hasHeightForWidth());
+        progressBar->setSizePolicy(sizePolicy5);
+        progressBar->setFont(font1);
         progressBar->setValue(24);
 
         verticalLayout->addWidget(progressBar);
@@ -1796,6 +2080,7 @@ public:
 
         line_6 = new QFrame(scrollAreaWidgetContents);
         line_6->setObjectName(QStringLiteral("line_6"));
+        line_6->setFont(font1);
         line_6->setFrameShadow(QFrame::Plain);
         line_6->setFrameShape(QFrame::VLine);
 
@@ -1806,6 +2091,7 @@ public:
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         label_44 = new QLabel(scrollAreaWidgetContents);
         label_44->setObjectName(QStringLiteral("label_44"));
+        label_44->setFont(font1);
 
         verticalLayout_4->addWidget(label_44);
 
@@ -1814,6 +2100,7 @@ public:
         horizontalLayout_37->setObjectName(QStringLiteral("horizontalLayout_37"));
         label_45 = new QLabel(scrollAreaWidgetContents);
         label_45->setObjectName(QStringLiteral("label_45"));
+        label_45->setFont(font1);
 
         horizontalLayout_37->addWidget(label_45);
 
@@ -1823,6 +2110,7 @@ public:
         sizePolicy3.setHeightForWidth(lineEdit_25->sizePolicy().hasHeightForWidth());
         lineEdit_25->setSizePolicy(sizePolicy3);
         lineEdit_25->setMinimumSize(QSize(30, 0));
+        lineEdit_25->setFont(font1);
 
         horizontalLayout_37->addWidget(lineEdit_25);
 
@@ -1834,6 +2122,7 @@ public:
         horizontalLayout_45->setObjectName(QStringLiteral("horizontalLayout_45"));
         label_46 = new QLabel(scrollAreaWidgetContents);
         label_46->setObjectName(QStringLiteral("label_46"));
+        label_46->setFont(font1);
 
         horizontalLayout_45->addWidget(label_46);
 
@@ -1842,6 +2131,7 @@ public:
         lineEdit_26->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_26->sizePolicy().hasHeightForWidth());
         lineEdit_26->setSizePolicy(sizePolicy3);
+        lineEdit_26->setFont(font1);
 
         horizontalLayout_45->addWidget(lineEdit_26);
 
@@ -1853,6 +2143,7 @@ public:
         horizontalLayout_44->setObjectName(QStringLiteral("horizontalLayout_44"));
         label_47 = new QLabel(scrollAreaWidgetContents);
         label_47->setObjectName(QStringLiteral("label_47"));
+        label_47->setFont(font1);
 
         horizontalLayout_44->addWidget(label_47);
 
@@ -1861,6 +2152,7 @@ public:
         lineEdit_27->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_27->sizePolicy().hasHeightForWidth());
         lineEdit_27->setSizePolicy(sizePolicy3);
+        lineEdit_27->setFont(font1);
 
         horizontalLayout_44->addWidget(lineEdit_27);
 
@@ -1874,6 +2166,7 @@ public:
         label_48->setObjectName(QStringLiteral("label_48"));
         sizePolicy.setHeightForWidth(label_48->sizePolicy().hasHeightForWidth());
         label_48->setSizePolicy(sizePolicy);
+        label_48->setFont(font1);
 
         horizontalLayout_43->addWidget(label_48);
 
@@ -1882,6 +2175,7 @@ public:
         lineEdit_28->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_28->sizePolicy().hasHeightForWidth());
         lineEdit_28->setSizePolicy(sizePolicy3);
+        lineEdit_28->setFont(font1);
 
         horizontalLayout_43->addWidget(lineEdit_28);
 
@@ -1895,6 +2189,7 @@ public:
         label_49->setObjectName(QStringLiteral("label_49"));
         sizePolicy.setHeightForWidth(label_49->sizePolicy().hasHeightForWidth());
         label_49->setSizePolicy(sizePolicy);
+        label_49->setFont(font1);
 
         horizontalLayout_42->addWidget(label_49);
 
@@ -1903,6 +2198,7 @@ public:
         lineEdit_29->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_29->sizePolicy().hasHeightForWidth());
         lineEdit_29->setSizePolicy(sizePolicy3);
+        lineEdit_29->setFont(font1);
 
         horizontalLayout_42->addWidget(lineEdit_29);
 
@@ -1914,6 +2210,7 @@ public:
         horizontalLayout_41->setObjectName(QStringLiteral("horizontalLayout_41"));
         label_50 = new QLabel(scrollAreaWidgetContents);
         label_50->setObjectName(QStringLiteral("label_50"));
+        label_50->setFont(font1);
 
         horizontalLayout_41->addWidget(label_50);
 
@@ -1922,6 +2219,7 @@ public:
         lineEdit_30->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_30->sizePolicy().hasHeightForWidth());
         lineEdit_30->setSizePolicy(sizePolicy3);
+        lineEdit_30->setFont(font1);
 
         horizontalLayout_41->addWidget(lineEdit_30);
 
@@ -1933,6 +2231,7 @@ public:
         horizontalLayout_40->setObjectName(QStringLiteral("horizontalLayout_40"));
         label_51 = new QLabel(scrollAreaWidgetContents);
         label_51->setObjectName(QStringLiteral("label_51"));
+        label_51->setFont(font1);
 
         horizontalLayout_40->addWidget(label_51);
 
@@ -1941,6 +2240,7 @@ public:
         lineEdit_31->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_31->sizePolicy().hasHeightForWidth());
         lineEdit_31->setSizePolicy(sizePolicy3);
+        lineEdit_31->setFont(font1);
 
         horizontalLayout_40->addWidget(lineEdit_31);
 
@@ -1952,6 +2252,7 @@ public:
         horizontalLayout_39->setObjectName(QStringLiteral("horizontalLayout_39"));
         label_52 = new QLabel(scrollAreaWidgetContents);
         label_52->setObjectName(QStringLiteral("label_52"));
+        label_52->setFont(font1);
 
         horizontalLayout_39->addWidget(label_52);
 
@@ -1960,6 +2261,7 @@ public:
         lineEdit_32->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_32->sizePolicy().hasHeightForWidth());
         lineEdit_32->setSizePolicy(sizePolicy3);
+        lineEdit_32->setFont(font1);
 
         horizontalLayout_39->addWidget(lineEdit_32);
 
@@ -1971,6 +2273,7 @@ public:
         horizontalLayout_38->setObjectName(QStringLiteral("horizontalLayout_38"));
         label_53 = new QLabel(scrollAreaWidgetContents);
         label_53->setObjectName(QStringLiteral("label_53"));
+        label_53->setFont(font1);
 
         horizontalLayout_38->addWidget(label_53);
 
@@ -1979,6 +2282,7 @@ public:
         lineEdit_33->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_33->sizePolicy().hasHeightForWidth());
         lineEdit_33->setSizePolicy(sizePolicy3);
+        lineEdit_33->setFont(font1);
 
         horizontalLayout_38->addWidget(lineEdit_33);
 
@@ -1992,6 +2296,7 @@ public:
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
         sizePolicy3.setHeightForWidth(pushButton_4->sizePolicy().hasHeightForWidth());
         pushButton_4->setSizePolicy(sizePolicy3);
+        pushButton_4->setFont(font1);
 
         horizontalLayout_47->addWidget(pushButton_4);
 
@@ -1999,6 +2304,7 @@ public:
         pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
         sizePolicy3.setHeightForWidth(pushButton_5->sizePolicy().hasHeightForWidth());
         pushButton_5->setSizePolicy(sizePolicy3);
+        pushButton_5->setFont(font1);
 
         horizontalLayout_47->addWidget(pushButton_5);
 
@@ -2006,6 +2312,7 @@ public:
         pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
         sizePolicy3.setHeightForWidth(pushButton_6->sizePolicy().hasHeightForWidth());
         pushButton_6->setSizePolicy(sizePolicy3);
+        pushButton_6->setFont(font1);
 
         horizontalLayout_47->addWidget(pushButton_6);
 
@@ -2019,6 +2326,7 @@ public:
         label_54->setObjectName(QStringLiteral("label_54"));
         sizePolicy.setHeightForWidth(label_54->sizePolicy().hasHeightForWidth());
         label_54->setSizePolicy(sizePolicy);
+        label_54->setFont(font1);
 
         horizontalLayout_49->addWidget(label_54);
 
@@ -2027,6 +2335,7 @@ public:
         lineEdit_34->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_34->sizePolicy().hasHeightForWidth());
         lineEdit_34->setSizePolicy(sizePolicy3);
+        lineEdit_34->setFont(font1);
 
         horizontalLayout_49->addWidget(lineEdit_34);
 
@@ -2038,6 +2347,7 @@ public:
         horizontalLayout_50->setObjectName(QStringLiteral("horizontalLayout_50"));
         label_55 = new QLabel(scrollAreaWidgetContents);
         label_55->setObjectName(QStringLiteral("label_55"));
+        label_55->setFont(font1);
 
         horizontalLayout_50->addWidget(label_55);
 
@@ -2046,6 +2356,7 @@ public:
         lineEdit_35->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_35->sizePolicy().hasHeightForWidth());
         lineEdit_35->setSizePolicy(sizePolicy3);
+        lineEdit_35->setFont(font1);
 
         horizontalLayout_50->addWidget(lineEdit_35);
 
@@ -2057,6 +2368,7 @@ public:
         horizontalLayout_56->setObjectName(QStringLiteral("horizontalLayout_56"));
         label_62 = new QLabel(scrollAreaWidgetContents);
         label_62->setObjectName(QStringLiteral("label_62"));
+        label_62->setFont(font1);
 
         horizontalLayout_56->addWidget(label_62);
 
@@ -2065,6 +2377,7 @@ public:
         lineEdit_37->setEnabled(false);
         sizePolicy3.setHeightForWidth(lineEdit_37->sizePolicy().hasHeightForWidth());
         lineEdit_37->setSizePolicy(sizePolicy3);
+        lineEdit_37->setFont(font1);
 
         horizontalLayout_56->addWidget(lineEdit_37);
 
@@ -2078,6 +2391,7 @@ public:
         comboBox_3->setObjectName(QStringLiteral("comboBox_3"));
         sizePolicy3.setHeightForWidth(comboBox_3->sizePolicy().hasHeightForWidth());
         comboBox_3->setSizePolicy(sizePolicy3);
+        comboBox_3->setFont(font1);
 
         horizontalLayout_68->addWidget(comboBox_3);
 
@@ -2085,8 +2399,25 @@ public:
         pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
         sizePolicy3.setHeightForWidth(pushButton_7->sizePolicy().hasHeightForWidth());
         pushButton_7->setSizePolicy(sizePolicy3);
+        pushButton_7->setFont(font1);
 
         horizontalLayout_68->addWidget(pushButton_7);
+
+        label_76 = new QLabel(scrollAreaWidgetContents);
+        label_76->setObjectName(QStringLiteral("label_76"));
+
+        horizontalLayout_68->addWidget(label_76);
+
+        spinBox_12 = new QSpinBox(scrollAreaWidgetContents);
+        spinBox_12->setObjectName(QStringLiteral("spinBox_12"));
+        spinBox_12->setMaximum(999);
+
+        horizontalLayout_68->addWidget(spinBox_12);
+
+        label_77 = new QLabel(scrollAreaWidgetContents);
+        label_77->setObjectName(QStringLiteral("label_77"));
+
+        horizontalLayout_68->addWidget(label_77);
 
 
         verticalLayout_4->addLayout(horizontalLayout_68);
@@ -2096,6 +2427,7 @@ public:
         sizePolicy7.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
         customPlot->setSizePolicy(sizePolicy7);
         customPlot->setMinimumSize(QSize(293, 150));
+        customPlot->setFont(font1);
 
         verticalLayout_4->addWidget(customPlot);
 
@@ -2222,7 +2554,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1612, 25));
+        menuBar->setGeometry(QRect(0, 0, 1612, 20));
         menuClassical = new QMenu(menuBar);
         menuClassical->setObjectName(QStringLiteral("menuClassical"));
         menuTools = new QMenu(menuBar);
@@ -2271,6 +2603,9 @@ public:
         menuTools_2->addAction(actionVPHG);
         menuTools_2->addAction(actionOptical_Fibres);
         menuTools_2->addAction(actionTSI);
+        menuTools_2->addAction(actionFPE);
+        menuTools_2->addAction(actionCzerny_Turner);
+        menuTools_2->addAction(actionPetzval);
         menuTools_2->addAction(actionNotes);
         menuFile->addAction(actionNew);
         menuFile->addAction(actionOpen);
@@ -2316,7 +2651,10 @@ public:
         actionSave_AS->setText(QApplication::translate("MainWindow", "Save AS", Q_NULLPTR));
         actionUndo->setText(QApplication::translate("MainWindow", "Undo", Q_NULLPTR));
         actionRedo->setText(QApplication::translate("MainWindow", "Redo", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-style:italic; text-decoration: underline;\">Optical &amp; Geometrical Parameters</span></p></body></html>", Q_NULLPTR));
+        actionFPE->setText(QApplication::translate("MainWindow", "FPE", Q_NULLPTR));
+        actionCzerny_Turner->setText(QApplication::translate("MainWindow", "Czerny-Turner", Q_NULLPTR));
+        actionPetzval->setText(QApplication::translate("MainWindow", "Petzval", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline;\">Optical &amp; Geometrical Parameters</span></p></body></html>", Q_NULLPTR));
         label_10->setText(QApplication::translate("MainWindow", "Echelle Line Density [l/mm]:", Q_NULLPTR));
         label_58->setText(QApplication::translate("MainWindow", "Peak Efficiency:", Q_NULLPTR));
         label_16->setText(QApplication::translate("MainWindow", "Blaze Angle [deg]:", Q_NULLPTR));
@@ -2325,7 +2663,10 @@ public:
         label_34->setText(QApplication::translate("MainWindow", "to", Q_NULLPTR));
         label_11->setText(QApplication::translate("MainWindow", "Focal Length Collimator [mm]:", Q_NULLPTR));
         label_12->setText(QApplication::translate("MainWindow", "Focal Length Camera [mm]:", Q_NULLPTR));
-        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length: [mm]", Q_NULLPTR));
+        checkBox_2->setText(QApplication::translate("MainWindow", "WP Configuration", Q_NULLPTR));
+        checkBox_3->setText(QApplication::translate("MainWindow", "Double Prism", Q_NULLPTR));
+        label_75->setText(QApplication::translate("MainWindow", "2nd Coll. Focal Length [mm]:", Q_NULLPTR));
+        label_71->setText(QApplication::translate("MainWindow", "Trans. Coll Focal Length: [mm]:", Q_NULLPTR));
         label_2->setText(QApplication::translate("MainWindow", "X-Disperser:", Q_NULLPTR));
         label_27->setText(QApplication::translate("MainWindow", "XD Line Density [l/mm]:", Q_NULLPTR));
         label_28->setText(QApplication::translate("MainWindow", "Total Angle at XD [deg]:", Q_NULLPTR));
@@ -2337,9 +2678,12 @@ public:
         label_70->setText(QApplication::translate("MainWindow", "Tune Wavelength [nm]:", Q_NULLPTR));
         label_14->setText(QApplication::translate("MainWindow", "Material XD:", Q_NULLPTR));
         label_35->setText(QApplication::translate("MainWindow", "Grism Angle:", Q_NULLPTR));
+        label_72->setText(QApplication::translate("MainWindow", "Glass Data:", Q_NULLPTR));
+        pushButton_8->setText(QApplication::translate("MainWindow", "Reload", Q_NULLPTR));
         label_41->setText(QApplication::translate("MainWindow", "Work Path:", Q_NULLPTR));
+        pushButton_10->setText(QApplication::translate("MainWindow", "Copy Files", Q_NULLPTR));
         pushButton->setText(QApplication::translate("MainWindow", "Close", Q_NULLPTR));
-        label_3->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Efficiency Data</span></p></body></html>", Q_NULLPTR));
+        label_3->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline;\">Efficiency Data</span></p></body></html>", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "# Silver Surfaces:", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "# Aluminium Surfaces:", Q_NULLPTR));
         label_65->setText(QApplication::translate("MainWindow", "# Aluminium UV Surfaces:", Q_NULLPTR));
@@ -2348,7 +2692,7 @@ public:
         checkBox_11->setText(QApplication::translate("MainWindow", "Transmission File: ", Q_NULLPTR));
         label_7->setText(QApplication::translate("MainWindow", "Uncoated Glass Surfaces:", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("MainWindow", "Efficiency [%]:", Q_NULLPTR));
-        label_29->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Object Data</span></p></body></html>", Q_NULLPTR));
+        label_29->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline;\">Object Data</span></p></body></html>", Q_NULLPTR));
         label_30->setText(QApplication::translate("MainWindow", "Effective Temperature [K]:", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         doubleSpinBox_9->setToolTip(QString());
@@ -2360,7 +2704,7 @@ public:
         label_31->setText(QApplication::translate("MainWindow", "Visual Magnitude [mag]:", Q_NULLPTR));
         label_32->setText(QApplication::translate("MainWindow", "Zenit Distance [deg]:", Q_NULLPTR));
         label_61->setText(QApplication::translate("MainWindow", "Exposure Time [s]:", Q_NULLPTR));
-        label_4->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Telescope, Slit &amp; CCD Data</span></p></body></html>", Q_NULLPTR));
+        label_4->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline;\">Telescope, Slit &amp; CCD Data</span></p></body></html>", Q_NULLPTR));
         label_17->setText(QApplication::translate("MainWindow", "Seeing [arcsec]:", Q_NULLPTR));
         label_21->setText(QApplication::translate("MainWindow", "Focal Length [mm]:", Q_NULLPTR));
         label_22->setText(QApplication::translate("MainWindow", "Diameter [mm]:", Q_NULLPTR));
@@ -2372,6 +2716,7 @@ public:
         label_39->setText(QApplication::translate("MainWindow", "mm", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("MainWindow", "Efficiency [%]:", Q_NULLPTR));
         label_56->setText(QApplication::translate("MainWindow", "Width on Sky [arcsec]:", Q_NULLPTR));
+        label_73->setText(QApplication::translate("MainWindow", "CCD:", Q_NULLPTR));
         label_18->setText(QApplication::translate("MainWindow", "Pixel Size [mm]:", Q_NULLPTR));
         label_19->setText(QApplication::translate("MainWindow", "Pixel in x:", Q_NULLPTR));
         label_20->setText(QApplication::translate("MainWindow", "Pixel in y:", Q_NULLPTR));
@@ -2382,7 +2727,9 @@ public:
         label_36->setText(QApplication::translate("MainWindow", "CCD Peak Wavelength [nm]:", Q_NULLPTR));
         label_37->setText(QApplication::translate("MainWindow", "CCD Peak Efficiency:", Q_NULLPTR));
         label_57->setText(QApplication::translate("MainWindow", "CCD  Gain [e/ADU]:", Q_NULLPTR));
-        label_44->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">System Output Overview</span></p></body></html>", Q_NULLPTR));
+        label_74->setText(QApplication::translate("MainWindow", "CCD Data Base:", Q_NULLPTR));
+        pushButton_9->setText(QApplication::translate("MainWindow", "Reload", Q_NULLPTR));
+        label_44->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline; color:#16345e;\">System Output Overview</span></p></body></html>", Q_NULLPTR));
         label_45->setText(QApplication::translate("MainWindow", "Central Wavelength [nm]:", Q_NULLPTR));
         label_46->setText(QApplication::translate("MainWindow", "Angle of Incidence @ CD:", Q_NULLPTR));
         label_47->setText(QApplication::translate("MainWindow", "Angle of Diffraction @ CD:", Q_NULLPTR));
@@ -2399,7 +2746,9 @@ public:
         label_55->setText(QApplication::translate("MainWindow", "Upper Wavelength on CCD:", Q_NULLPTR));
         label_62->setText(QApplication::translate("MainWindow", "y of Upper Diffraction Order:", Q_NULLPTR));
         pushButton_7->setText(QApplication::translate("MainWindow", "Frame", Q_NULLPTR));
-        label_42->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline; color:#16345e;\">Outputs</span></p></body></html>", Q_NULLPTR));
+        label_76->setText(QApplication::translate("MainWindow", "y Offset", Q_NULLPTR));
+        label_77->setText(QApplication::translate("MainWindow", "pixel", Q_NULLPTR));
+        label_42->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline; color:#16345e;\">Outputs</span></p></body></html>", Q_NULLPTR));
         label_43->setText(QApplication::translate("MainWindow", "Averaged Efficiency", Q_NULLPTR));
         label_63->setText(QApplication::translate("MainWindow", "Signal", Q_NULLPTR));
         label_64->setText(QApplication::translate("MainWindow", "SNR", Q_NULLPTR));

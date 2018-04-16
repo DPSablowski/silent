@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_threed_t {
-    QByteArrayData data[53];
-    char stringdata0[1402];
+    QByteArrayData data[57];
+    char stringdata0[1457];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -83,7 +83,11 @@ QT_MOC_LITERAL(48, 1308, 9), // "vecresize"
 QT_MOC_LITERAL(49, 1318, 23), // "on_pushButton_4_clicked"
 QT_MOC_LITERAL(50, 1342, 23), // "on_pushButton_5_clicked"
 QT_MOC_LITERAL(51, 1366, 11), // "setvalues3d"
-QT_MOC_LITERAL(52, 1378, 23) // "on_pushButton_6_clicked"
+QT_MOC_LITERAL(52, 1378, 23), // "on_pushButton_6_clicked"
+QT_MOC_LITERAL(53, 1402, 16), // "showPointToolTip"
+QT_MOC_LITERAL(54, 1419, 12), // "QMouseEvent*"
+QT_MOC_LITERAL(55, 1432, 5), // "event"
+QT_MOC_LITERAL(56, 1438, 18) // "showPointToolTip_2"
 
     },
     "threed\0seData\0\0str\0on_checkBox_clicked\0"
@@ -129,7 +133,9 @@ QT_MOC_LITERAL(52, 1378, 23) // "on_pushButton_6_clicked"
     "on_doubleSpinBox_28_valueChanged\0"
     "on_pushButton_3_clicked\0vecresize\0"
     "on_pushButton_4_clicked\0on_pushButton_5_clicked\0"
-    "setvalues3d\0on_pushButton_6_clicked"
+    "setvalues3d\0on_pushButton_6_clicked\0"
+    "showPointToolTip\0QMouseEvent*\0event\0"
+    "showPointToolTip_2"
 };
 #undef QT_MOC_LITERAL
 
@@ -139,7 +145,7 @@ static const uint qt_meta_data_threed[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      50,   14, // methods
+      52,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -147,56 +153,58 @@ static const uint qt_meta_data_threed[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,  264,    2, 0x0a /* Public */,
-       4,    0,  267,    2, 0x08 /* Private */,
-       5,    0,  268,    2, 0x08 /* Private */,
-       6,    0,  269,    2, 0x08 /* Private */,
-       7,    0,  270,    2, 0x08 /* Private */,
-       8,    0,  271,    2, 0x08 /* Private */,
-       9,    0,  272,    2, 0x08 /* Private */,
-      10,    0,  273,    2, 0x08 /* Private */,
-      11,    0,  274,    2, 0x08 /* Private */,
-      12,    0,  275,    2, 0x08 /* Private */,
-      13,    0,  276,    2, 0x08 /* Private */,
-      14,    0,  277,    2, 0x08 /* Private */,
-      15,    0,  278,    2, 0x08 /* Private */,
-      16,    0,  279,    2, 0x08 /* Private */,
-      17,    0,  280,    2, 0x08 /* Private */,
-      18,    0,  281,    2, 0x08 /* Private */,
-      19,    0,  282,    2, 0x08 /* Private */,
-      20,    0,  283,    2, 0x08 /* Private */,
-      21,    0,  284,    2, 0x08 /* Private */,
-      22,    0,  285,    2, 0x08 /* Private */,
-      23,    0,  286,    2, 0x08 /* Private */,
-      24,    0,  287,    2, 0x08 /* Private */,
-      25,    0,  288,    2, 0x08 /* Private */,
-      26,    0,  289,    2, 0x08 /* Private */,
-      27,    0,  290,    2, 0x08 /* Private */,
-      28,    0,  291,    2, 0x08 /* Private */,
-      29,    0,  292,    2, 0x08 /* Private */,
-      30,    0,  293,    2, 0x08 /* Private */,
-      31,    0,  294,    2, 0x08 /* Private */,
-      32,    0,  295,    2, 0x08 /* Private */,
-      33,    0,  296,    2, 0x08 /* Private */,
-      34,    0,  297,    2, 0x08 /* Private */,
-      35,    0,  298,    2, 0x08 /* Private */,
-      36,    0,  299,    2, 0x08 /* Private */,
-      37,    0,  300,    2, 0x08 /* Private */,
-      38,    0,  301,    2, 0x08 /* Private */,
-      39,    0,  302,    2, 0x08 /* Private */,
-      40,    0,  303,    2, 0x08 /* Private */,
-      41,    0,  304,    2, 0x08 /* Private */,
-      42,    0,  305,    2, 0x08 /* Private */,
-      43,    0,  306,    2, 0x08 /* Private */,
-      44,    0,  307,    2, 0x08 /* Private */,
-      45,    0,  308,    2, 0x08 /* Private */,
-      46,    0,  309,    2, 0x08 /* Private */,
-      47,    0,  310,    2, 0x08 /* Private */,
-      48,    0,  311,    2, 0x08 /* Private */,
-      49,    0,  312,    2, 0x08 /* Private */,
-      50,    0,  313,    2, 0x08 /* Private */,
-      51,    0,  314,    2, 0x08 /* Private */,
-      52,    0,  315,    2, 0x08 /* Private */,
+       1,    1,  274,    2, 0x0a /* Public */,
+       4,    0,  277,    2, 0x08 /* Private */,
+       5,    0,  278,    2, 0x08 /* Private */,
+       6,    0,  279,    2, 0x08 /* Private */,
+       7,    0,  280,    2, 0x08 /* Private */,
+       8,    0,  281,    2, 0x08 /* Private */,
+       9,    0,  282,    2, 0x08 /* Private */,
+      10,    0,  283,    2, 0x08 /* Private */,
+      11,    0,  284,    2, 0x08 /* Private */,
+      12,    0,  285,    2, 0x08 /* Private */,
+      13,    0,  286,    2, 0x08 /* Private */,
+      14,    0,  287,    2, 0x08 /* Private */,
+      15,    0,  288,    2, 0x08 /* Private */,
+      16,    0,  289,    2, 0x08 /* Private */,
+      17,    0,  290,    2, 0x08 /* Private */,
+      18,    0,  291,    2, 0x08 /* Private */,
+      19,    0,  292,    2, 0x08 /* Private */,
+      20,    0,  293,    2, 0x08 /* Private */,
+      21,    0,  294,    2, 0x08 /* Private */,
+      22,    0,  295,    2, 0x08 /* Private */,
+      23,    0,  296,    2, 0x08 /* Private */,
+      24,    0,  297,    2, 0x08 /* Private */,
+      25,    0,  298,    2, 0x08 /* Private */,
+      26,    0,  299,    2, 0x08 /* Private */,
+      27,    0,  300,    2, 0x08 /* Private */,
+      28,    0,  301,    2, 0x08 /* Private */,
+      29,    0,  302,    2, 0x08 /* Private */,
+      30,    0,  303,    2, 0x08 /* Private */,
+      31,    0,  304,    2, 0x08 /* Private */,
+      32,    0,  305,    2, 0x08 /* Private */,
+      33,    0,  306,    2, 0x08 /* Private */,
+      34,    0,  307,    2, 0x08 /* Private */,
+      35,    0,  308,    2, 0x08 /* Private */,
+      36,    0,  309,    2, 0x08 /* Private */,
+      37,    0,  310,    2, 0x08 /* Private */,
+      38,    0,  311,    2, 0x08 /* Private */,
+      39,    0,  312,    2, 0x08 /* Private */,
+      40,    0,  313,    2, 0x08 /* Private */,
+      41,    0,  314,    2, 0x08 /* Private */,
+      42,    0,  315,    2, 0x08 /* Private */,
+      43,    0,  316,    2, 0x08 /* Private */,
+      44,    0,  317,    2, 0x08 /* Private */,
+      45,    0,  318,    2, 0x08 /* Private */,
+      46,    0,  319,    2, 0x08 /* Private */,
+      47,    0,  320,    2, 0x08 /* Private */,
+      48,    0,  321,    2, 0x08 /* Private */,
+      49,    0,  322,    2, 0x08 /* Private */,
+      50,    0,  323,    2, 0x08 /* Private */,
+      51,    0,  324,    2, 0x08 /* Private */,
+      52,    0,  325,    2, 0x08 /* Private */,
+      53,    1,  326,    2, 0x08 /* Private */,
+      56,    1,  329,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -249,6 +257,8 @@ static const uint qt_meta_data_threed[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 54,   55,
+    QMetaType::Void, 0x80000000 | 54,   55,
 
        0        // eod
 };
@@ -309,6 +319,8 @@ void threed::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 47: _t->on_pushButton_5_clicked(); break;
         case 48: _t->setvalues3d(); break;
         case 49: _t->on_pushButton_6_clicked(); break;
+        case 50: _t->showPointToolTip((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 51: _t->showPointToolTip_2((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -339,13 +351,13 @@ int threed::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 50)
+        if (_id < 52)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 50;
+        _id -= 52;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 50)
+        if (_id < 52)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 50;
+        _id -= 52;
     }
     return _id;
 }

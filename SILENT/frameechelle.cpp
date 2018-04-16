@@ -32,33 +32,42 @@ FrameEchelle::~FrameEchelle()
     delete ui;
 }
 
-void FrameEchelle::seData(QString str)
+void FrameEchelle::seData(QString str, int pix, int piy)
 {
     ui->lineEdit_3->setText(str);
+    ui->spinBox->setValue(pix);
+    ui->spinBox_2->setValue(piy);
 }
 
 void FrameEchelle::on_pushButton_2_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
 
+    QString qPath = ui->lineEdit_3->text();
+    string path = qPath.toUtf8().constData();
+
     string zeile, one, two, three;
     int llx=ui->spinBox->value(), lly=ui->spinBox_2->value();
 
     if(ui->comboBox->currentIndex()==0){
-    ifstream input("planckech.txt");
 
-    QFile checkfile2("planckech.txt");
+        std::ostringstream dat2NameStream(path);
+        dat2NameStream<<path<<"/planckech.txt";
+        std::string dat2Name = dat2NameStream.str();
+
+    QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Continuum file does not exist.");
+        QMessageBox::information(this, "Error", "Continuum file "+checkfile2.fileName()+" does not exist.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Continuum file is empty.");
+        QMessageBox::information(this, "Error", "Continuum "+checkfile2.fileName()+" file is empty.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(dat2Name.c_str());
 
     int number_of_lines =0;
 
@@ -113,20 +122,25 @@ void FrameEchelle::on_pushButton_2_clicked()
     ui->customPlot->replot();
     }
     if(ui->comboBox->currentIndex()==1){
-    ifstream input("neonech.txt");
 
-    QFile checkfile2("neonech.txt");
+        std::ostringstream dat2NameStream(path);
+        dat2NameStream<<path<<"/neonech.txt";
+        std::string dat2Name = dat2NameStream.str();
+
+    QFile checkfile2(dat2Name.c_str());
+
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Neon emission frame does not exist.");
+        QMessageBox::information(this, "Error", "Neon emission frame "+checkfile2.fileName()+" does not exist.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Neon emission frame is empty.");
+        QMessageBox::information(this, "Error", "Neon emission frame "+checkfile2.fileName()+" is empty.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(dat2Name.c_str());
 
     int number_of_lines =0;
 
@@ -181,20 +195,23 @@ void FrameEchelle::on_pushButton_2_clicked()
     ui->customPlot->replot();
     }
     if(ui->comboBox->currentIndex()==2){
-    ifstream input("balmerech.txt");
+        std::ostringstream dat2NameStream(path);
+        dat2NameStream<<path<<"/balmerech.txt";
+        std::string dat2Name = dat2NameStream.str();
 
-    QFile checkfile2("balmerech.txt");
+    QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Balmer frame does not exist.");
+        QMessageBox::information(this, "Error", "Balmer frame "+checkfile2.fileName()+" does not exist.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Balmer frame is empty.");
+        QMessageBox::information(this, "Error", "Balmer frame "+checkfile2.fileName()+" is empty.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+        ifstream input(dat2Name.c_str());
 
     int number_of_lines =0;
 
@@ -249,20 +266,24 @@ void FrameEchelle::on_pushButton_2_clicked()
     ui->customPlot->replot();
     }
     if(ui->comboBox->currentIndex()==3){
-    ifstream input("tharech.txt");
 
-    QFile checkfile2("tharech.txt");
+        std::ostringstream dat2NameStream(path);
+        dat2NameStream<<path<<"/tharech.txt";
+        std::string dat2Name = dat2NameStream.str();
+
+    QFile checkfile2(dat2Name.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "Th/Ar frame does not exist.");
+        QMessageBox::information(this, "Error", "Th/Ar frame "+checkfile2.fileName()+" does not exist.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "Th/Ar frame is empty.");
+        QMessageBox::information(this, "Error", "Th/Ar frame "+checkfile2.fileName()+" is empty.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(dat2Name.c_str());
 
     int number_of_lines =0;
 
@@ -336,29 +357,35 @@ void FrameEchelle::on_pushButton_3_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
 
+    QString qPath = ui->lineEdit_3->text();
+    string path = qPath.toUtf8().constData();
+
     if(ui->checkBox->isChecked()){
-        QString save=ui->lineEdit->text()+"pdf";
+        QString save=qPath+"/"+ui->lineEdit->text()+".pdf";
         ui->customPlot->savePdf(save);
     }
 
     if(ui->checkBox_2->isChecked()){
-        QString save=ui->lineEdit->text()+"png";
+        QString save=qPath+"/"+ui->lineEdit->text()+".png";
         ui->customPlot->savePng(save);
     }
     if(ui->checkBox_3->isChecked()){
         QString output=ui->lineEdit->text();
             string data = output.toUtf8().constData();
             std::ostringstream datNameStream(data);
-            datNameStream<<data<<".txt";
+            datNameStream<<path<<"/"<<data<<".txt";
             std::string datName = datNameStream.str();
             ofstream dat(datName.c_str());
 
             string zeile, one, two, three;
 
             if(ui->comboBox->currentIndex()==0){
-            ifstream input("planckech.txt");
+                std::ostringstream dat2NameStream(path);
+                dat2NameStream<<path<<"/planckech.txt";
+                std::string dat2Name = dat2NameStream.str();
 
-            QFile checkfile2("planckech.txt");
+            QFile checkfile2(dat2Name.c_str());
+
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Planck frame does not exist.");
@@ -370,6 +397,7 @@ void FrameEchelle::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream input(dat2Name.c_str());
 
             int number_of_lines =0;
 
@@ -394,9 +422,11 @@ void FrameEchelle::on_pushButton_3_clicked()
             input.close();
             }
             if(ui->comboBox->currentIndex()==1){
-            ifstream input("neonech.txt");
+                std::ostringstream dat2NameStream(path);
+                dat2NameStream<<path<<"/neonech.txt";
+                std::string dat2Name = dat2NameStream.str();
 
-            QFile checkfile2("neonech.txt");
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Neon frame does not exist.");
@@ -408,6 +438,7 @@ void FrameEchelle::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream input(dat2Name.c_str());
 
             int number_of_lines =0;
 
@@ -432,9 +463,11 @@ void FrameEchelle::on_pushButton_3_clicked()
             input.close();
             }
             if(ui->comboBox->currentIndex()==2){
-            ifstream input("balmerech.txt");
+                std::ostringstream dat2NameStream(path);
+                dat2NameStream<<path<<"/balmerech.txt";
+                std::string dat2Name = dat2NameStream.str();
 
-            QFile checkfile2("balmerech.txt");
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Balmer frame does not exist.");
@@ -446,6 +479,7 @@ void FrameEchelle::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream input(dat2Name.c_str());
 
             int number_of_lines =0;
 
@@ -470,9 +504,11 @@ void FrameEchelle::on_pushButton_3_clicked()
             input.close();
             }
             if(ui->comboBox->currentIndex()==3){
-            ifstream input("tharech.txt");
+                std::ostringstream dat2NameStream(path);
+                dat2NameStream<<path<<"/tharech.txt";
+                std::string dat2Name = dat2NameStream.str();
 
-            QFile checkfile2("tharech.txt");
+            QFile checkfile2(dat2Name.c_str());
 
             if(!checkfile2.exists()){
                 QMessageBox::information(this, "Error", "Th/Ar frame does not exist.");
@@ -484,6 +520,7 @@ void FrameEchelle::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream input(dat2Name.c_str());
 
             int number_of_lines =0;
 

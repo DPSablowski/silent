@@ -16,7 +16,7 @@ public:
     ~FrameEchelle();
 
 public slots:
-    void seData(QString str);
+    void seData(QString str, int piex, int piey);
 
 private slots:
     void on_pushButton_2_clicked();

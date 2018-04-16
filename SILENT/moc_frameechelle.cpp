@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_FrameEchelle_t {
-    QByteArrayData data[11];
-    char stringdata0[187];
+    QByteArrayData data[13];
+    char stringdata0[197];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,16 +35,18 @@ QT_MOC_LITERAL(0, 0, 12), // "FrameEchelle"
 QT_MOC_LITERAL(1, 13, 6), // "seData"
 QT_MOC_LITERAL(2, 20, 0), // ""
 QT_MOC_LITERAL(3, 21, 3), // "str"
-QT_MOC_LITERAL(4, 25, 23), // "on_pushButton_2_clicked"
-QT_MOC_LITERAL(5, 49, 19), // "on_checkBox_clicked"
-QT_MOC_LITERAL(6, 69, 21), // "on_checkBox_2_clicked"
-QT_MOC_LITERAL(7, 91, 23), // "on_pushButton_3_clicked"
-QT_MOC_LITERAL(8, 115, 21), // "on_checkBox_3_clicked"
-QT_MOC_LITERAL(9, 137, 23), // "on_pushButton_4_clicked"
-QT_MOC_LITERAL(10, 161, 25) // "on_spinBox_3_valueChanged"
+QT_MOC_LITERAL(4, 25, 4), // "piex"
+QT_MOC_LITERAL(5, 30, 4), // "piey"
+QT_MOC_LITERAL(6, 35, 23), // "on_pushButton_2_clicked"
+QT_MOC_LITERAL(7, 59, 19), // "on_checkBox_clicked"
+QT_MOC_LITERAL(8, 79, 21), // "on_checkBox_2_clicked"
+QT_MOC_LITERAL(9, 101, 23), // "on_pushButton_3_clicked"
+QT_MOC_LITERAL(10, 125, 21), // "on_checkBox_3_clicked"
+QT_MOC_LITERAL(11, 147, 23), // "on_pushButton_4_clicked"
+QT_MOC_LITERAL(12, 171, 25) // "on_spinBox_3_valueChanged"
 
     },
-    "FrameEchelle\0seData\0\0str\0"
+    "FrameEchelle\0seData\0\0str\0piex\0piey\0"
     "on_pushButton_2_clicked\0on_checkBox_clicked\0"
     "on_checkBox_2_clicked\0on_pushButton_3_clicked\0"
     "on_checkBox_3_clicked\0on_pushButton_4_clicked\0"
@@ -66,17 +68,17 @@ static const uint qt_meta_data_FrameEchelle[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x0a /* Public */,
-       4,    0,   57,    2, 0x08 /* Private */,
-       5,    0,   58,    2, 0x08 /* Private */,
-       6,    0,   59,    2, 0x08 /* Private */,
-       7,    0,   60,    2, 0x08 /* Private */,
-       8,    0,   61,    2, 0x08 /* Private */,
-       9,    0,   62,    2, 0x08 /* Private */,
-      10,    0,   63,    2, 0x08 /* Private */,
+       1,    3,   54,    2, 0x0a /* Public */,
+       6,    0,   61,    2, 0x08 /* Private */,
+       7,    0,   62,    2, 0x08 /* Private */,
+       8,    0,   63,    2, 0x08 /* Private */,
+       9,    0,   64,    2, 0x08 /* Private */,
+      10,    0,   65,    2, 0x08 /* Private */,
+      11,    0,   66,    2, 0x08 /* Private */,
+      12,    0,   67,    2, 0x08 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::Int,    3,    4,    5,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -94,7 +96,7 @@ void FrameEchelle::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         FrameEchelle *_t = static_cast<FrameEchelle *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->seData((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 0: _t->seData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 1: _t->on_pushButton_2_clicked(); break;
         case 2: _t->on_checkBox_clicked(); break;
         case 3: _t->on_checkBox_2_clicked(); break;

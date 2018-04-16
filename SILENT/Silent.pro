@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     framecl.cpp \
     tsi.cpp \
     warning1.cpp \
-    notes.cpp
+    notes.cpp \
+    czernyturner.cpp \
+    fpe.cpp \
+    petzval.cpp
 
 HEADERS  += mainwindow.h \
     classical.h \
@@ -44,7 +47,10 @@ HEADERS  += mainwindow.h \
     framecl.h \
     tsi.h \
     warning1.h \
-    notes.h
+    notes.h \
+    czernyturner.h \
+    fpe.h \
+    petzval.h
 
 FORMS    += mainwindow.ui \
     classical.ui \
@@ -59,7 +65,10 @@ FORMS    += mainwindow.ui \
     framecl.ui \
     tsi.ui \
     warning1.ui \
-    notes.ui
+    notes.ui \
+    czernyturner.ui \
+    fpe.ui \
+    petzval.ui
 
 RESOURCES += \
     silentresources.qrc

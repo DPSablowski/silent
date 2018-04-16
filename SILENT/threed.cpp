@@ -174,7 +174,7 @@ threed::~threed()
 //********************************************************
 //show mouse coordinates
 //********************************************************
-void MainWindow::showPointToolTip(QMouseEvent *event)
+void threed::showPointToolTip(QMouseEvent *event)
 {
 
     double xc = ui->customPlot->xAxis->pixelToCoord(event->pos().x());
@@ -186,7 +186,7 @@ void MainWindow::showPointToolTip(QMouseEvent *event)
 //********************************************************
 //show mouse coordinates
 //********************************************************
-void MainWindow::showPointToolTip_2(QMouseEvent *event)
+void threed::showPointToolTip_2(QMouseEvent *event)
 {
 
     double xc = ui->customPlot_2->xAxis->pixelToCoord(event->pos().x());
@@ -396,6 +396,7 @@ void threed::on_doubleSpinBox_21_valueChanged()
 // slit efficiency
 void threed::on_pushButton_2_clicked()
 {
+    sdisc3d = sdisc3d/2.3548;
     // circular slit
     if(ui->checkBox_3->isChecked()){
 
@@ -403,9 +404,9 @@ void threed::on_pushButton_2_clicked()
         int steps=s3d/2/slitstep+1;
         double relativ=0;
         for(int i =0; i<steps-1; i++){
-            relativ+=(exp(-2*i*slitstep*i*slitstep/sdisc3d/sdisc3d)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc3d/sdisc3d))/2*slitstep;
+            relativ+=(exp(-i*slitstep*i*slitstep/2/sdisc3d/sdisc3d)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc3d/sdisc3d))/2*slitstep;
         }
-        slitEff3d=pow((2*relativ/(sdisc3d*sqrt(M_PI/2))),2);
+        slitEff3d=pow((2*relativ/(sdisc3d*sqrt(M_PI*2))),2);
         ui->doubleSpinBox_22->setValue(slitEff3d*100);
     }
 
@@ -417,16 +418,16 @@ void threed::on_pushButton_2_clicked()
         int steps2=sl3d/2/slitstep+1;
         double relativ1=0, relativ2=0;
         for(int i =0; i<steps1-1; i++){
-            relativ1+=(exp(-2*i*slitstep*i*slitstep/sdisc3d/sdisc3d)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc3d/sdisc3d))/2*slitstep;
+            relativ1+=(exp(-i*slitstep*i*slitstep/2/sdisc3d/sdisc3d)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc3d/sdisc3d))/2*slitstep;
         }
         if(sl3d!=0){
         for(int i =0; i<steps2-1; i++){
-            relativ2+=(exp(-2*i*slitstep*i*slitstep/sdisc3d/sdisc3d)+exp(-2*(i+1)*slitstep*(i+1)*slitstep/sdisc3d/sdisc3d))/2*slitstep;
+            relativ2+=(exp(-i*slitstep*i*slitstep/2/sdisc3d/sdisc3d)+exp(-(i+1)*slitstep*(i+1)*slitstep/2/sdisc3d/sdisc3d))/2*slitstep;
         }}
         else{
-            relativ2+=sdisc3d*sqrt(M_PI/2)/2;
+            relativ2+=sdisc3d*sqrt(M_PI*2)/2;
         }
-        slitEff3d=2*relativ1*2*relativ2/pow((sdisc3d*sqrt(M_PI/2)),2);
+        slitEff3d=2*relativ1*2*relativ2/pow((sdisc3d*sqrt(M_PI*2)),2);
         ui->doubleSpinBox_22->setValue(slitEff3d*100);
     }
 
@@ -435,6 +436,7 @@ void threed::on_pushButton_2_clicked()
         slitEff3d=1.0;
         ui->doubleSpinBox_22->setValue(100);
     }
+    sdisc3d = sdisc3d*2.3548;
 }
 
 void threed::on_spinBox_7_valueChanged()
@@ -997,8 +999,9 @@ void threed::on_pushButton_3_clicked()
             reflectance3d[i]=reflectance3d[i]*bb3dt[i];
             }
 
-            R3d[i] = w3d[i]*n3d*f13d*g3d/(cos(M_PI/180*a3d)*s3d);
             A3d[i] = cos(M_PI/180*a3d)/cos(M_PI/180*(b3d-bm3d));
+            R3d[i] = w3d[i]*n3d*f13d*g3d/(cos(M_PI/180*a3d)*s3d*A3d[i]);
+
             s23d[i] = A3d[i] * f23d/f13d*s3d;
             Nf3d[i] = s23d[i]/p3d/2;
             Tr3d[i] = 1-0.0091224/cos(M_PI/180*z3d)/(pow(w3d[i]*1000,4));

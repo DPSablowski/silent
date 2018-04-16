@@ -147,7 +147,6 @@ void PClassical::on_pushButton_3_clicked()
             std::ostringstream datNameStream(cPPath);
             datNameStream<<cPPath<<"/twopixRcl.txt";
             std::string datName = datNameStream.str();
-            ifstream toplot1(datName.c_str());
 
             QFile checkfile3(datName.c_str());
 
@@ -156,6 +155,7 @@ void PClassical::on_pushButton_3_clicked()
                 this->setCursor(QCursor(Qt::ArrowCursor));
                return;
             }
+            ifstream toplot1(datName.c_str());
 
             int number_of_lines =0;
 
@@ -1633,7 +1633,7 @@ void PClassical::on_pushButton_2_clicked()
 
 void PClassical::on_pushButton_4_clicked()
 {
-    QString save=ui->lineEdit->text();
+    QString save=ui->lineEdit_2->text()+"/"+ui->lineEdit->text();
     if(ui->checkBox_14->isChecked()){
     ui->customPlot->savePdf(save);
     }

@@ -35,6 +35,8 @@ TSI::TSI(QWidget *parent) :
     ui->comboBox->addItem("Bowen-Walraven");
     ui->comboBox->addItem("Waveguide");
 
+    ui->customPlot->axisRect()->setupFullAxesBox(true);
+
 }
 
 TSI::~TSI()
