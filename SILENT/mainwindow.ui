@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1612</width>
-    <height>817</height>
+    <height>939</height>
    </rect>
   </property>
   <property name="palette">
@@ -471,8 +471,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1580</width>
-         <height>832</height>
+         <width>1594</width>
+         <height>842</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_61">
@@ -1874,6 +1874,16 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="Line" name="line_9">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -2636,6 +2646,16 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_10">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -3783,6 +3803,16 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="Line" name="line_11">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -4487,6 +4517,43 @@
            </layout>
           </item>
           <item>
+           <widget class="Line" name="line_14">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_77">
+            <item>
+             <widget class="QLabel" name="label_78">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Order Overlap&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QCustomPlot" name="customPlot" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
@@ -4508,6 +4575,16 @@
               <italic>false</italic>
               <bold>false</bold>
              </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_12">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -4573,6 +4650,16 @@
            </widget>
           </item>
           <item>
+           <widget class="Line" name="line_15">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_48">
             <item>
              <widget class="QLabel" name="label_63">
@@ -4609,6 +4696,16 @@
               <width>200</width>
               <height>130</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_16">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -4653,6 +4750,16 @@
            </widget>
           </item>
           <item>
+           <widget class="Line" name="line_17">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_62">
             <item>
              <widget class="QLabel" name="label_9">
@@ -4689,6 +4796,16 @@
               <width>200</width>
               <height>130</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_13">
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>

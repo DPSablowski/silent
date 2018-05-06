@@ -156,6 +156,7 @@ public:
     QLineEdit *lineEdit_5;
     QHBoxLayout *horizontalLayout_13;
     QPushButton *pushButton;
+    QFrame *line_9;
     QFrame *line_3;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_3;
@@ -200,6 +201,7 @@ public:
     QHBoxLayout *horizontalLayout_55;
     QLabel *label_61;
     QDoubleSpinBox *doubleSpinBox_8;
+    QFrame *line_10;
     QFrame *line_4;
     QVBoxLayout *verticalLayout;
     QLabel *label_4;
@@ -269,6 +271,7 @@ public:
     QPushButton *pushButton_9;
     QProgressBar *progressBar;
     QSpacerItem *verticalSpacer;
+    QFrame *line_11;
     QFrame *line_6;
     QVBoxLayout *verticalLayout_4;
     QLabel *label_44;
@@ -318,7 +321,12 @@ public:
     QLabel *label_76;
     QSpinBox *spinBox_12;
     QLabel *label_77;
+    QFrame *line_14;
+    QHBoxLayout *horizontalLayout_77;
+    QLabel *label_78;
+    QSpacerItem *horizontalSpacer_5;
     QCustomPlot *customPlot;
+    QFrame *line_12;
     QFrame *line_7;
     QVBoxLayout *verticalLayout_3;
     QLabel *label_42;
@@ -326,18 +334,22 @@ public:
     QLabel *label_43;
     QSpacerItem *horizontalSpacer;
     QCustomPlot *customPlot_3;
+    QFrame *line_15;
     QHBoxLayout *horizontalLayout_48;
     QLabel *label_63;
     QSpacerItem *horizontalSpacer_2;
     QCustomPlot *customPlot_4;
+    QFrame *line_16;
     QHBoxLayout *horizontalLayout_58;
     QLabel *label_64;
     QSpacerItem *horizontalSpacer_3;
     QCustomPlot *customPlot_5;
+    QFrame *line_17;
     QHBoxLayout *horizontalLayout_62;
     QLabel *label_9;
     QSpacerItem *horizontalSpacer_4;
     QCustomPlot *customPlot_2;
+    QFrame *line_13;
     QMenuBar *menuBar;
     QMenu *menuClassical;
     QMenu *menuTools;
@@ -353,7 +365,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1612, 817);
+        MainWindow->resize(1612, 939);
         QPalette palette;
         QBrush brush(QColor(102, 21, 21, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -516,7 +528,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1580, 832));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1594, 842));
         horizontalLayout_61 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_61->setSpacing(6);
         horizontalLayout_61->setContentsMargins(11, 11, 11, 11);
@@ -1193,6 +1205,13 @@ public:
 
         verticalLayout_7->addLayout(verticalLayout_5);
 
+        line_9 = new QFrame(scrollAreaWidgetContents);
+        line_9->setObjectName(QStringLiteral("line_9"));
+        line_9->setFrameShadow(QFrame::Plain);
+        line_9->setFrameShape(QFrame::HLine);
+
+        verticalLayout_7->addWidget(line_9);
+
 
         horizontalLayout_61->addLayout(verticalLayout_7);
 
@@ -1544,6 +1563,13 @@ public:
 
 
         verticalLayout_2->addLayout(horizontalLayout_55);
+
+        line_10 = new QFrame(scrollAreaWidgetContents);
+        line_10->setObjectName(QStringLiteral("line_10"));
+        line_10->setFrameShadow(QFrame::Plain);
+        line_10->setFrameShape(QFrame::HLine);
+
+        verticalLayout_2->addWidget(line_10);
 
 
         horizontalLayout_61->addLayout(verticalLayout_2);
@@ -2075,6 +2101,13 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
+        line_11 = new QFrame(scrollAreaWidgetContents);
+        line_11->setObjectName(QStringLiteral("line_11"));
+        line_11->setFrameShadow(QFrame::Plain);
+        line_11->setFrameShape(QFrame::HLine);
+
+        verticalLayout->addWidget(line_11);
+
 
         horizontalLayout_61->addLayout(verticalLayout);
 
@@ -2422,6 +2455,28 @@ public:
 
         verticalLayout_4->addLayout(horizontalLayout_68);
 
+        line_14 = new QFrame(scrollAreaWidgetContents);
+        line_14->setObjectName(QStringLiteral("line_14"));
+        line_14->setFrameShadow(QFrame::Plain);
+        line_14->setFrameShape(QFrame::HLine);
+
+        verticalLayout_4->addWidget(line_14);
+
+        horizontalLayout_77 = new QHBoxLayout();
+        horizontalLayout_77->setSpacing(6);
+        horizontalLayout_77->setObjectName(QStringLiteral("horizontalLayout_77"));
+        label_78 = new QLabel(scrollAreaWidgetContents);
+        label_78->setObjectName(QStringLiteral("label_78"));
+
+        horizontalLayout_77->addWidget(label_78);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout_77->addItem(horizontalSpacer_5);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_77);
+
         customPlot = new QCustomPlot(scrollAreaWidgetContents);
         customPlot->setObjectName(QStringLiteral("customPlot"));
         sizePolicy7.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
@@ -2430,6 +2485,13 @@ public:
         customPlot->setFont(font1);
 
         verticalLayout_4->addWidget(customPlot);
+
+        line_12 = new QFrame(scrollAreaWidgetContents);
+        line_12->setObjectName(QStringLiteral("line_12"));
+        line_12->setFrameShadow(QFrame::Plain);
+        line_12->setFrameShape(QFrame::HLine);
+
+        verticalLayout_4->addWidget(line_12);
 
 
         horizontalLayout_61->addLayout(verticalLayout_4);
@@ -2475,6 +2537,13 @@ public:
 
         verticalLayout_3->addWidget(customPlot_3);
 
+        line_15 = new QFrame(scrollAreaWidgetContents);
+        line_15->setObjectName(QStringLiteral("line_15"));
+        line_15->setFrameShadow(QFrame::Plain);
+        line_15->setFrameShape(QFrame::HLine);
+
+        verticalLayout_3->addWidget(line_15);
+
         horizontalLayout_48 = new QHBoxLayout();
         horizontalLayout_48->setSpacing(6);
         horizontalLayout_48->setObjectName(QStringLiteral("horizontalLayout_48"));
@@ -2497,6 +2566,13 @@ public:
         customPlot_4->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_4);
+
+        line_16 = new QFrame(scrollAreaWidgetContents);
+        line_16->setObjectName(QStringLiteral("line_16"));
+        line_16->setFrameShadow(QFrame::Plain);
+        line_16->setFrameShape(QFrame::HLine);
+
+        verticalLayout_3->addWidget(line_16);
 
         horizontalLayout_58 = new QHBoxLayout();
         horizontalLayout_58->setSpacing(6);
@@ -2521,6 +2597,13 @@ public:
 
         verticalLayout_3->addWidget(customPlot_5);
 
+        line_17 = new QFrame(scrollAreaWidgetContents);
+        line_17->setObjectName(QStringLiteral("line_17"));
+        line_17->setFrameShadow(QFrame::Plain);
+        line_17->setFrameShape(QFrame::HLine);
+
+        verticalLayout_3->addWidget(line_17);
+
         horizontalLayout_62 = new QHBoxLayout();
         horizontalLayout_62->setSpacing(6);
         horizontalLayout_62->setObjectName(QStringLiteral("horizontalLayout_62"));
@@ -2543,6 +2626,13 @@ public:
         customPlot_2->setMinimumSize(QSize(200, 130));
 
         verticalLayout_3->addWidget(customPlot_2);
+
+        line_13 = new QFrame(scrollAreaWidgetContents);
+        line_13->setObjectName(QStringLiteral("line_13"));
+        line_13->setFrameShadow(QFrame::Plain);
+        line_13->setFrameShape(QFrame::HLine);
+
+        verticalLayout_3->addWidget(line_13);
 
 
         horizontalLayout_61->addLayout(verticalLayout_3);
@@ -2748,6 +2838,7 @@ public:
         pushButton_7->setText(QApplication::translate("MainWindow", "Frame", Q_NULLPTR));
         label_76->setText(QApplication::translate("MainWindow", "y Offset", Q_NULLPTR));
         label_77->setText(QApplication::translate("MainWindow", "pixel", Q_NULLPTR));
+        label_78->setText(QApplication::translate("MainWindow", "<html><head/><body><p>Order Overlap</p></body></html>", Q_NULLPTR));
         label_42->setText(QApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; text-decoration: underline; color:#16345e;\">Outputs</span></p></body></html>", Q_NULLPTR));
         label_43->setText(QApplication::translate("MainWindow", "Averaged Efficiency", Q_NULLPTR));
         label_63->setText(QApplication::translate("MainWindow", "Signal", Q_NULLPTR));

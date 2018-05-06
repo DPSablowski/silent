@@ -45,6 +45,8 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void on_checkBox_4_clicked();
+
 private:
     Ui::Petzval *ui;
 

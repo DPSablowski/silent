@@ -56,9 +56,13 @@ public:
     QDoubleSpinBox *doubleSpinBox_4;
     QHBoxLayout *horizontalLayout_11;
     QLabel *label_8;
+    QDoubleSpinBox *doubleSpinBox_9;
+    QLabel *label_20;
     QDoubleSpinBox *doubleSpinBox_6;
     QHBoxLayout *horizontalLayout_8;
     QLabel *label_6;
+    QDoubleSpinBox *doubleSpinBox_10;
+    QLabel *label_21;
     QDoubleSpinBox *doubleSpinBox_5;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *pushButton_3;
@@ -75,6 +79,8 @@ public:
     QHBoxLayout *horizontalLayout_12;
     QPushButton *pushButton_4;
     QLineEdit *lineEdit_6;
+    QCheckBox *checkBox_4;
+    QSpinBox *spinBox_8;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_14;
     QLabel *label_13;
@@ -149,7 +155,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1186, 621));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1189, 622));
         gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         verticalLayout = new QVBoxLayout();
@@ -234,10 +240,27 @@ public:
 
         horizontalLayout_11->addWidget(label_8);
 
+        doubleSpinBox_9 = new QDoubleSpinBox(scrollAreaWidgetContents);
+        doubleSpinBox_9->setObjectName(QStringLiteral("doubleSpinBox_9"));
+        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(doubleSpinBox_9->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_9->setSizePolicy(sizePolicy1);
+        doubleSpinBox_9->setMaximum(999.99);
+        doubleSpinBox_9->setValue(0);
+
+        horizontalLayout_11->addWidget(doubleSpinBox_9);
+
+        label_20 = new QLabel(scrollAreaWidgetContents);
+        label_20->setObjectName(QStringLiteral("label_20"));
+
+        horizontalLayout_11->addWidget(label_20);
+
         doubleSpinBox_6 = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_6->setObjectName(QStringLiteral("doubleSpinBox_6"));
-        sizePolicy.setHeightForWidth(doubleSpinBox_6->sizePolicy().hasHeightForWidth());
-        doubleSpinBox_6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(doubleSpinBox_6->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_6->setSizePolicy(sizePolicy1);
         doubleSpinBox_6->setMaximum(999.99);
 
         horizontalLayout_11->addWidget(doubleSpinBox_6);
@@ -252,10 +275,23 @@ public:
 
         horizontalLayout_8->addWidget(label_6);
 
+        doubleSpinBox_10 = new QDoubleSpinBox(scrollAreaWidgetContents);
+        doubleSpinBox_10->setObjectName(QStringLiteral("doubleSpinBox_10"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_10->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_10->setSizePolicy(sizePolicy1);
+        doubleSpinBox_10->setMaximum(999.99);
+
+        horizontalLayout_8->addWidget(doubleSpinBox_10);
+
+        label_21 = new QLabel(scrollAreaWidgetContents);
+        label_21->setObjectName(QStringLiteral("label_21"));
+
+        horizontalLayout_8->addWidget(label_21);
+
         doubleSpinBox_5 = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_5->setObjectName(QStringLiteral("doubleSpinBox_5"));
-        sizePolicy.setHeightForWidth(doubleSpinBox_5->sizePolicy().hasHeightForWidth());
-        doubleSpinBox_5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(doubleSpinBox_5->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_5->setSizePolicy(sizePolicy1);
         doubleSpinBox_5->setMaximum(999.99);
 
         horizontalLayout_8->addWidget(doubleSpinBox_5);
@@ -267,9 +303,6 @@ public:
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         pushButton_3 = new QPushButton(scrollAreaWidgetContents);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(pushButton_3->sizePolicy().hasHeightForWidth());
         pushButton_3->setSizePolicy(sizePolicy1);
 
@@ -358,6 +391,21 @@ public:
         lineEdit_6->setSizePolicy(sizePolicy1);
 
         horizontalLayout_12->addWidget(lineEdit_6);
+
+        checkBox_4 = new QCheckBox(scrollAreaWidgetContents);
+        checkBox_4->setObjectName(QStringLiteral("checkBox_4"));
+        sizePolicy.setHeightForWidth(checkBox_4->sizePolicy().hasHeightForWidth());
+        checkBox_4->setSizePolicy(sizePolicy);
+
+        horizontalLayout_12->addWidget(checkBox_4);
+
+        spinBox_8 = new QSpinBox(scrollAreaWidgetContents);
+        spinBox_8->setObjectName(QStringLiteral("spinBox_8"));
+        sizePolicy1.setHeightForWidth(spinBox_8->sizePolicy().hasHeightForWidth());
+        spinBox_8->setSizePolicy(sizePolicy1);
+        spinBox_8->setMaximum(9999);
+
+        horizontalLayout_12->addWidget(spinBox_8);
 
 
         verticalLayout->addLayout(horizontalLayout_12);
@@ -755,13 +803,16 @@ public:
         label_2->setText(QApplication::translate("Petzval", "Focal Length [mm]:", Q_NULLPTR));
         label_3->setText(QApplication::translate("Petzval", "Allowed Focal Length Tolerance [mm]:", Q_NULLPTR));
         label_5->setText(QApplication::translate("Petzval", "Minimum Backfocus[mm]:", Q_NULLPTR));
-        label_8->setText(QApplication::translate("Petzval", "Front Lens smaller than:", Q_NULLPTR));
-        label_6->setText(QApplication::translate("Petzval", "Second Lens smaller than [mm]:", Q_NULLPTR));
+        label_8->setText(QApplication::translate("Petzval", "Front Lens larger than:", Q_NULLPTR));
+        label_20->setText(QApplication::translate("Petzval", "and smaller", Q_NULLPTR));
+        label_6->setText(QApplication::translate("Petzval", "Second Lens larger than:", Q_NULLPTR));
+        label_21->setText(QApplication::translate("Petzval", "and smaller", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("Petzval", "Load Lens Catalog", Q_NULLPTR));
         pushButton_5->setText(QApplication::translate("Petzval", "Load Glass Catalog", Q_NULLPTR));
         pushButton->setText(QApplication::translate("Petzval", "Search", Q_NULLPTR));
         label_7->setText(QApplication::translate("Petzval", ".pet; # Combs:", Q_NULLPTR));
         pushButton_4->setText(QApplication::translate("Petzval", "Evaluate", Q_NULLPTR));
+        checkBox_4->setText(QApplication::translate("Petzval", "all", Q_NULLPTR));
         label_13->setText(QApplication::translate("Petzval", "# Wavelengths:", Q_NULLPTR));
         label_12->setText(QApplication::translate("Petzval", "# Rays", Q_NULLPTR));
         label_19->setText(QApplication::translate("Petzval", "# Fields:", Q_NULLPTR));
