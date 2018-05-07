@@ -24,7 +24,8 @@ Petzval::Petzval(QWidget *parent) :
 
     ui->lineEdit->setText("LensData.slib");
     ui->lineEdit_4->setText("GlassData.slib");
-    ui->lineEdit_5->setText("evals");
+    ui->lineEdit_5->setText("combinations");
+    ui->lineEdit_6->setText("evaluated");
 
     ui->checkBox_3->setChecked(true);
 
@@ -34,6 +35,8 @@ Petzval::Petzval(QWidget *parent) :
     ui->doubleSpinBox_4->setValue(40.0);
     ui->doubleSpinBox_5->setValue(26.0);
     ui->doubleSpinBox_6->setValue(26.0);
+    ui->doubleSpinBox_9->setValue(10.0);
+    ui->doubleSpinBox_10->setValue(10.0);
 
     ui->checkBox->setChecked(true);
 
@@ -126,7 +129,9 @@ void Petzval::seData(QString str)
     ui->lineEdit_2->setText(str);
 }
 
+//*****************************
 // load lens data
+//*****************************
 void Petzval::loadDatabase(){
 
     QString qLib = ui->lineEdit_2->text()+"/"+ui->lineEdit->text();
@@ -192,13 +197,17 @@ void Petzval::loadDatabase(){
     }
 }
 
+//*****************************
 // load catalog
+//*****************************
 void Petzval::on_pushButton_3_clicked()
 {
     Petzval::loadDatabase();
 }
 
+//*****************************
 // search combinations
+//*****************************
 void Petzval::on_pushButton_clicked()
 {
     Petzval::loadDatabase();
@@ -214,7 +223,9 @@ void Petzval::on_pushButton_clicked()
     double foclo = foc - ui->doubleSpinBox_3->value();
     double back = ui->doubleSpinBox_4->value();
     double d2max = ui->doubleSpinBox_5->value();
+    double d1min = ui->doubleSpinBox_9->value();
     double d1max = ui->doubleSpinBox_6->value();
+    double d2min = ui->doubleSpinBox_9->value();
 
     if(d1max < diam){
         QString Qdi = QString::number(diam);
@@ -225,26 +236,26 @@ void Petzval::on_pushButton_clicked()
     int cnum=0;
 
     for(int i =0; i<llines; i++){
-        if((diameter[i]>= diam) & (diameter[i]<=d1max)){
+        if((diameter[i]>= diam) & (diameter[i]<=d1max) & (diameter[i]>=d1min)){
             F1 = focal[i]/diam;
             for(int e =0; e<llines; e++){
                 tup = focal[i]+focal[e]-focal[i]*focal[e]/focup;
                 tlo = focal[i]+focal[e]-focal[i]*focal[e]/foclo;
                 backup = (foclo-tlo)/(1-tlo/focal[e]);
-                if(tup<focal[i] & (backup>=back) & (diameter[e]<d2max)){
+                if((tup<focal[i]) & (backup>=back) & (diameter[e]<d2max) & (diameter[e]>=d2min)){
                     dup = (focal[i]-tup)/F1;
                     dlo = (focal[i]-tlo)/F1;
                     H2up = -dup*focal[e]/(focal[i]+focal[e]-dup);
                     H2lo = -dlo*focal[e]/(focal[i]+focal[e]-dlo);
                     H1up = dup*focal[i]/(focal[i]+focal[e]-dup);
                     H1lo = dlo*focal[i]/(focal[i]+focal[e]-dlo);
-                    if(dlo<=diameter[e]){
+                    if((dlo<=diameter[e]) & (tlo<focal[i])){
                         cout<<product[i]<<"\t\t"<<product[e]<<"\t"<<tup<<"\t"<<tlo<<"\t"<<dup<<"\t"<<dlo<<"\t"<<H1up<<"\t"<<H1lo<<"\t"<<H2up<<"\t"<<H2lo<<"\t"<<backup<<endl;
-                        string pro1 = product[i];
-                        string pro2 = product[e];
+                        //string pro1 = product[i];
+                        //string pro2 = product[e];
                         evals<<i<<"\t"<<e<<"\t"<<tlo<<"\t"<<backup<<endl;
-                        QString qstr = QString::fromStdString(pro1.c_str())+" & "+QString::fromStdString(pro2.c_str());
-                        ui->comboBox->addItem(qstr);
+                        //QString qstr = QString::fromStdString(pro1.c_str())+" & "+QString::fromStdString(pro2.c_str());
+                        //ui->comboBox->addItem(qstr);
                         ++cnum;
                     }
                     else{
@@ -261,10 +272,13 @@ void Petzval::on_pushButton_clicked()
         }
     }
     ui->lineEdit_3->setText(QString::number(cnum));
+    ui->spinBox_8->setMaximum(cnum);
 
 }
 
+//*****************************
 // Evaluate found combinations
+//*****************************
 void Petzval::on_pushButton_4_clicked()
 {
     QString qSpot = ui->lineEdit_2->text()+"/spot.pet";
@@ -374,13 +388,23 @@ void Petzval::on_pushButton_4_clicked()
     ui->customPlot_7->yAxis->setTickLabelFont(legendFont);
 
 
-    QString qLib = ui->lineEdit_2->text()+"/"+ui->lineEdit_5->text()+".pet";
+    QString qLib, qEval;
+    if(ui->checkBox_4->isChecked()){
+        qLib= ui->lineEdit_2->text()+"/"+ui->lineEdit_5->text()+".pet";
+        qEval= ui->lineEdit_2->text()+"/"+ui->lineEdit_6->text()+".pet";
+    }
+    else{
+        qLib= ui->lineEdit_2->text()+"/"+ui->lineEdit_6->text()+".pet";
+    }
+
     QFileInfo qeval(qLib);
     if(!qeval.exists()){
         QMessageBox::information(this, "Error", "Error: No file with evaluated combinations found.");
         return;
     }
     string sbin = qLib.toUtf8().constData();
+    string sEval = qEval.toUtf8().constData();
+    ofstream oEval;
     ifstream evals(sbin.c_str());
 
     int nsystems=0;
@@ -396,7 +420,7 @@ void Petzval::on_pushButton_4_clicked()
     Petzval::loadDatabase();
 
     QVector<int> first(nsystems), second(nsystems), gl1(nsystems), gl2(nsystems), gl3(nsystems), gl4(nsystems);
-    QVector<double> nthi(nsystems), bthi(nsystems);
+    QVector<double> nthi(nsystems), bthi(nsystems), rms(nsystems), oback(nsystems);
     int checker=0;
     nrays=ui->spinBox_4->value();
 
@@ -449,7 +473,7 @@ void Petzval::on_pushButton_4_clicked()
     evals.close();
 
     int lensd=20;
-    double th=0, Frenp, Frens;
+    double th=0, Frenp, Frens, llp=0.0;
     QVector<double> radi(7), thi(7), ind(7), diam(6), lxk(7), rayy(7), rayx(7), trans(nwaves), transp(nwaves), transs(nwaves), lensx(lensd), lensy(lensd);
 
     ind[0]=1.0;
@@ -476,8 +500,14 @@ void Petzval::on_pushButton_4_clicked()
     }
 
     int gray=0;
-    nfields = ui->spinBox_7->value();
-        QVector<double> fieldx(nfields), fieldy(nfields);
+
+    if(ui->checkBox_4->isChecked()){
+        nfields=1;
+    }
+    else{
+        nfields = ui->spinBox_7->value();
+    }
+        QVector<double> fieldx(nfields), fieldy(nfields), mxv(nwaves*nrays), hxv(nwaves*nrays);
 
         havex.resize(nfields);
         havey.resize(nfields);
@@ -502,9 +532,19 @@ void Petzval::on_pushButton_4_clicked()
                 fieldy[i]=item->text().toDouble();
             }
         }
+        int nstar=0, nend=1, nmin=0;
+        if(ui->checkBox_4->isChecked()){
+            nstar=0;
+            nend=radius1.size();
+        }
+        else{
+            nstar=ui->spinBox_8->value();
+            nend=ui->spinBox_8->value()+1;
+        }
 
 
-    for(int gg=0; gg<1; gg++){
+    for(int gg=nstar; gg<nend; gg++){
+        nmin=0;
         ui->customPlot->clearGraphs();
         ui->customPlot_2->clearGraphs();
         ui->customPlot_3->clearGraphs();
@@ -534,6 +574,7 @@ void Petzval::on_pushButton_4_clicked()
         thi[3]=nthi[gg];
         thi[4]=thick1[second[gg]];
         thi[5]=thick2[second[gg]];
+        llp=thi[1]+thi[2]+thi[3]+thi[4]+thi[5];
         thi[6]=bthi[gg];
 
         for(int ra=0; ra<6; ra++){
@@ -699,7 +740,18 @@ void Petzval::on_pushButton_4_clicked()
                             rayy[i]=h2x;
                             //cout<<rayx[i]<<"\t"<<rayy[i]<<endl;
                             //cout<<x1<<"\t"<<x2<<"\t"<<alpha1<<"\t"<<alpha2<<"\t"<<m<<"\t"<<h<<"\t"<<ang<<"\t"<<h2<<endl;
-                        }
+
+                            if(fi==0 & i==5 & u==0){
+                                //cout<<fi<<"\t"<<e<<"\t"<<u<<"\t"<<g<<"\t"<<i<<"\t"<<mx<<"\t"<<hx<<endl;
+                                mxv[nmin]=mx;
+                                hxv[nmin]=hx;
+                                //cout<<mxv[min]<<"\t"<<hxv[min]<<endl;
+                                ++nmin;
+                            }
+
+                        }   // end loop for surface to surface calculation
+
+
                         trans[e]+=Tr/nrays;
                         transs[e]+=Trs/nrays;
                         transp[e]+=Trp/nrays;
@@ -764,12 +816,111 @@ void Petzval::on_pushButton_4_clicked()
                 ui->customPlot_7->rescaleAxes(true);
                 ui->customPlot_7->replot();
             }
-        } // end field loop
 
+            // find focus on-axis
+            if(ui->checkBox_4->isChecked()){
+                    double x=llp;
+                    double dx1=1.0, dx=1.0, xsta=llp, xend=llp+thi[6]+10, nx=0.0, mean1=0.0, mean2=0.0;
+                    int ref=3;
+                    //cout<<xsta<<"\t"<<xend<<"\t"<<x<<endl;
+
+                    for(int i=0; i<ref; i++){
+                        dx=dx1/(pow(10,i));
+                        nx=(xend-xsta)/dx;
+                        //cout<<i<<"\t"<<dx<<"\t"<<nx<<endl;
+                        for(int tt=0; tt<nx; tt++){
+                            x=xsta+tt*dx;
+                            mean1=0.0;
+                            for(int zz=0; zz<mxv.size(); zz++){
+                                mean1+=pow((mxv[zz]*x+hxv[zz]),2);
+                            }
+                            mean1=sqrt(mean1)/mxv.size();
+                            //cout<<x<<"\t"<<mean1<<endl;
+                            if(tt>0){
+                                if(mean1>=mean2){
+                                    tt=nx;
+                                    xsta=x-2*dx;
+                                    xend=x;
+                                    oback[gg]=(x-dx)-llp;
+                                    rms[gg]=mean2;
+                                    //cout<<mean1<<"\t"<<mean2<<"\t"<<rms[gg]<<endl;
+                                }
+                                else{
+                                    mean2=mean1;
+                                }
+                            }
+                            else{
+                                mean2=mean1;
+                            }
+                        }   // end loop for discrete search on x
+
+                    }   // end loop for refinements
+
+            }
+            //*********************
+
+        } // end field loop
     }
     spot.close();
 
+    if(ui->checkBox_4->isChecked()){
+       oEval.open(sEval.c_str());
+
+       QString qBest = ui->lineEdit_2->text()+"/bestcomp.pet";
+       string sbest = qBest.toUtf8().constData();
+       ofstream best(sbest.c_str());
+
+       double rmsmin, ssrms;
+       int gmin=0, counter=0;
+       //QVector<double>
+       for(int i=0; i<nsystems; i++){
+           if(oback[i]>=ui->doubleSpinBox_4->value()){
+                oEval<<first[i]<<"\t"<<second[i]<<"\t"<<nthi[i]<<"\t"<<oback[i]<<endl;//"\t"<<rms[i]<<endl;
+           }
+       }
+       for(int e=0; e<10; e++){
+           counter=0;
+           rmsmin=rms[0];
+           gmin=0;
+            for(int i =0; i<rms.size(); i++){
+                if((rms[i]<rmsmin) & (oback[i]>=ui->doubleSpinBox_4->value())){
+                    gmin=i;
+                    rmsmin=rms[i];
+                }
+            }
+            string pro1 = product[first[gmin]];
+            string pro2 = product[second[gmin]];
+            cout<<rms[gmin]<<"\t"<<rms.size()<<"\t"<<gmin<<endl;
+            ssrms=rms[gmin]*1000;
+            QString srms = QString::number(ssrms);
+            QString qstr = QString::fromStdString(pro1.c_str())+" & "+QString::fromStdString(pro2.c_str())+" rms: "+srms;
+            ui->comboBox->addItem(qstr);
+            best<<first[gmin]<<"\t"<<second[gmin]<<"\t"<<nthi[gmin]<<"\t"<<oback[gmin]<<endl;
+
+            for(int i=0; i<rms.size(); i++){
+                if(i!=gmin){
+                    rms[counter]=rms[i];
+                    first[counter]=first[i];
+                    second[counter]=second[i];
+                    nthi[counter]=nthi[i];
+                    oback[counter]=oback[i];
+                    ++counter;
+                }
+                else{
+                    //
+                }
+            }
+            rms.resize(counter);
+            first.resize(counter);
+            second.resize(counter);
+            oback.resize(counter);
+            nthi.resize(counter);
+       }
+
+    }
+
     // plot spots
+    if(!ui->checkBox_4->isChecked()){
     ifstream ispot(sspot.c_str());
 
     QVector<double> pspotx(nrays*nrays), pspoty(nrays*nrays);
@@ -900,10 +1051,13 @@ void Petzval::on_pushButton_4_clicked()
             }
         }
     }
+    }
 
 }
 
+//**********************************
 // Load glass catalog
+//**********************************
 void Petzval::on_pushButton_5_clicked()
 {
     QString qLib = ui->lineEdit_2->text()+"/"+ui->lineEdit_4->text();
@@ -1007,8 +1161,9 @@ void Petzval::on_checkBox_2_clicked()
     }
 }
 
-
+//************************************
 // save spot diagram
+//************************************
 void Petzval::on_pushButton_6_clicked()
 {
     QString save=ui->lineEdit_2->text()+"/"+ui->lineEdit_7->text();
@@ -1364,5 +1519,15 @@ void Petzval::on_pushButton_8_clicked()
                 ui->customPlot_6->replot();
             }
         }
+    }
+}
+
+void Petzval::on_checkBox_4_clicked()
+{
+    if(ui->checkBox_4->isChecked()){
+        ui->spinBox_8->setEnabled(false);
+    }
+    else{
+        ui->spinBox_8->setEnabled(true);
     }
 }

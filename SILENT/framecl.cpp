@@ -57,21 +57,22 @@ void FrameCl::on_pushButton_2_clicked()
         std::ostringstream datNameStream(cFPath);
         datNameStream<<cFPath<<"/planckfcl.txt";
         std::string datName = datNameStream.str();
-        ifstream input(datName.c_str());
+
 
 
     QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with Continuum not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Continuum not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with Continuum is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Continuum is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(datName.c_str());
 
     int number_of_lines =0;
 
@@ -135,20 +136,20 @@ void FrameCl::on_pushButton_2_clicked()
         std::ostringstream datNameStream(cFPath);
         datNameStream<<cFPath<<"/neonfcl.txt";
         std::string datName = datNameStream.str();
-        ifstream input(datName.c_str());
 
     QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with Neon emission not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Neon emission not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with Neon emission is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Neon emission is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(datName.c_str());
 
     int number_of_lines =0;
 
@@ -212,20 +213,20 @@ void FrameCl::on_pushButton_2_clicked()
         std::ostringstream datNameStream(cFPath);
         datNameStream<<cFPath<<"/balmerfcl";
         std::string datName = datNameStream.str();
-        ifstream input(datName.c_str());
 
     QFile checkfile2(datName.c_str());
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with Balmer absorption not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Balmer absorption not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with Balmer absorption is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Balmer absorption is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    ifstream input(datName.c_str());
 
     int number_of_lines =0;
 

@@ -44,24 +44,33 @@ void Frame3D::on_pushButton_2_clicked()
     ui->customPlot->clearGraphs();
     ui->customPlot->clearPlottables();
 
+    QString qpa = ui->lineEdit_3->text();
+    string pa = qpa.toUtf8().constData();
+
     string zeile, one, two, three;
     int llx=ui->spinBox->value(), lly=ui->spinBox_2->value();
 
+    // plot planck frame *******************************
     if(ui->comboBox->currentIndex()==0){
-    ifstream input("planck3d.txt");
-    QFile checkfile2("planck3d.txt");
+
+    QFile checkfile2(qpa+"/planck3d.txt");
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with continuum not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with continuum not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
 
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with continuum is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with continuum is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+
+    std::ostringstream datNameStream(pa);
+    datNameStream<<pa<<"/planck3d.txt";
+    std::string datName = datNameStream.str();
+    ifstream input(datName.c_str());
 
 
     int number_of_lines =0;
@@ -119,20 +128,26 @@ void Frame3D::on_pushButton_2_clicked()
 
     }
 
+    // plot balmer frame ********************************
     if(ui->comboBox->currentIndex()==1){
-    ifstream input("balmer3d.txt");
-    QFile checkfile2("balmer3d.txt");
+
+    QFile checkfile2(qpa+"/balmer3d.txt");
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with Balmer absorption not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Balmer absorption not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with Balmer absorption is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Balmer absorption is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+
+    std::ostringstream datNameStream(pa);
+    datNameStream<<pa<<"/balmer3d.txt";
+    std::string datName = datNameStream.str();
+    ifstream input(datName.c_str());
 
     int number_of_lines =0;
 
@@ -189,20 +204,25 @@ void Frame3D::on_pushButton_2_clicked()
 
     }
 
+    // plot neon frame ****************************
     if(ui->comboBox->currentIndex()==2){
-    ifstream input("neon3d.txt");
-    QFile checkfile2("neon3d.txt");
+
+    QFile checkfile2(qpa+"/neon3d.txt");
 
     if(!checkfile2.exists()){
-        QMessageBox::information(this, "Error", "File with Neon emission not available! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Neon emission not available! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
     if(checkfile2.size()==0){
-        QMessageBox::information(this, "Error", "File with Neon emission is empty! Calculate first.");
+        QMessageBox::information(this, "Error", "File "+checkfile2.fileName()+" with Neon emission is empty! Calculate first.");
         this->setCursor(QCursor(Qt::ArrowCursor));
        return;
     }
+    std::ostringstream datNameStream(pa);
+    datNameStream<<pa<<"/neon3d.txt";
+    std::string datName = datNameStream.str();
+    ifstream input(datName.c_str());
 
     int number_of_lines =0;
 
